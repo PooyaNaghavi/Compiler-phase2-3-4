@@ -235,11 +235,6 @@ public class VisitorImpl implements Visitor {
             }
             //SymbolTable.push(current_var);
         }
-        if(!SymbolTable.path2_error) {
-            if(varDeclaration.getType() instanceof UserDefinedType){
-                user_defines_declaration.add((UserDefinedType) varDeclaration.getType());
-            }
-        }
         varDeclaration.getIdentifier().accept(this);
         // SymbolTable.pop();
     }

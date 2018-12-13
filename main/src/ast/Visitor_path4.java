@@ -1,6 +1,7 @@
 package ast;
 //import ast.VisitorImpl;
 import ast.Type.Type;
+import ast.Type.UserDefinedType.UserDefinedType;
 import ast.node.Program;
 import ast.node.declaration.ClassDeclaration;
 import ast.node.declaration.MethodDeclaration;
@@ -15,11 +16,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Visitor_path4 extends  VisitorImpl{
-
+public SymbolTable sym_top ;
 
     @Override
     public void visit(Program program) {
-
+        sym_top = SymbolTable.top;
         program.getMainClass().accept(this);
         for (ClassDeclaration classDec : program.getClasses()) {
             classDec.accept(this);
@@ -79,6 +80,13 @@ public class Visitor_path4 extends  VisitorImpl{
 
         String varName = varDeclaration.getIdentifier().getName();
 
+        if(varDeclaration.getType() instanceof UserDefinedType){
+            SymbolTable user_define_symbol = symbol_table_items.get(varDeclaration.getIdentifier().getName());
+            if(user_define_symbol == null){
+                errors.put(Integer.valueOf(varDeclaration.get_line_number()), ": variable "+varDeclaration.getIdentifier().getName()+" is not declared");
+            }
+
+        }
         SymbolTableVariableItemBase vd = new SymbolTableVariableItemBase(varName, varDeclaration.getType(),0);
         try {
             SymbolTable.top.put(vd);
@@ -118,21 +126,27 @@ public class Visitor_path4 extends  VisitorImpl{
 //
 //            }
         try {
-            top.get("#Class_"+identifier.getName());
+            sym_top.get("#Class_"+identifier.getName());
+
 
         } catch (ItemNotFoundException e) {
-//            e.printStackTrace();
             try {
-                top.get("#Method_"+identifier.getName());
-            } catch (ItemNotFoundException e1) {
-                try {
-                    top.get("#Variable_"+ identifier.getName());
-                } catch (ItemNotFoundException e2) {
-                    SymbolTable.error = true;
-                    errors.put(Integer.valueOf(identifier.get_line_number()), ": variable "+identifier.getName()+" is not declared");
-                }
-
+                top.get("#Class_" + identifier.getName());
             }
+            catch(ItemNotFoundException e3) {
+                try {
+                    top.get("#Method_"+identifier.getName());
+                } catch (ItemNotFoundException e1) {
+                    try {
+                        top.get("#Variable_"+ identifier.getName());
+                    } catch (ItemNotFoundException e2) {
+                        SymbolTable.error = true;
+                        errors.put(Integer.valueOf(identifier.get_line_number()), ": variable "+identifier.getName()+" is not declared");
+                    }
+
+                }
+            }
+
         }
 
 

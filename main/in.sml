@@ -1,13 +1,27 @@
 class MainClass{
  def main(): int{
-  return 0;
+
+    return new bb();
+ }
+}
+class xxx{}
+class gg extends bb  {
+var a : int;
+var h : int;
+var j : int;
+var jsdfkj : int;
+ def method(c : int ): int{
+    var fdfs :fd;
+
+    x = a + h + j + 12 + 34;
+
+  return a;
  }
 }
 
-class a {
-     var g : int;
-     def sag(): int{
-         g = 0;
-         return 0;
-     }
- }
+
+class bb{
+ var aa : int[];
+
+
+}
