@@ -14,6 +14,5 @@ public class SymbolTableClassItem extends SymbolTableItem {
     public String getKey() {
         return "#Class_"+name;
     }
-    public ArrayList<Type> getArgsType() { return null;}
 
 }

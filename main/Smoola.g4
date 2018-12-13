@@ -453,7 +453,10 @@ grammar Smoola;
         {$syn_type = new ArrayType();}
         |
   	    class_name = ID
-        {$syn_type = new UserDefinedType(new Identifier($class_name.text));}
+        {
+            $syn_type = new UserDefinedType(new Identifier($class_name.text));
+
+        }
   	;
 
     CONST_NUM:

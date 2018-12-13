@@ -1,6 +1,7 @@
 package symbolTable;
 
 import java.util.*;
+import ast.Type.UserDefinedType.*;
 
 public class SymbolTable {
 

@@ -23,7 +23,7 @@ public class VisitorImpl implements Visitor {
     public boolean flag;
     static HashMap<String, SymbolTable> symbol_table_items = new HashMap<>();
     static HashMap<Integer, String> errors = new HashMap<>();
-    static ArrayList<UserDefinedType> user_defines_declaration;
+    public static ArrayList<UserDefinedType> user_defined_declaration = new ArrayList<>();
 
     public HashMap<Integer, String> getErrors() {
         return errors;
@@ -86,6 +86,12 @@ public class VisitorImpl implements Visitor {
             // SymbolTable new_symbol_table;
             // if(symbol_table_items.get(class_name).getPre() != null)
             //     new_symbol_table = new SymbolTable(symbol_table_items.get(class_name).getPre());
+            //print(user_defined_declaration);
+            for(UserDefinedType user_defined_type : user_defined_declaration){
+                if(user_defined_type.getName().getName().equals(class_name)){
+                    user_defined_type.setClassDeclaration(classDeclaration);
+                }
+            }
 
             ArrayList<MethodDeclaration> methodDeclarations = classDeclaration.getMethodDeclarations();
             ArrayList<VarDeclaration> varDeclarations = classDeclaration.getVarDeclarations();
@@ -206,12 +212,11 @@ public class VisitorImpl implements Visitor {
     @Override
     public void visit(VarDeclaration varDeclaration) {
         String var_name = varDeclaration.getIdentifier().getName();
-
+        Type var_type = varDeclaration.getType();
         if (!SymbolTable.has_error) {
             print(varDeclaration.toString());
         } else if (!SymbolTable.path1_error) {
 
-            Type var_type = varDeclaration.getType();
             SymbolTableVariableItemBase var_item = new SymbolTableVariableItemBase(var_name, var_type, index);
             index++;
             //SymbolTable current_var = new SymbolTable();
@@ -234,6 +239,10 @@ public class VisitorImpl implements Visitor {
                 SymbolTable.error = true;
             }
             //SymbolTable.push(current_var);
+        }else if(!SymbolTable.path2_error){
+//
+            if(var_type instanceof UserDefinedType)
+                user_defined_declaration.add((UserDefinedType)var_type);
         }
         varDeclaration.getIdentifier().accept(this);
         // SymbolTable.pop();

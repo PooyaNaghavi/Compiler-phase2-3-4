@@ -2907,7 +2907,10 @@ public class SmoolaParser extends Parser {
 				{
 				setState(431);
 				((TypeContext)_localctx).class_name = match(ID);
-				((TypeContext)_localctx).syn_type =  new UserDefinedType(new Identifier((((TypeContext)_localctx).class_name!=null?((TypeContext)_localctx).class_name.getText():null)));
+
+				            ((TypeContext)_localctx).syn_type =  new UserDefinedType(new Identifier((((TypeContext)_localctx).class_name!=null?((TypeContext)_localctx).class_name.getText():null)));
+				         
+				        
 				}
 				break;
 			}

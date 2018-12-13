@@ -4,10 +4,15 @@ import ast.Type.Type;
 import ast.node.declaration.ClassDeclaration;
 import ast.node.expression.Identifier;
 
+import java.util.ArrayList;
+
 public class UserDefinedType extends Type {
     private ClassDeclaration classDeclaration;
     private Identifier name;
 
+    public UserDefinedType() {
+
+    }
     public UserDefinedType(Identifier name){
       this.name = name;
     }
@@ -26,7 +31,6 @@ public class UserDefinedType extends Type {
     public void setName(Identifier name) {
         this.name = name;
     }
-
 
     @Override
     public String toString() {
