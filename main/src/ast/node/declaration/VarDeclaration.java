@@ -1,0 +1,44 @@
+package ast.node.declaration;
+
+import ast.Type.Type;
+import ast.Visitor;
+import ast.node.expression.Identifier;
+
+public class VarDeclaration extends Declaration {
+    private Identifier identifier;
+    private Type type;
+    private int index;
+    public VarDeclaration(Identifier identifier, Type type) {
+        this.identifier = identifier;
+        this.type = type;
+    }
+    public VarDeclaration(Identifier identifier, Type type, int i) {
+          this.identifier = identifier;
+          this.type = type;
+          this.index = i;
+    }
+    public Identifier getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(Identifier identifier) {
+        this.identifier = identifier;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "VarDeclaration";
+    }
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+}
