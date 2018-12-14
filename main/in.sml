@@ -1,6 +1,16 @@
 class MainClass{
  def main(): int{
 
+<<<<<<< HEAD
+}
+
+class aaa{
+ var a : sasg;
+ def method(c : int , j :string ): int{
+    a = h + this.methd();
+    return a;
+ }
+=======
     writeln( this.a());
 
     return 0;
@@ -34,4 +44,5 @@ class cc{
     def xx():string{
         return this.xx();
     }
+>>>>>>> c45edc9b36e93203c35b42b57f680bf17c2afd12
 }
