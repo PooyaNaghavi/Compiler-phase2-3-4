@@ -62,27 +62,27 @@ grammar Smoola;
     ;
     mainClass returns[ClassDeclaration syn_main_class]:
         // name should be checked later
-        'class' class_name = ID {ClassDeclaration main_class = new ClassDeclaration(new Identifier($class_name.text, $class_name.getLine())); main_class.set_line_num($class_name.getLine());}
-        '{' 'def' method_name = ID '(' ')' ':' 'int' {MethodDeclaration method_dec = new MethodDeclaration(new Identifier($method_name.text, $method_name.getLine())); method_dec.set_line_num($method_name.getLine());}
+        'class' class_name = ID {ClassDeclaration main_class = new ClassDeclaration(new Identifier($class_name.text)); main_class.set_line_num($class_name.getLine());}
+        '{' 'def' method_name = ID '(' ')' ':' 'int' {MethodDeclaration method_dec = new MethodDeclaration(new Identifier($method_name.text)); method_dec.set_line_num($method_name.getLine());}
         {method_dec.setReturnType(new IntType()); }
         '{'  stms = statements {method_dec.addStatements($stms.syn_statements); }
         'return' return_exp = expression {method_dec.setReturnValue($return_exp.syn_expression); } ';' '}' '}'
         {main_class.addMethodDeclaration(method_dec); $syn_main_class = main_class;}
     ;
     classDeclaration returns[ClassDeclaration syn_class_declaration]:
-        'class' class_name = ID {ClassDeclaration class_dec = new ClassDeclaration(new Identifier($class_name.text, $class_name.getLine())); class_dec.set_line_num($class_name.getLine());}('extends' parent_class_name = ID {class_dec.setParentName(new Identifier($parent_class_name.text, $parent_class_name.getLine())); class_dec.set_line_num($parent_class_name.getLine()); })?
+        'class' class_name = ID {ClassDeclaration class_dec = new ClassDeclaration(new Identifier($class_name.text)); class_dec.set_line_num($class_name.getLine());}('extends' parent_class_name = ID {class_dec.setParentName(new Identifier($parent_class_name.text)); class_dec.set_line_num($parent_class_name.getLine()); })?
         '{' (var_dec = varDeclaration {class_dec.addVarDeclaration($var_dec.syn_var_declaration); })*
         (method_dec = methodDeclaration {class_dec.addMethodDeclaration($method_dec.syn_method_declaration); })* '}'
         {$syn_class_declaration = class_dec; }
     ;
     varDeclaration returns[VarDeclaration syn_var_declaration]:
-        'var' var_name = ID ':' var_type = type ';' {$syn_var_declaration = new VarDeclaration(new Identifier($var_name.text, $var_name.getLine()), $var_type.syn_type); $syn_var_declaration.set_line_num($var_name.getLine());}
+        'var' var_name = ID ':' var_type = type ';' {$syn_var_declaration = new VarDeclaration(new Identifier($var_name.text), $var_type.syn_type); $syn_var_declaration.set_line_num($var_name.getLine());}
     ;
     methodDeclaration returns[MethodDeclaration syn_method_declaration]:
-        'def' method_name = ID {MethodDeclaration method_dec = new MethodDeclaration(new Identifier($method_name.text, $method_name.getLine())); method_dec.set_line_num($method_name.getLine()); } ('(' ')'
+        'def' method_name = ID {MethodDeclaration method_dec = new MethodDeclaration(new Identifier($method_name.text)); method_dec.set_line_num($method_name.getLine()); } ('(' ')'
         |
-        ('(' var_name1 = ID ':' var_type1 = type {VarDeclaration var1 = new VarDeclaration(new Identifier($var_name1.text, $var_name1.getLine()), $var_type1.syn_type); method_dec.addArg(var1); var1.set_line_num($var_name1.getLine());}
-        (',' var_name2 = ID ':' var_type2 = type {VarDeclaration var2 = new VarDeclaration(new Identifier($var_name2.text, $var_name2.getLine()), $var_type2.syn_type); method_dec.addArg(var2); var2.set_line_num($var_name2.getLine());} )* ')'))
+        ('(' var_name1 = ID ':' var_type1 = type {VarDeclaration var1 = new VarDeclaration(new Identifier($var_name1.text), $var_type1.syn_type); method_dec.addArg(var1); var1.set_line_num($var_name1.getLine());}
+        (',' var_name2 = ID ':' var_type2 = type {VarDeclaration var2 = new VarDeclaration(new Identifier($var_name2.text), $var_type2.syn_type); method_dec.addArg(var2); var2.set_line_num($var_name2.getLine());} )* ')'))
         ':' return_type = type {method_dec.setReturnType($return_type.syn_type); }
         '{' (var_dec = varDeclaration {method_dec.addLocalVar($var_dec.syn_var_declaration); })*
         stms = statements {method_dec.addStatements($stms.syn_statements); }
@@ -390,10 +390,8 @@ grammar Smoola;
   	;
 
     expressionMemTemp returns[Expression syn_expression_mem_temp]:
-  		bracket = '[' exp = expression ']'
-        {$syn_expression_mem_temp = $exp.syn_expression;
-         $syn_expression_mem_temp.set_line_num($bracket.getLine());
-         }
+  		'[' exp = expression ']'
+        {$syn_expression_mem_temp = $exp.syn_expression; }
   	   |
   	;
 
@@ -411,8 +409,8 @@ grammar Smoola;
   	expressionMethodsTemp [Expression inh_expression_other] returns[Expression syn_expression_method_temp]:
 
   	    '.' (method_name1 = ID '(' ')'
-        {$syn_expression_method_temp = new MethodCall($inh_expression_other, new Identifier($method_name1.text, $method_name1.getLine())); $syn_expression_method_temp.set_line_num($method_name1.getLine());}
-        | method_name2 = ID {MethodCall method_call = new MethodCall($inh_expression_other, new Identifier($method_name2.text, $method_name2.getLine())); method_call.set_line_num($method_name2.getLine());}
+        {$syn_expression_method_temp = new MethodCall($inh_expression_other, new Identifier($method_name1.text)); $syn_expression_method_temp.set_line_num($method_name1.getLine());}
+        | method_name2 = ID {MethodCall method_call = new MethodCall($inh_expression_other, new Identifier($method_name2.text)); method_call.set_line_num($method_name2.getLine());}
         '(' (exp_arg1 = expression {method_call.addArg($exp_arg1.syn_expression); }(',' exp_arg2 = expression {method_call.addArg($exp_arg2.syn_expression); })*) ')' { $syn_expression_method_temp = method_call; }
         | 'length' {$syn_expression_method_temp = new Length($inh_expression_other); } )
         exp_method_temp = expressionMethodsTemp[$syn_expression_method_temp]
@@ -421,25 +419,25 @@ grammar Smoola;
   	;
     expressionOther returns[Expression syn_expression_other]:
   	    const_num = CONST_NUM
-        {$syn_expression_other = new IntValue($const_num.int, new IntType()); $syn_expression_other.set_line_num($const_num.getLine()); }
+        {$syn_expression_other = new IntValue($const_num.int, new IntType()); }
         |	const_str = CONST_STR
-        {$syn_expression_other = new StringValue($const_str.text, new StringType()); $syn_expression_other.set_line_num($const_str.getLine()); }
+        {$syn_expression_other = new StringValue($const_str.text, new StringType()); }
         |   const_str = 'new ' 'int' '[' const_num = CONST_NUM ']'
-        {$syn_expression_other = new NewArray($const_num.int); $syn_expression_other.set_line_num($const_str.getLine());}
+        {$syn_expression_other = new NewArray($const_num.int); $syn_expression_other.set_line_num($const_num.getLine());}
         |   'new ' class_name = ID '(' ')'
-        {$syn_expression_other = new NewClass(new Identifier($class_name.text, $class_name.getLine())); $syn_expression_other.set_line_num($class_name.getLine());}
+        {$syn_expression_other = new NewClass(new Identifier($class_name.text)); $syn_expression_other.set_line_num($class_name.getLine());}
         |   pointer_str = 'this'
-        {$syn_expression_other = new This(); $syn_expression_other.set_line_num($pointer_str.getLine());}
+        {$syn_expression_other = new This();}
         |   bool_str = 'true'
         {$syn_expression_other = new BooleanValue(true, new BooleanType()); $syn_expression_other.set_line_num($bool_str.getLine()); }
         |   bool_str = 'false'
         {$syn_expression_other = new BooleanValue(false, new BooleanType()); $syn_expression_other.set_line_num($bool_str.getLine()); }
         | identifier = ID
-        {$syn_expression_other = new Identifier($identifier.text, $identifier.getLine()); $syn_expression_other.set_line_num($identifier.getLine()); }
+        {$syn_expression_other = new Identifier($identifier.text); $syn_expression_other.set_line_num($identifier.getLine()); }
         |   array_name = ID '[' array_index = expression ']'
-        {$syn_expression_other = new ArrayCall(new Identifier($array_name.text, $array_name.getLine()), $array_index.syn_expression); $syn_expression_other.set_line_num($array_name.getLine());}
-        |	lpar = '(' expr = expression ')'
-        {$syn_expression_other = $expr.syn_expression; $syn_expression_other.set_line_num($lpar.getLine()); }
+        {$syn_expression_other = new ArrayCall(new Identifier($array_name.text), $array_index.syn_expression); $syn_expression_other.set_line_num($array_name.getLine());}
+        |	'(' expr = expression ')'
+        {$syn_expression_other = $expr.syn_expression; }
   	;
   	type returns[Type syn_type]:
   	    'int'
@@ -456,7 +454,10 @@ grammar Smoola;
         |
   	    class_name = ID
         {
-            $syn_type = new UserDefinedType(new Identifier($class_name.text, $class_name.getLine()));
+            Identifier newID = new Identifier($class_name.text);
+            newID.set_line_num($class_name.getLine());
+            $syn_type = new UserDefinedType(newID);
+
         }
   	;
 

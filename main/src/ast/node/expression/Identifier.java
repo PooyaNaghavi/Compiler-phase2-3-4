@@ -8,7 +8,10 @@ public class Identifier extends Expression {
     public Identifier(String name) {
         this.name = name;
     }
-
+    public Identifier(String name, int line){
+        this.name = name;
+        this.line = line;
+    }
     public String getName() {
         return name;
     }

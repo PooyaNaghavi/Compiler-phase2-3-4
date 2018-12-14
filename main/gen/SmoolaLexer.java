@@ -1,4 +1,4 @@
-// Generated from /Users/pooya/Desktop/University/Term 7(F 97)/Compilers and Programming Languages/Project/Phase2/compilerFall97-master/src/main/Smoola.g4 by ANTLR 4.7
+// Generated from /home/milad/Desktop/Compiler-phase3/main/Smoola.g4 by ANTLR 4.7
 
     import ast.*;
     import ast.node.*;

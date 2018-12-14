@@ -1,4 +1,4 @@
-// Generated from /Users/pooya/Desktop/University/Term 7(F 97)/Compilers and Programming Languages/Project/Phase2/compilerFall97-master/src/main/Smoola.g4 by ANTLR 4.7
+// Generated from /home/milad/Desktop/Compiler-phase3/main/Smoola.g4 by ANTLR 4.7
 
     import ast.*;
     import ast.node.*;
@@ -281,7 +281,7 @@ public class SmoolaParser extends Parser {
 			match(T__0);
 			setState(81);
 			((MainClassContext)_localctx).class_name = match(ID);
-			ClassDeclaration main_class = new ClassDeclaration(new Identifier((((MainClassContext)_localctx).class_name!=null?((MainClassContext)_localctx).class_name.getText():null))); main_class.set_line_num(((MainClassContext)_localctx).class_name.getLine());
+			ClassDeclaration main_class = new ClassDeclaration(new Identifier((((MainClassContext)_localctx).class_name!=null?((MainClassContext)_localctx).class_name.getText():null), ((MainClassContext)_localctx).class_name.getLine())); main_class.set_line_num(((MainClassContext)_localctx).class_name.getLine());
 			setState(83);
 			match(T__1);
 			setState(84);
@@ -296,7 +296,7 @@ public class SmoolaParser extends Parser {
 			match(T__5);
 			setState(89);
 			match(T__6);
-			MethodDeclaration method_dec = new MethodDeclaration(new Identifier((((MainClassContext)_localctx).method_name!=null?((MainClassContext)_localctx).method_name.getText():null))); method_dec.set_line_num(((MainClassContext)_localctx).method_name.getLine());
+			MethodDeclaration method_dec = new MethodDeclaration(new Identifier((((MainClassContext)_localctx).method_name!=null?((MainClassContext)_localctx).method_name.getText():null), ((MainClassContext)_localctx).method_name.getLine())); method_dec.set_line_num(((MainClassContext)_localctx).method_name.getLine());
 			method_dec.setReturnType(new IntType()); 
 			setState(92);
 			match(T__1);
@@ -380,7 +380,7 @@ public class SmoolaParser extends Parser {
 			match(T__0);
 			setState(104);
 			((ClassDeclarationContext)_localctx).class_name = match(ID);
-			ClassDeclaration class_dec = new ClassDeclaration(new Identifier((((ClassDeclarationContext)_localctx).class_name!=null?((ClassDeclarationContext)_localctx).class_name.getText():null))); class_dec.set_line_num(((ClassDeclarationContext)_localctx).class_name.getLine());
+			ClassDeclaration class_dec = new ClassDeclaration(new Identifier((((ClassDeclarationContext)_localctx).class_name!=null?((ClassDeclarationContext)_localctx).class_name.getText():null), ((ClassDeclarationContext)_localctx).class_name.getLine())); class_dec.set_line_num(((ClassDeclarationContext)_localctx).class_name.getLine());
 			setState(109);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -390,7 +390,7 @@ public class SmoolaParser extends Parser {
 				match(T__10);
 				setState(107);
 				((ClassDeclarationContext)_localctx).parent_class_name = match(ID);
-				class_dec.setParentName(new Identifier((((ClassDeclarationContext)_localctx).parent_class_name!=null?((ClassDeclarationContext)_localctx).parent_class_name.getText():null))); class_dec.set_line_num(((ClassDeclarationContext)_localctx).parent_class_name.getLine()); 
+				class_dec.setParentName(new Identifier((((ClassDeclarationContext)_localctx).parent_class_name!=null?((ClassDeclarationContext)_localctx).parent_class_name.getText():null), ((ClassDeclarationContext)_localctx).parent_class_name.getLine())); class_dec.set_line_num(((ClassDeclarationContext)_localctx).parent_class_name.getLine()); 
 				}
 			}
 
@@ -485,7 +485,7 @@ public class SmoolaParser extends Parser {
 			((VarDeclarationContext)_localctx).var_type = type();
 			setState(135);
 			match(T__8);
-			((VarDeclarationContext)_localctx).syn_var_declaration =  new VarDeclaration(new Identifier((((VarDeclarationContext)_localctx).var_name!=null?((VarDeclarationContext)_localctx).var_name.getText():null)), ((VarDeclarationContext)_localctx).var_type.syn_type); _localctx.syn_var_declaration.set_line_num(((VarDeclarationContext)_localctx).var_name.getLine());
+			((VarDeclarationContext)_localctx).syn_var_declaration =  new VarDeclaration(new Identifier((((VarDeclarationContext)_localctx).var_name!=null?((VarDeclarationContext)_localctx).var_name.getText():null), ((VarDeclarationContext)_localctx).var_name.getLine()), ((VarDeclarationContext)_localctx).var_type.syn_type); _localctx.syn_var_declaration.set_line_num(((VarDeclarationContext)_localctx).var_name.getLine());
 			}
 		}
 		catch (RecognitionException re) {
@@ -562,7 +562,7 @@ public class SmoolaParser extends Parser {
 			match(T__2);
 			setState(139);
 			((MethodDeclarationContext)_localctx).method_name = match(ID);
-			MethodDeclaration method_dec = new MethodDeclaration(new Identifier((((MethodDeclarationContext)_localctx).method_name!=null?((MethodDeclarationContext)_localctx).method_name.getText():null))); method_dec.set_line_num(((MethodDeclarationContext)_localctx).method_name.getLine()); 
+			MethodDeclaration method_dec = new MethodDeclaration(new Identifier((((MethodDeclarationContext)_localctx).method_name!=null?((MethodDeclarationContext)_localctx).method_name.getText():null), ((MethodDeclarationContext)_localctx).method_name.getLine())); method_dec.set_line_num(((MethodDeclarationContext)_localctx).method_name.getLine()); 
 			setState(161);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
@@ -585,7 +585,7 @@ public class SmoolaParser extends Parser {
 				match(T__5);
 				setState(146);
 				((MethodDeclarationContext)_localctx).var_type1 = type();
-				VarDeclaration var1 = new VarDeclaration(new Identifier((((MethodDeclarationContext)_localctx).var_name1!=null?((MethodDeclarationContext)_localctx).var_name1.getText():null)), ((MethodDeclarationContext)_localctx).var_type1.syn_type); method_dec.addArg(var1); var1.set_line_num(((MethodDeclarationContext)_localctx).var_name1.getLine());
+				VarDeclaration var1 = new VarDeclaration(new Identifier((((MethodDeclarationContext)_localctx).var_name1!=null?((MethodDeclarationContext)_localctx).var_name1.getText():null), ((MethodDeclarationContext)_localctx).var_name1.getLine()), ((MethodDeclarationContext)_localctx).var_type1.syn_type); method_dec.addArg(var1); var1.set_line_num(((MethodDeclarationContext)_localctx).var_name1.getLine());
 				setState(156);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -600,7 +600,7 @@ public class SmoolaParser extends Parser {
 					match(T__5);
 					setState(151);
 					((MethodDeclarationContext)_localctx).var_type2 = type();
-					VarDeclaration var2 = new VarDeclaration(new Identifier((((MethodDeclarationContext)_localctx).var_name2!=null?((MethodDeclarationContext)_localctx).var_name2.getText():null)), ((MethodDeclarationContext)_localctx).var_type2.syn_type); method_dec.addArg(var2); var2.set_line_num(((MethodDeclarationContext)_localctx).var_name2.getLine());
+					VarDeclaration var2 = new VarDeclaration(new Identifier((((MethodDeclarationContext)_localctx).var_name2!=null?((MethodDeclarationContext)_localctx).var_name2.getText():null), ((MethodDeclarationContext)_localctx).var_name2.getLine()), ((MethodDeclarationContext)_localctx).var_type2.syn_type); method_dec.addArg(var2); var2.set_line_num(((MethodDeclarationContext)_localctx).var_name2.getLine());
 					}
 					}
 					setState(158);
@@ -1025,6 +1025,7 @@ public class SmoolaParser extends Parser {
 
 	public static class StatementWriteContext extends ParserRuleContext {
 		public Write syn_statement_write;
+		public Token write_name;
 		public ExpressionContext exp;
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
@@ -1055,10 +1056,10 @@ public class SmoolaParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(233);
-			match(T__17);
+			((StatementWriteContext)_localctx).write_name = match(T__17);
 			setState(234);
 			((StatementWriteContext)_localctx).exp = expression();
-			((StatementWriteContext)_localctx).syn_statement_write =  new Write(((StatementWriteContext)_localctx).exp.syn_expression);
+			Write w = new Write(((StatementWriteContext)_localctx).exp.syn_expression); w.set_line_num(((StatementWriteContext)_localctx).write_name.getLine()); ((StatementWriteContext)_localctx).syn_statement_write =  w;
 			setState(236);
 			match(T__4);
 			setState(237);
@@ -2394,6 +2395,7 @@ public class SmoolaParser extends Parser {
 
 	public static class ExpressionMemTempContext extends ParserRuleContext {
 		public Expression syn_expression_mem_temp;
+		public Token bracket;
 		public ExpressionContext exp;
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
@@ -2428,12 +2430,14 @@ public class SmoolaParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(341);
-				match(T__30);
+				((ExpressionMemTempContext)_localctx).bracket = match(T__30);
 				setState(342);
 				((ExpressionMemTempContext)_localctx).exp = expression();
 				setState(343);
 				match(T__31);
-				((ExpressionMemTempContext)_localctx).syn_expression_mem_temp =  ((ExpressionMemTempContext)_localctx).exp.syn_expression; 
+				((ExpressionMemTempContext)_localctx).syn_expression_mem_temp =  ((ExpressionMemTempContext)_localctx).exp.syn_expression;
+				         _localctx.syn_expression_mem_temp.set_line_num(((ExpressionMemTempContext)_localctx).bracket.getLine());
+				         
 				}
 				break;
 			case T__4:
@@ -2591,14 +2595,14 @@ public class SmoolaParser extends Parser {
 					match(T__3);
 					setState(356);
 					match(T__4);
-					((ExpressionMethodsTempContext)_localctx).syn_expression_method_temp =  new MethodCall(_localctx.inh_expression_other, new Identifier((((ExpressionMethodsTempContext)_localctx).method_name1!=null?((ExpressionMethodsTempContext)_localctx).method_name1.getText():null))); _localctx.syn_expression_method_temp.set_line_num(((ExpressionMethodsTempContext)_localctx).method_name1.getLine());
+					((ExpressionMethodsTempContext)_localctx).syn_expression_method_temp =  new MethodCall(_localctx.inh_expression_other, new Identifier((((ExpressionMethodsTempContext)_localctx).method_name1!=null?((ExpressionMethodsTempContext)_localctx).method_name1.getText():null), ((ExpressionMethodsTempContext)_localctx).method_name1.getLine())); _localctx.syn_expression_method_temp.set_line_num(((ExpressionMethodsTempContext)_localctx).method_name1.getLine());
 					}
 					break;
 				case 2:
 					{
 					setState(358);
 					((ExpressionMethodsTempContext)_localctx).method_name2 = match(ID);
-					MethodCall method_call = new MethodCall(_localctx.inh_expression_other, new Identifier((((ExpressionMethodsTempContext)_localctx).method_name2!=null?((ExpressionMethodsTempContext)_localctx).method_name2.getText():null))); method_call.set_line_num(((ExpressionMethodsTempContext)_localctx).method_name2.getLine());
+					MethodCall method_call = new MethodCall(_localctx.inh_expression_other, new Identifier((((ExpressionMethodsTempContext)_localctx).method_name2!=null?((ExpressionMethodsTempContext)_localctx).method_name2.getText():null), ((ExpressionMethodsTempContext)_localctx).method_name2.getLine())); method_call.set_line_num(((ExpressionMethodsTempContext)_localctx).method_name2.getLine());
 					setState(360);
 					match(T__3);
 					{
@@ -2682,9 +2686,12 @@ public class SmoolaParser extends Parser {
 		public Token const_num;
 		public Token const_str;
 		public Token class_name;
+		public Token pointer_str;
+		public Token bool_str;
 		public Token identifier;
 		public Token array_name;
 		public ExpressionContext array_index;
+		public Token lpar;
 		public ExpressionContext expr;
 		public TerminalNode CONST_NUM() { return getToken(SmoolaParser.CONST_NUM, 0); }
 		public TerminalNode CONST_STR() { return getToken(SmoolaParser.CONST_STR, 0); }
@@ -2723,7 +2730,7 @@ public class SmoolaParser extends Parser {
 				{
 				setState(385);
 				((ExpressionOtherContext)_localctx).const_num = match(CONST_NUM);
-				((ExpressionOtherContext)_localctx).syn_expression_other =  new IntValue((((ExpressionOtherContext)_localctx).const_num!=null?Integer.valueOf(((ExpressionOtherContext)_localctx).const_num.getText()):0), new IntType()); 
+				((ExpressionOtherContext)_localctx).syn_expression_other =  new IntValue((((ExpressionOtherContext)_localctx).const_num!=null?Integer.valueOf(((ExpressionOtherContext)_localctx).const_num.getText()):0), new IntType()); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).const_num.getLine()); 
 				}
 				break;
 			case 2:
@@ -2731,14 +2738,14 @@ public class SmoolaParser extends Parser {
 				{
 				setState(387);
 				((ExpressionOtherContext)_localctx).const_str = match(CONST_STR);
-				((ExpressionOtherContext)_localctx).syn_expression_other =  new StringValue((((ExpressionOtherContext)_localctx).const_str!=null?((ExpressionOtherContext)_localctx).const_str.getText():null), new StringType()); 
+				((ExpressionOtherContext)_localctx).syn_expression_other =  new StringValue((((ExpressionOtherContext)_localctx).const_str!=null?((ExpressionOtherContext)_localctx).const_str.getText():null), new StringType()); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).const_str.getLine()); 
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(389);
-				match(T__34);
+				((ExpressionOtherContext)_localctx).const_str = match(T__34);
 				setState(390);
 				match(T__6);
 				setState(391);
@@ -2747,7 +2754,7 @@ public class SmoolaParser extends Parser {
 				((ExpressionOtherContext)_localctx).const_num = match(CONST_NUM);
 				setState(393);
 				match(T__31);
-				((ExpressionOtherContext)_localctx).syn_expression_other =  new NewArray((((ExpressionOtherContext)_localctx).const_num!=null?Integer.valueOf(((ExpressionOtherContext)_localctx).const_num.getText()):0)); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).const_num.getLine());
+				((ExpressionOtherContext)_localctx).syn_expression_other =  new NewArray((((ExpressionOtherContext)_localctx).const_num!=null?Integer.valueOf(((ExpressionOtherContext)_localctx).const_num.getText()):0)); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).const_str.getLine());
 				}
 				break;
 			case 4:
@@ -2761,31 +2768,31 @@ public class SmoolaParser extends Parser {
 				match(T__3);
 				setState(398);
 				match(T__4);
-				((ExpressionOtherContext)_localctx).syn_expression_other =  new NewClass(new Identifier((((ExpressionOtherContext)_localctx).class_name!=null?((ExpressionOtherContext)_localctx).class_name.getText():null))); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).class_name.getLine());
+				((ExpressionOtherContext)_localctx).syn_expression_other =  new NewClass(new Identifier((((ExpressionOtherContext)_localctx).class_name!=null?((ExpressionOtherContext)_localctx).class_name.getText():null), ((ExpressionOtherContext)_localctx).class_name.getLine())); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).class_name.getLine());
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(400);
-				match(T__35);
-				((ExpressionOtherContext)_localctx).syn_expression_other =  new This();
+				((ExpressionOtherContext)_localctx).pointer_str = match(T__35);
+				((ExpressionOtherContext)_localctx).syn_expression_other =  new This(); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).pointer_str.getLine());
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(402);
-				match(T__36);
-				((ExpressionOtherContext)_localctx).syn_expression_other =  new BooleanValue(true, new BooleanType()); 
+				((ExpressionOtherContext)_localctx).bool_str = match(T__36);
+				((ExpressionOtherContext)_localctx).syn_expression_other =  new BooleanValue(true, new BooleanType()); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).bool_str.getLine()); 
 				}
 				break;
 			case 7:
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(404);
-				match(T__37);
-				((ExpressionOtherContext)_localctx).syn_expression_other =  new BooleanValue(false, new BooleanType()); 
+				((ExpressionOtherContext)_localctx).bool_str = match(T__37);
+				((ExpressionOtherContext)_localctx).syn_expression_other =  new BooleanValue(false, new BooleanType()); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).bool_str.getLine()); 
 				}
 				break;
 			case 8:
@@ -2793,7 +2800,7 @@ public class SmoolaParser extends Parser {
 				{
 				setState(406);
 				((ExpressionOtherContext)_localctx).identifier = match(ID);
-				((ExpressionOtherContext)_localctx).syn_expression_other =  new Identifier((((ExpressionOtherContext)_localctx).identifier!=null?((ExpressionOtherContext)_localctx).identifier.getText():null)); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).identifier.getLine()); 
+				((ExpressionOtherContext)_localctx).syn_expression_other =  new Identifier((((ExpressionOtherContext)_localctx).identifier!=null?((ExpressionOtherContext)_localctx).identifier.getText():null), ((ExpressionOtherContext)_localctx).identifier.getLine()); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).identifier.getLine()); 
 				}
 				break;
 			case 9:
@@ -2807,19 +2814,19 @@ public class SmoolaParser extends Parser {
 				((ExpressionOtherContext)_localctx).array_index = expression();
 				setState(411);
 				match(T__31);
-				((ExpressionOtherContext)_localctx).syn_expression_other =  new ArrayCall(new Identifier((((ExpressionOtherContext)_localctx).array_name!=null?((ExpressionOtherContext)_localctx).array_name.getText():null)), ((ExpressionOtherContext)_localctx).array_index.syn_expression); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).array_name.getLine());
+				((ExpressionOtherContext)_localctx).syn_expression_other =  new ArrayCall(new Identifier((((ExpressionOtherContext)_localctx).array_name!=null?((ExpressionOtherContext)_localctx).array_name.getText():null), ((ExpressionOtherContext)_localctx).array_name.getLine()), ((ExpressionOtherContext)_localctx).array_index.syn_expression); _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).array_name.getLine());
 				}
 				break;
 			case 10:
 				enterOuterAlt(_localctx, 10);
 				{
 				setState(414);
-				match(T__3);
+				((ExpressionOtherContext)_localctx).lpar = match(T__3);
 				setState(415);
 				((ExpressionOtherContext)_localctx).expr = expression();
 				setState(416);
 				match(T__4);
-				((ExpressionOtherContext)_localctx).syn_expression_other =  ((ExpressionOtherContext)_localctx).expr.syn_expression; 
+				((ExpressionOtherContext)_localctx).syn_expression_other =  ((ExpressionOtherContext)_localctx).expr.syn_expression; _localctx.syn_expression_other.set_line_num(((ExpressionOtherContext)_localctx).lpar.getLine()); 
 				}
 				break;
 			}
@@ -2837,7 +2844,6 @@ public class SmoolaParser extends Parser {
 
 	public static class TypeContext extends ParserRuleContext {
 		public Type syn_type;
-		public Token khar;
 		public Token class_name;
 		public TerminalNode ID() { return getToken(SmoolaParser.ID, 0); }
 		public TypeContext(ParserRuleContext parent, int invokingState) {
@@ -2870,7 +2876,7 @@ public class SmoolaParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(421);
-				((TypeContext)_localctx).khar = match(T__6);
+				match(T__6);
 				((TypeContext)_localctx).syn_type =  new IntType(); 
 				}
 				break;
@@ -2908,8 +2914,7 @@ public class SmoolaParser extends Parser {
 				setState(431);
 				((TypeContext)_localctx).class_name = match(ID);
 
-				            ((TypeContext)_localctx).syn_type =  new UserDefinedType(new Identifier((((TypeContext)_localctx).class_name!=null?((TypeContext)_localctx).class_name.getText():null)));
-				         
+				            ((TypeContext)_localctx).syn_type =  new UserDefinedType(new Identifier((((TypeContext)_localctx).class_name!=null?((TypeContext)_localctx).class_name.getText():null), ((TypeContext)_localctx).class_name.getLine()));
 				        
 				}
 				break;
