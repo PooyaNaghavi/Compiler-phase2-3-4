@@ -440,7 +440,7 @@ grammar Smoola;
         {$syn_expression_other = $expr.syn_expression; }
   	;
   	type returns[Type syn_type]:
-  	    khar = 'int'
+  	    'int'
         {$syn_type = new IntType(); }
         |
   	    'boolean'

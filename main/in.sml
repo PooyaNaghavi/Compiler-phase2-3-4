@@ -18,7 +18,8 @@ var fs : cc ;
     var fdfs :fd;
 
     a = a > (a > 2);
-  return a;
+    salam = ff.length;
+    return a;
  }
 }
 

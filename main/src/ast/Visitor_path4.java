@@ -18,6 +18,8 @@ import ast.node.expression.Value.StringValue;
 import ast.node.statement.*;
 import symbolTable.*;
 
+import java.util.ArrayList;
+
 public class Visitor_path4 extends VisitorImpl{
     public SymbolTable symbolTable_top;
     public String line_number;
@@ -126,22 +128,46 @@ public class Visitor_path4 extends VisitorImpl{
                 if (identifier_symbolTableItem instanceof SymbolTableVariableItemBase) {
                     return get_identifier_type(((SymbolTableVariableItemBase) identifier_symbolTableItem).getType());
                 }
-
             } catch (ItemNotFoundException e) {
                 return new NoType();
             }
         }
-        if(expression instanceof  Length) {
-
+        if(expression instanceof Length) {
+            Type exp_type = get_type(((Length) expression).getExpression());
+            if(exp_type instanceof ArrayType || exp_type instanceof NoType){
+                return new IntType();
+            }else {
+                SymbolTable.error = true;
+                errors.put(Integer.valueOf(expression.get_line_number()), ":Length expression is not array" );
+                return new NoType();
+            }
         }
         if(expression instanceof MethodCall) {
-
+            //TODO : implemented MethodCall
+            Type instance_exp_type = get_type(((MethodCall) expression).getInstance());
+            Type identifier_type = get_type(((MethodCall) expression).getMethodName());
+            ArrayList <Type> arg_types = new ArrayList<>();
+            for (Expression arg_exp : ((MethodCall) expression).getArgs())
+                arg_types.add(get_type(arg_exp));
         }
         if(expression instanceof  NewArray) {
-
+           //It doesn't have any error
         }
         if(expression instanceof  NewClass) {
+            Type identifier_type = get_type(((NewClass) expression).getClassName());
+            if(identifier_type instanceof UserDefinedType) {
+                SymbolTable new_class_symbolTable = symbol_table_items.get(((UserDefinedType) identifier_type).getName().getName());
+                if(new_class_symbolTable != null){
+                    return identifier_type;
+                }
+                else{
 
+                }
+            }else{
+                SymbolTable.error = true;
+                errors.put(Integer.valueOf(expression.get_line_number()), ":Class variable is not class Type" );
+                return new NoType();
+            }
         }
         if(expression instanceof This) {
 
