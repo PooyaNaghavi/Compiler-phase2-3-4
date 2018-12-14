@@ -2,11 +2,96 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58aba860-4d9c-4d1c-8160-9425cac4bd4d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/antlr_4_7_1_complete.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/main.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smoola.g4" beforeDir="false" afterPath="$PROJECT_DIR$/Smoola.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/in.sml" beforeDir="false" afterPath="$PROJECT_DIR$/in.sml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaBaseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaBaseListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaBaseVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaBaseVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaLexer.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaLexer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ClassDeclarationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ClassDeclarationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionAddContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionAddContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionAddTempContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionAddTempContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionAndContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionAndContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionAndTempContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionAndTempContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionAssignmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionAssignmentContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionCmpContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionCmpContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionCmpTempContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionCmpTempContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionEqContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionEqContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionEqTempContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionEqTempContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMemContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMemContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMemTempContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMemTempContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMethodsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMethodsContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMethodsTempContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMethodsTempContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMultContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMultContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMultTempContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionMultTempContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionOrContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionOrContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionOrTempContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionOrTempContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionOtherContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionOtherContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionUnaryContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ExpressionUnaryContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$MainClassContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$MainClassContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$MethodDeclarationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$MethodDeclarationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$ProgramContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$ProgramContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementAssignmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementAssignmentContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementBlockContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementBlockContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementConditionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementConditionContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementLoopContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementLoopContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementWriteContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementWriteContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$StatementsContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$TypeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$TypeContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser$VarDeclarationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser$VarDeclarationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/SmoolaVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/SmoolaVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/Type/ArrayType/ArrayType.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/Type/ArrayType/ArrayType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/Type/PrimitiveType/BooleanType.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/Type/PrimitiveType/BooleanType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/Type/PrimitiveType/IntType.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/Type/PrimitiveType/IntType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/Type/PrimitiveType/StringType.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/Type/PrimitiveType/StringType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/Type/Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/Type/Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/Type/UserDefinedType/UserDefinedType.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/Type/UserDefinedType/UserDefinedType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/Visitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/Visitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/VisitorImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/VisitorImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/production/production/main/ast/Visitor_path4.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/Visitor_path4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/Visitor_path4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/Visitor_path4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/Node.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/Program.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/Program.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/declaration/ClassDeclaration.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/declaration/ClassDeclaration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/declaration/Declaration.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/declaration/Declaration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/declaration/MethodDeclaration.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/declaration/MethodDeclaration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/declaration/VarDeclaration.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/declaration/VarDeclaration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/ArrayCall.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/ArrayCall.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/BinaryExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/BinaryExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/BinaryOperator.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/BinaryOperator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/Expression.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/Expression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/Identifier.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/Identifier.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/Length.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/Length.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/MethodCall.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/MethodCall.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/NewArray.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/NewArray.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/NewClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/NewClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/This.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/This.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/UnaryExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/UnaryExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/UnaryOperator.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/UnaryOperator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/Value/BooleanValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/Value/BooleanValue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/Value/IntValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/Value/IntValue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/Value/StringValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/Value/StringValue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/expression/Value/Value.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/expression/Value/Value.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/statement/Assign.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/statement/Assign.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/statement/Block.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/statement/Block.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/statement/Conditional.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/statement/Conditional.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/statement/Statement.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/statement/Statement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/statement/While.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/statement/While.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/ast/node/statement/Write.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/ast/node/statement/Write.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/symbolTable/ItemAlreadyExistsException.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/symbolTable/ItemAlreadyExistsException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/symbolTable/ItemNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/symbolTable/ItemNotFoundException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/symbolTable/Stack.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/symbolTable/Stack.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/symbolTable/SymbolTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/symbolTable/SymbolTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/symbolTable/SymbolTableClassItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/symbolTable/SymbolTableClassItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/symbolTable/SymbolTableItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/symbolTable/SymbolTableItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/symbolTable/SymbolTableMethodItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/symbolTable/SymbolTableMethodItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/production/main/symbolTable/SymbolTableVariableItemBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/production/main/symbolTable/SymbolTableVariableItemBase.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,10 +154,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ast/Visitor_path4.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
+            <state relative-caret-position="-45">
               <caret line="126" column="72" selection-start-line="126" selection-start-column="61" selection-end-line="126" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -85,16 +170,16 @@
         <entry file="file://$PROJECT_DIR$/src/ast/node/expression/NewClass.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="5" column="33" lean-forward="true" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="33" />
+              <caret line="5" column="33" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Smoola.g4">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="429" column="26" lean-forward="true" selection-start-line="429" selection-start-column="26" selection-end-line="429" selection-end-column="26" />
+            <state relative-caret-position="5258">
+              <caret line="410" column="30" selection-start-line="410" selection-start-column="28" selection-end-line="410" selection-end-column="30" />
               <folding>
                 <element signature="e#17#465#1" expanded="true" />
               </folding>
@@ -115,7 +200,7 @@
         <entry file="file://$PROJECT_DIR$/src/ast/node/expression/MethodCall.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="9" selection-end-column="59" />
+              <caret line="7" selection-start-line="7" selection-end-line="9" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -151,7 +236,7 @@
         <entry file="file://$PROJECT_DIR$/src/ast/VisitorImpl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-end-line="16" selection-end-column="27" />
+              <caret line="16" column="27" selection-start-line="16" selection-end-line="16" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -309,7 +394,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544776407016" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544776614591" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -360,12 +445,12 @@
       <workItem from="1544704443093" duration="4742000" />
       <workItem from="1544709452779" duration="13987000" />
       <workItem from="1544728413864" duration="3980000" />
-      <workItem from="1544732456429" duration="5908000" />
+      <workItem from="1544732456429" duration="6133000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63637000" />
+    <option name="totallyTimeSpent" value="63862000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -916,14 +1001,14 @@
     <entry file="file://$PROJECT_DIR$/src/ast/node/expression/MethodCall.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="9" selection-end-column="59" />
+          <caret line="7" selection-start-line="7" selection-end-line="9" selection-end-column="59" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ast/VisitorImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-end-line="16" selection-end-column="27" />
+          <caret line="16" column="27" selection-start-line="16" selection-end-line="16" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -940,26 +1025,26 @@
     <entry file="file://$PROJECT_DIR$/src/ast/node/expression/NewClass.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="33" lean-forward="true" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ast/Visitor_path4.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="126" column="72" selection-start-line="126" selection-start-column="61" selection-end-line="126" selection-end-column="72" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="5" column="33" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Smoola.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="429" column="26" lean-forward="true" selection-start-line="429" selection-start-column="26" selection-end-line="429" selection-end-column="26" />
+        <state relative-caret-position="5258">
+          <caret line="410" column="30" selection-start-line="410" selection-start-column="28" selection-end-line="410" selection-end-column="30" />
           <folding>
             <element signature="e#17#465#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ast/Visitor_path4.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-45">
+          <caret line="126" column="72" selection-start-line="126" selection-start-column="61" selection-end-line="126" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
