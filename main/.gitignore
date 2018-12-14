@@ -2,3 +2,4 @@
 *.class
 gen/
 *.jar
+*.xml

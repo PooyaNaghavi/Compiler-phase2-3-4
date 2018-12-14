@@ -22,15 +22,28 @@ public class VisitorImpl implements Visitor {
     public int name_index;
     public boolean flag;
     static HashMap<String, SymbolTable> symbol_table_items = new HashMap<>();
-    static HashMap<Integer, String> errors = new HashMap<>();
+    static HashMap<Integer, ArrayList<String>> errors = new HashMap<>();
     public static ArrayList<UserDefinedType> user_defined_declaration = new ArrayList<>();
+    public static ArrayList<UserDefinedType> class_defined_declaration = new ArrayList<>();
 
-    public HashMap<Integer, String> getErrors() {
+    public HashMap<Integer, ArrayList<String>> getErrors() {
         return errors;
     }
 
     public void print(Object str) {
         System.out.println(str);
+    }
+
+    public void add_error(int key, String error){
+        ArrayList<String> error_temp;
+        if(errors.containsKey(key)){
+            error_temp = errors.get(key);
+            error_temp.add(error);
+        } else {
+            error_temp = new ArrayList<String>();
+            error_temp.add(error);
+            errors.put(key, error_temp);
+        }
     }
 
     @Override
@@ -54,6 +67,7 @@ public class VisitorImpl implements Visitor {
         } else if (!SymbolTable.path1_error) {
             SymbolTableClassItem class_item = new SymbolTableClassItem(class_name);
             SymbolTable current_class = new SymbolTable();
+            class_defined_declaration.add(new UserDefinedType(new Identifier(class_name), classDeclaration));
             try {
                 SymbolTable.top.put(class_item);
             } catch (ItemAlreadyExistsException e) {
@@ -70,7 +84,8 @@ public class VisitorImpl implements Visitor {
                     }
                 }
                 flag = true;
-                errors.put(Integer.valueOf(classDeclaration.get_line_number()), ":Redefinition of class " + class_name);
+                add_error(Integer.valueOf(classDeclaration.get_line_number()), ":Redefinition of class " + class_name);
+                //errors.put(Integer.valueOf(classDeclaration.get_line_number()), ":Redefinition of class " + class_name);
                 //print("Line:" + classDeclaration.get_line_number() + ":Redefinition of class " + class_name);
                 SymbolTable.error = true;
             }
@@ -115,7 +130,8 @@ public class VisitorImpl implements Visitor {
 //                  if(arg_flag)
 //                  {
                         SymbolTable.error = true;
-                        errors.put(Integer.valueOf(method_dec.get_line_number()), ":Redefinition of method " + method_dec.getName().getName());
+                        add_error(Integer.valueOf(method_dec.get_line_number()), ":Redefinition of method " + method_dec.getName().getName());
+                        //errors.put(Integer.valueOf(method_dec.get_line_number()), ":Redefinition of method " + method_dec.getName().getName());
                         //print("Line:" + method_dec.get_line_number() + ":Redefinition of method " + method_dec.getName().getName());
                         //     }
 
@@ -131,11 +147,12 @@ public class VisitorImpl implements Visitor {
                     symbol_parent_table_item = symbol_table_items.get(class_name).get_parent("#Variable_" + arg_dec.getIdentifier().getName());
                     if (symbol_parent_table_item != null) {
                         SymbolTable.error = true;
+                        add_error(Integer.valueOf(arg_dec.get_line_number()), ":Redefinition of variable " + arg_dec.getIdentifier().getName());
 //                  Type parent_argType = ((SymbolTableVariableItemBase)symbol_parent_table_item).getType();
 //                  Type argType = ((SymbolTableVariableItemBase)symbol_table_items.get(class_name).getInCurrentScope("#Variable_" + arg_dec.getIdentifier().getName())).getType();
 //                  if(parent_argType.toString().equals(argType.toString()))
 //                  {
-                        errors.put(Integer.valueOf(arg_dec.get_line_number()), ":Redefinition of variable " + arg_dec.getIdentifier().getName());
+                        //errors.put(Integer.valueOf(arg_dec.get_line_number()), ":Redefinition of variable " + arg_dec.getIdentifier().getName());
 //                      //print("Line:" + arg_dec.get_line_number() + ":Redefinition of variable " + arg_dec.getIdentifier().getName());
 //               //  }
                     }
@@ -186,7 +203,8 @@ public class VisitorImpl implements Visitor {
                     }
                 }
                 flag = true;
-                errors.put(Integer.valueOf(methodDeclaration.get_line_number()), ":Redefinition of method " + method_name);
+                add_error(Integer.valueOf(methodDeclaration.get_line_number()), ":Redefinition of method " + method_name);
+                //errors.put(Integer.valueOf(methodDeclaration.get_line_number()), ":Redefinition of method " + method_name);
                 //print("Line:" + methodDeclaration.get_line_number() + ":Redefinition of method " + method_name);
                 SymbolTable.error = true;
             }
@@ -234,7 +252,8 @@ public class VisitorImpl implements Visitor {
                     }
                 }
                 flag = true;
-                errors.put(Integer.valueOf(varDeclaration.get_line_number()), ":Redefinition of variable " + var_name);
+                add_error(Integer.valueOf(varDeclaration.get_line_number()), ":Redefinition of variable " + var_name);
+                //errors.put(Integer.valueOf(varDeclaration.get_line_number()), ":Redefinition of variable " + var_name);
                 //print("Line:" + varDeclaration.get_line_number() + ":Redefinition of variable " + var_name);
                 SymbolTable.error = true;
             }
@@ -301,7 +320,8 @@ public class VisitorImpl implements Visitor {
             print(newArray.toString());
         } else if (!SymbolTable.path1_error) {
             if (newArray.getSize() <= 0) {
-                errors.put(Integer.valueOf(newArray.get_line_number()), ":Array length should not be zero or negative");
+                add_error(Integer.valueOf(newArray.get_line_number()), ":Array length should not be zero or negative");
+                //errors.put(Integer.valueOf(newArray.get_line_number()), ":Array length should not be zero or negative");
                 //print("Line:" + newArray.get_line_number() + ":Array length should not be zero or negative");
                 SymbolTable.error = true;
             }

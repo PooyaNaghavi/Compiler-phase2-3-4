@@ -13,9 +13,16 @@ public class UserDefinedType extends Type {
     public UserDefinedType() {
 
     }
+
     public UserDefinedType(Identifier name){
       this.name = name;
     }
+
+    public UserDefinedType(Identifier name, ClassDeclaration classDeclaration){
+        this.name = name;
+        this.classDeclaration = classDeclaration;
+    }
+
     public ClassDeclaration getClassDeclaration() {
         return classDeclaration;
     }

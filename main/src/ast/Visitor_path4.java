@@ -42,18 +42,43 @@ public class Visitor_path4 extends VisitorImpl{
         return check_parent_Type(left,right);
     }
 
+    public Type unary_subType(Type expression, UnaryOperator op){
+        if(op.equals(UnaryOperator.minus)) {
+            if(!(expression instanceof IntType || expression instanceof NoType)){
+                SymbolTable.error = true;
+                add_error(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                //errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                return new NoType();
+            }else{
+                return new IntType();
+            }
+        }else if(op.equals(UnaryOperator.not)) {
+            if(!(expression instanceof BooleanType || expression instanceof NoType)){
+                SymbolTable.error = true;
+                add_error(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                //errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                return new NoType();
+            }else{
+                return new BooleanType();
+            }
+        }
+        return  new NoType();
+    }
+
     public Type binary_subType(Type left_expression_type, Type right_expression_type, BinaryOperator op){
         if(op.equals(BinaryOperator.eq) || op.equals(BinaryOperator.neq)) {
             if(left_expression_type instanceof BooleanType || right_expression_type instanceof BooleanType){
                 SymbolTable.error = true;
-                errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                add_error(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                //errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
                 return new NoType();
             }else if(!((left_expression_type instanceof  NoType || right_expression_type instanceof NoType) ||
                     ((left_expression_type.toString().equals(right_expression_type.toString())) &&
                     (left_expression_type instanceof IntType || left_expression_type instanceof ArrayType ||
                             left_expression_type instanceof StringType || left_expression_type instanceof UserDefinedType)))) {
                 SymbolTable.error = true;
-                errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                add_error(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                //errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
                 return new NoType();
             }else if(left_expression_type instanceof UserDefinedType && right_expression_type instanceof UserDefinedType) {
                 if (((UserDefinedType) left_expression_type).getClassDeclaration().getParentName() != null) {
@@ -77,7 +102,8 @@ public class Visitor_path4 extends VisitorImpl{
             if(!((left_expression_type instanceof IntType  || left_expression_type instanceof NoType) &&
                     (right_expression_type instanceof IntType || right_expression_type instanceof  NoType))){
                 SymbolTable.error = true;
-                errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                add_error(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                //errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
                 return new NoType();
             }else if(op.equals(BinaryOperator.lt) || op.equals(BinaryOperator.gt))
                 return new BooleanType();
@@ -87,7 +113,8 @@ public class Visitor_path4 extends VisitorImpl{
             if(!((left_expression_type instanceof BooleanType || left_expression_type instanceof NoType) &&
                     (right_expression_type instanceof BooleanType || right_expression_type instanceof  NoType))) {
                 SymbolTable.error = true;
-                errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                add_error(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
+                //errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
                 return new NoType();
             }else
                 return new BooleanType();
@@ -109,7 +136,8 @@ public class Visitor_path4 extends VisitorImpl{
             Type index_type = get_type(((ArrayCall) expression).getIndex());
             if(!(index_type instanceof IntType)){
                 SymbolTable.error = true;
-                errors.put(Integer.valueOf(expression.get_line_number()), ":ArrayCall index is not Integer" );
+                add_error(Integer.valueOf(expression.get_line_number()), ":ArrayCall index is not Integer" );
+                //errors.put(Integer.valueOf(expression.get_line_number()), ":ArrayCall index is not Integer" );
             }
             return instance_type;
         }
@@ -138,7 +166,8 @@ public class Visitor_path4 extends VisitorImpl{
                 return new IntType();
             }else {
                 SymbolTable.error = true;
-                errors.put(Integer.valueOf(expression.get_line_number()), ":Length expression is not array" );
+                add_error(Integer.valueOf(expression.get_line_number()), ":Length expression is not array" );
+                //errors.put(Integer.valueOf(expression.get_line_number()), ":Length expression is not array" );
                 return new NoType();
             }
         }
@@ -155,25 +184,45 @@ public class Visitor_path4 extends VisitorImpl{
         }
         if(expression instanceof  NewClass) {
             Type identifier_type = get_type(((NewClass) expression).getClassName());
-            if(identifier_type instanceof UserDefinedType) {
-                SymbolTable new_class_symbolTable = symbol_table_items.get(((UserDefinedType) identifier_type).getName().getName());
+            if(identifier_type instanceof NoType) {
+                SymbolTable new_class_symbolTable = symbol_table_items.get(((NewClass) expression).getClassName().getName());
                 if(new_class_symbolTable != null){
-                    return identifier_type;
+                    for(UserDefinedType class_defined : class_defined_declaration){
+                        if(class_defined.getName().getName().equals(((NewClass) expression).getClassName().getName())){
+                            return class_defined;
+                        }
+                    }
                 }
                 else{
-
+                    SymbolTable.error = true;
+                    add_error(Integer.valueOf(expression.get_line_number()), ":class " + ((NewClass) expression).getClassName().getName()+ " is not declared" );
+                    //errors.put(Integer.valueOf(expression.get_line_number()), ":class " + ((NewClass) expression).getClassName().getName()+ " is not declared" );
+                    return new NoType();
                 }
-            }else{
+            }else {
                 SymbolTable.error = true;
-                errors.put(Integer.valueOf(expression.get_line_number()), ":Class variable is not class Type" );
+                add_error(Integer.valueOf(expression.get_line_number()), ":class " + ((NewClass) expression).getClassName().getName() +" is not declared" );
+                //errors.put(Integer.valueOf(expression.get_line_number()), ":class " + ((NewClass) expression).getClassName().getName() +" is not declared" );
                 return new NoType();
             }
         }
         if(expression instanceof This) {
-
+            for ( String key : symbol_table_items.keySet() ) {
+                if(symbol_table_items.get(key) == SymbolTable.top.getPre()){
+                    for(UserDefinedType user_defined : user_defined_declaration){
+                        if(user_defined.getName().getName().equals(key)){
+                            return user_defined;
+                        }
+                    }
+                }
+            }
+            return new NoType();
         }
         if(expression instanceof UnaryExpression) {
-
+            Type unary_expression_type = get_type(((UnaryExpression) expression).getValue());
+            UnaryOperator op = ((UnaryExpression) expression).getUnaryOperator();
+            line_number = expression.get_line_number();
+            return unary_subType(unary_expression_type, op);
         }
         return new NoType();
     }
@@ -255,7 +304,8 @@ public class Visitor_path4 extends VisitorImpl{
             } catch (ItemNotFoundException e) {
 
                 SymbolTable.error = true;
-                errors.put(Integer.valueOf(varDeclaration.get_line_number()), ":variable " + ((UserDefinedType) varDeclaration.getType()).getName().getName() + " is not declared");
+                add_error(Integer.valueOf(varDeclaration.get_line_number()), ":variable " + ((UserDefinedType) varDeclaration.getType()).getName().getName() + " is not declared");
+                //errors.put(Integer.valueOf(varDeclaration.get_line_number()), ":variable " + ((UserDefinedType) varDeclaration.getType()).getName().getName() + " is not declared");
             }
         }
         SymbolTableVariableItemBase variable_item = new SymbolTableVariableItemBase(varName, varDeclaration.getType(),0);
@@ -288,26 +338,24 @@ public class Visitor_path4 extends VisitorImpl{
         } catch (ItemNotFoundException e1) {
             try {
                 top.get("#Class_" + identifier.getName());
-            }
-            catch(ItemNotFoundException e2) {
+            } catch (ItemNotFoundException e2) {
                 try {
-                    top.get("#Method_"+identifier.getName());
+                    top.get("#Method_" + identifier.getName());
                 } catch (ItemNotFoundException e3) {
                     try {
-                        top.get("#Variable_"+ identifier.getName());
+                        top.get("#Variable_" + identifier.getName());
                     } catch (ItemNotFoundException e4) {
                         SymbolTable.error = true;
-                        errors.put(Integer.valueOf(identifier.get_line_number()), ":variable "+identifier.getName()+" is not declared");
+                        add_error(Integer.valueOf(identifier.get_line_number()), ":variable " + identifier.getName() + " is not declared");
+                        //errors.put(Integer.valueOf(identifier.get_line_number()), ":variable " + identifier.getName() + " is not declared");
                         try {
                             top.put(new SymbolTableVariableItemBase(identifier.getName(), new NoType(), index));
-                            index ++;
-                        }catch(ItemAlreadyExistsException e5){}
+                            index++;
+                        } catch (ItemAlreadyExistsException e5) { }
                     }
                 }
             }
-
         }
-
     }
 
     @Override
@@ -380,7 +428,8 @@ public class Visitor_path4 extends VisitorImpl{
 
         Type conditional_type = get_type(conditional.getExpression());
         if(!(conditional_type instanceof BooleanType || conditional_type instanceof NoType)){
-            print("Line:" + conditional.get_line_number() + ":condition type must be boolean");
+            add_error(Integer.valueOf(conditional.get_line_number()), ":condition type must be boolean");
+            //print("Line:" + conditional.get_line_number() + ":condition type must be boolean");
         }
         conditional.getExpression().accept(this);
         conditional.getConsequenceBody().accept(this);
@@ -393,7 +442,8 @@ public class Visitor_path4 extends VisitorImpl{
 
         Type loop_type = get_type(loop.getCondition());
         if(!(loop_type instanceof BooleanType || loop_type instanceof NoType )){
-            print("Line:" + loop.get_line_number() + ":condition type must be boolean");
+            add_error(Integer.valueOf(loop.get_line_number()),":condition type must be boolean" );
+            //print("Line:" + loop.get_line_number() + ":condition type must be boolean");
         }
         loop.getCondition().accept(this);
         loop.getBody().accept(this);
@@ -405,7 +455,8 @@ public class Visitor_path4 extends VisitorImpl{
         Type write_type = get_type(write.getArg());
         if(!(write_type instanceof IntType || write_type instanceof NoType ||
                 write_type instanceof ArrayType || write_type instanceof StringType)){
-            print("Line:" + write.get_line_number() + ":unsupported type for writeln");
+            add_error(Integer.valueOf(write.get_line_number()), ":unsupported type for writeln");
+            //print("Line:" + write.get_line_number() + ":unsupported type for writeln");
         }
         write.getArg().accept(this);
     }
