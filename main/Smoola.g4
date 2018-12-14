@@ -51,11 +51,14 @@ grammar Smoola;
           if(SymbolTable.has_error == false)
             syn_program.accept(visitor);
           else{
-              HashMap<Integer, String> errors = visitor.getErrors();
+              HashMap<Integer, ArrayList<String>> errors = visitor.getErrors();
               ArrayList<Integer> keys = new ArrayList(errors.keySet());
               Collections.sort(keys);
-              for (Integer i : keys) {
-                  System.out.println("Line:" + i + errors.get(i));
+              for (Integer i : keys)
+              {
+                  ArrayList<String> error_temp = errors.get(i);
+                  for(String error : error_temp)
+                    System.out.println("Line:" + i + error);
               }
           }
         }

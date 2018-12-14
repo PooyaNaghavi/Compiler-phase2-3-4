@@ -1,32 +1,37 @@
 class MainClass{
  def main(): int{
-    return new bb();
+
+    writeln( this.a());
+
+    return 0;
  }
 
 }
-class xxx{}
-class aaa  extends fff {
-var a : int;
-var h :aaa;
-var g : fff;
-var hfhtr : bb;
-var ff: string;
-var hh : boolean ;
-var js : bb ;
-var fs : cc ;
- def method(c : int , j :string ): int{
-    var fdfs :fd;
+class aa extends bb{
+    var kooft : pedarsag;
+    var a : aa;
+    var b : cc ;
+    var ali : int[];
+    def bb():int{
+    a = 2 +-----!(true) + -32 ;
+    a = 0;
+    a = a.length;
 
-    a = a > (a > 2);
-    salam = ff.length;
-    return a;
- }
+    a[10] = a == new MainClass() ;
+    writeln(new aa().ggg());
+    writeln(new aa().gggdfdff());
+    writeln(new aaaaaa().ggg());
+    writeln(this.ggg(10));
+    return new fsdfs().fds();
+    }
 }
-
-
 class bb extends cc{
- var aa : int[];
+    def ggg(x : int):int{
+        return 0;
+    }
 }
-class cc {}
-
-class fff extends cc{}
+class cc{
+    def xx():string{
+        return this.xx();
+    }
+}

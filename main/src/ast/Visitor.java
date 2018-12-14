@@ -5,11 +5,13 @@ import ast.node.declaration.*;
 import ast.node.expression.*;
 import ast.node.expression.Value.*;
 import ast.node.statement.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface Visitor {
 
-    HashMap<Integer, String> getErrors();
+    HashMap<Integer, ArrayList<String>> getErrors();
     void visit (Program program);
 
     //Declarations

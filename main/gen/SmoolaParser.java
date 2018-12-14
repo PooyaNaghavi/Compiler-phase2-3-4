@@ -215,11 +215,14 @@ public class SmoolaParser extends Parser {
 			          if(SymbolTable.has_error == false)
 			            syn_program.accept(visitor);
 			          else{
-			              HashMap<Integer, String> errors = visitor.getErrors();
+			              HashMap<Integer, ArrayList<String>> errors = visitor.getErrors();
 			              ArrayList<Integer> keys = new ArrayList(errors.keySet());
 			              Collections.sort(keys);
-			              for (Integer i : keys) {
-			                  System.out.println("Line:" + i + errors.get(i));
+			              for (Integer i : keys)
+			              {
+			                  ArrayList<String> error_temp = errors.get(i);
+			                  for(String error : error_temp)
+			                    System.out.println("Line:" + i + error);
 			              }
 			          }
 			        
@@ -2837,7 +2840,6 @@ public class SmoolaParser extends Parser {
 
 	public static class TypeContext extends ParserRuleContext {
 		public Type syn_type;
-		public Token khar;
 		public Token class_name;
 		public TerminalNode ID() { return getToken(SmoolaParser.ID, 0); }
 		public TypeContext(ParserRuleContext parent, int invokingState) {
@@ -2870,7 +2872,7 @@ public class SmoolaParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(421);
-				((TypeContext)_localctx).khar = match(T__6);
+				match(T__6);
 				((TypeContext)_localctx).syn_type =  new IntType(); 
 				}
 				break;
@@ -2909,7 +2911,7 @@ public class SmoolaParser extends Parser {
 				((TypeContext)_localctx).class_name = match(ID);
 
 				            ((TypeContext)_localctx).syn_type =  new UserDefinedType(new Identifier((((TypeContext)_localctx).class_name!=null?((TypeContext)_localctx).class_name.getText():null)));
-				         
+
 				        
 				}
 				break;
