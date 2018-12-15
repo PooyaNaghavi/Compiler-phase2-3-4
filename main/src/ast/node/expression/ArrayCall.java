@@ -10,6 +10,12 @@ public class ArrayCall extends Expression {
         this.instance = instance;
         this.index = index;
     }
+    public ArrayCall(Expression instance, Expression index, int line) {
+        this.instance = instance;
+        this.index = index;
+        this.line = line;
+    }
+
 
     public Expression getInstance() {
         return instance;

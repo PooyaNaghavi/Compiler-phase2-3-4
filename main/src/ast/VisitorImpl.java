@@ -39,6 +39,7 @@ public class VisitorImpl implements Visitor {
         if(errors.containsKey(key)){
             error_temp = errors.get(key);
             error_temp.add(error);
+            errors.put(key, error_temp);
         } else {
             error_temp = new ArrayList<String>();
             error_temp.add(error);
@@ -378,8 +379,10 @@ public class VisitorImpl implements Visitor {
         if (!SymbolTable.has_error) {
             print(assign.toString());
         }
-        assign.getlValue().accept(this);
-        assign.getrValue().accept(this);
+        if (!(assign.getlValue() == null || assign.getrValue() == null)) {
+            assign.getlValue().accept(this);
+            assign.getrValue().accept(this);
+        }
     }
 
     @Override
@@ -399,7 +402,8 @@ public class VisitorImpl implements Visitor {
         }
         conditional.getExpression().accept(this);
         conditional.getConsequenceBody().accept(this);
-        conditional.getAlternativeBody().accept(this);
+        if(conditional.getAlternativeBody() != null)
+            conditional.getAlternativeBody().accept(this);
     }
 
     @Override

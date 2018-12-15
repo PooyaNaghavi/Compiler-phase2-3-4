@@ -11,6 +11,11 @@ public class Assign extends Statement {
         this.lValue = lValue;
         this.rValue = rValue;
     }
+    public Assign(Expression lValue, Expression rValue, int line) {
+        this.lValue = lValue;
+        this.rValue = rValue;
+        this.line = line;
+    }
 
     public Expression getlValue() {
         return lValue;

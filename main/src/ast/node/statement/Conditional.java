@@ -13,6 +13,10 @@ public class Conditional extends Statement {
         this.consequenceBody = consequenceBody;
         this.alternativeBody = alternativeBody;
     }
+    public Conditional(Expression expression, Statement consequenceBody) {
+        this.expression = expression;
+        this.consequenceBody = consequenceBody;
+    }
 
     public Expression getExpression() {
         return expression;

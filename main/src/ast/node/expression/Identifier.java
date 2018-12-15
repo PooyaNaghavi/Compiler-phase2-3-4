@@ -12,6 +12,7 @@ public class Identifier extends Expression {
         this.name = name;
         this.line = line;
     }
+
     public String getName() {
         return name;
     }
