@@ -31,23 +31,46 @@ public class Visitor_path4 extends VisitorImpl{
         for (Integer i : keys)
         {
             ArrayList<String> error_temp = errors.get(i);
-            ArrayList<String> new_error_array = new ArrayList<>();
+            ArrayList<String> class_error_array = new ArrayList<>();
+            ArrayList<String> method_error_array = new ArrayList<>();
             ArrayList<String> deleted_array = new ArrayList<>();
             boolean flag = false;
             for(String error : error_temp)
             {
                 if(error.toLowerCase().contains("class".toLowerCase()))
                     if(error.toLowerCase().contains("is not declared".toLowerCase())) {
-                        new_error_array.add(error);
+                        class_error_array.add(error);
                     }
             }
-            for(String class_error : new_error_array) {
+            for(String error : error_temp)
+            {
+                if(error.toLowerCase().contains("method".toLowerCase()))
+                    if(error.toLowerCase().contains("is not declared".toLowerCase())) {
+                        method_error_array.add(error);
+                    }
+            }
+            for(String class_error : class_error_array) {
                 for (String error : error_temp) {
                     if (error.toLowerCase().contains("variable".toLowerCase())) {
                         if (error.toLowerCase().contains("is not declared".toLowerCase())) {
                             int class_index = class_error.indexOf("is not declared");
                             int variable_index = error.indexOf("is not declared");
                             String str1 = class_error.substring(6, class_index);
+                            String str2 = error.substring(9, variable_index);
+                            if(str1.equals(str2)) {
+                                deleted_array.add(error);
+                            }
+                        }
+                    }
+                }
+            }
+            for(String method_error : method_error_array) {
+                for (String error : error_temp) {
+                    if (error.toLowerCase().contains("variable".toLowerCase())) {
+                        if (error.toLowerCase().contains("is not declared".toLowerCase())) {
+                            int method_index = method_error.indexOf("is not declared");
+                            int variable_index = error.indexOf("is not declared");
+                            String str1 = method_error.substring(7, method_index);
                             String str2 = error.substring(9, variable_index);
                             if(str1.equals(str2)) {
                                 deleted_array.add(error);
@@ -256,8 +279,7 @@ public class Visitor_path4 extends VisitorImpl{
             ArrayList <Type> arg_types = new ArrayList<>();
             for (Expression arg_exp : ((MethodCall) expression).getArgs())
                 arg_types.add(get_type(arg_exp));
-            if(instance_exp_type instanceof UserDefinedType)
-            {
+            if(instance_exp_type instanceof UserDefinedType) {
                 if(identifier_type instanceof UserDefinedType || identifier_type instanceof NoType) {
                     while(true){
                         ArrayList<MethodDeclaration> methods = ((UserDefinedType) instance_exp_type).getClassDeclaration().getMethodDeclarations();
@@ -297,7 +319,8 @@ public class Visitor_path4 extends VisitorImpl{
                         }
                     }
                     SymbolTable.error = true;
-                    add_error(Integer.valueOf(expression.get_line_number()), ":there is no method named " + ((MethodCall) expression).getMethodName() + " in class " + ((UserDefinedType) instance_exp_type).getName().getName());
+                    add_error(Integer.valueOf(expression.get_line_number()), ":method " + ((MethodCall) expression).getMethodName().getName() +  " is not declared");
+                    add_error(Integer.valueOf(expression.get_line_number()), ":there is no method named " + ((MethodCall) expression).getMethodName().getName() + " in class " + ((UserDefinedType) instance_exp_type).getName().getName());
                     return new NoType();
                 } else {
                     SymbolTable.error = true;
@@ -333,7 +356,7 @@ public class Visitor_path4 extends VisitorImpl{
                 }
             }else {
                 SymbolTable.error = true;
-                add_error(Integer.valueOf(expression.get_line_number()), ":class " + ((NewClass) expression).getClassName().getName() +" is not declared" );
+                add_error(Integer.valueOf(expression.get_line_number()), ":class " + ((NewClass) expression).getClassName().getName() + " is not declared" );
                 //errors.put(Integer.valueOf(expression.get_line_number()), ":class " + ((NewClass) expression).getClassName().getName() +" is not declared" );
                 return new NoType();
             }
@@ -600,6 +623,11 @@ public class Visitor_path4 extends VisitorImpl{
         conditional.getConsequenceBody().accept(this);
         if( conditional.getAlternativeBody() != null)
             conditional.getAlternativeBody().accept(this);
+    }
+
+    @Override
+    public void visit(MethodCallInMain methodCallInMain) {
+        //TODO: implement appropriate visit functionality
     }
 
     @Override

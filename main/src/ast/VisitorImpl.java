@@ -49,6 +49,12 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public void visit(Program program) {
+        SymbolTableClassItem class_item = new SymbolTableClassItem("Object");
+        class_defined_declaration.add(new UserDefinedType(new Identifier("Object"), new ClassDeclaration(new Identifier("Object"))));
+        try {
+            SymbolTable.top.put(class_item);
+        }catch(ItemAlreadyExistsException e1){ }
+        
         flag = true;
         if (!SymbolTable.has_error) {
             print(program.toString());
@@ -404,6 +410,11 @@ public class VisitorImpl implements Visitor {
         conditional.getConsequenceBody().accept(this);
         if(conditional.getAlternativeBody() != null)
             conditional.getAlternativeBody().accept(this);
+    }
+
+    @Override
+    public void visit(MethodCallInMain methodCallInMain) {
+        //TODO: implement appropriate visit functionality
     }
 
     @Override

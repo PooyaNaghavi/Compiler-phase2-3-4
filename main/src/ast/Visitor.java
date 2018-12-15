@@ -37,6 +37,7 @@ public interface Visitor {
     void visit(Assign assign);
     void visit(Block block);
     void visit(Conditional conditional);
+    void visit(MethodCallInMain methodCallInMain);
     void visit(While loop);
     void visit(Write write);
 
