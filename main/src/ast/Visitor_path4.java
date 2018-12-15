@@ -25,6 +25,27 @@ public class Visitor_path4 extends VisitorImpl{
     public SymbolTable symbolTable_top;
     public String line_number;
 
+    public boolean check_sub_type(Type right, Type left) {
+        if (right instanceof UserDefinedType && left instanceof UserDefinedType) {
+            while(symbol_table_items.get(((UserDefinedType) right).getName().getName()).getPre() != null) {
+                for (String key : symbol_table_items.keySet()) {
+                    if (symbol_table_items.get(key) == symbol_table_items.get(((UserDefinedType) right).getName().getName()).getPre()) {
+                        if (key.equals(((UserDefinedType) left).getName().getName().toString())) {
+                            return true;
+                        } else {
+                            for (UserDefinedType class_defined : class_defined_declaration) {
+                                if (class_defined.getName().getName().equals(key) ){
+                                    right =  class_defined;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
     public void check_error(){
         ArrayList<Integer> keys = new ArrayList(errors.keySet());
         Collections.sort(keys);
@@ -129,11 +150,6 @@ public class Visitor_path4 extends VisitorImpl{
 
     public Type binary_subType(Type left_expression_type, Type right_expression_type, BinaryOperator op){
         if(op.equals(BinaryOperator.eq) || op.equals(BinaryOperator.neq)) {
-//            if(left_expression_type instanceof BooleanType || right_expression_type instanceof BooleanType){
-//                SymbolTable.error = true;
-//                add_error(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
-//                //errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
-//                return new NoType();
             if(!((left_expression_type instanceof  NoType || right_expression_type instanceof NoType) ||
                     ((left_expression_type.toString().equals(right_expression_type.toString())) &&
                     (left_expression_type instanceof IntType || left_expression_type instanceof ArrayType ||
@@ -213,7 +229,6 @@ public class Visitor_path4 extends VisitorImpl{
                 return new NoType();
         }
         if(expression instanceof BinaryExpression){
-
             Type left_type = get_type(((BinaryExpression) expression).getLeft());
             Type right_type = get_type(((BinaryExpression) expression).getRight());
             BinaryOperator op = ((BinaryExpression) expression).getBinaryOperator();
@@ -591,7 +606,7 @@ public class Visitor_path4 extends VisitorImpl{
                     SymbolTable.error = true;
                     add_error(Integer.valueOf(assign.get_line_number()), ":left side of assignment must be a valid lvalue");
                 }
-            } else if (!(right_type instanceof NoType || right_type.toString().equals(left_type.toString()))) {
+            } else if (!(right_type instanceof NoType || right_type.toString().equals(left_type.toString()) || check_sub_type(right_type, left_type))) {
                 SymbolTable.error = true;
                 add_error(Integer.valueOf(assign.get_line_number()), ":left side of assignment must be a valid lvalue");
             }

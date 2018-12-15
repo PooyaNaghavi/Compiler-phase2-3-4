@@ -8,7 +8,9 @@ class MainClass{
 
 }
 class aa extends bb{
-    var kooft : pedarsag;
+    var man : aa;
+    var kooft : Object;
+    var dard : bb;
     var a : aa;
     var b : cc ;
     var c : int;
@@ -16,6 +18,11 @@ class aa extends bb{
     var mili : int[];
     var salam : boolean;
     def bb():int{
+        if(man == a) then
+            c = 2;
+        if(kooft == dard) then
+            c = 2;
+        man = dard;
         writeln(this.bb());
         writeln(a.bb());
         a = 2 +-----!(true) + -32 ;
@@ -44,9 +51,9 @@ class aa extends bb{
     }
 }
 class bb extends cc{
-    var sag : cc;
-    def ggg(x : int):int{
-        return khar;
+    var sag : bb;
+    def ggg(x : int):cc{
+        return sag;
     }
 }
 class cc{

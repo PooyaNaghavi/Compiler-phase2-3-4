@@ -51,10 +51,12 @@ public class VisitorImpl implements Visitor {
     public void visit(Program program) {
         SymbolTableClassItem class_item = new SymbolTableClassItem("Object");
         class_defined_declaration.add(new UserDefinedType(new Identifier("Object"), new ClassDeclaration(new Identifier("Object"))));
+        user_defined_declaration.add(new UserDefinedType(new Identifier("Object"), new ClassDeclaration(new Identifier("Object"))));
+        symbol_table_items.put("Object", SymbolTable.top);
         try {
             SymbolTable.top.put(class_item);
         }catch(ItemAlreadyExistsException e1){ }
-        
+
         flag = true;
         if (!SymbolTable.has_error) {
             print(program.toString());
@@ -103,6 +105,8 @@ public class VisitorImpl implements Visitor {
                 symbol_table_items.get(class_name).setPre(symbol_table_items.get(parent_class_name));
                 // print(symbol_table_items.get(parent_class_name));
                 // print(symbol_table_items.get(class_name).getPre().getInCurrentScope("#Variable_x").getKey());
+            }else{
+                symbol_table_items.get(class_name).setPre(symbol_table_items.get("Object"));
             }
         } else if (!SymbolTable.path3_error) {
             // SymbolTable new_symbol_table;
@@ -267,8 +271,17 @@ public class VisitorImpl implements Visitor {
             //SymbolTable.push(current_var);
         }else if(!SymbolTable.path2_error){
 //
-            if(var_type instanceof UserDefinedType)
-                user_defined_declaration.add((UserDefinedType)var_type);
+            if(var_type instanceof UserDefinedType) {
+                user_defined_declaration.add((UserDefinedType) var_type);
+                if(((UserDefinedType) var_type).getName().getName().equals("Object")){
+                    for(UserDefinedType user_defined_type : user_defined_declaration){
+                        if(user_defined_type.getName().getName().equals("Object")){
+                            user_defined_type.setClassDeclaration(new ClassDeclaration(new Identifier("Object")));
+                        }
+                    }
+                }
+            }
+
         }
         varDeclaration.getIdentifier().accept(this);
         // SymbolTable.pop();
