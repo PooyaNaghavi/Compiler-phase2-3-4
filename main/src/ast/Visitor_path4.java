@@ -686,8 +686,10 @@ public class Visitor_path4 extends VisitorImpl{
 
             assign.getlValue().accept(this);
             assign.getrValue().accept(this);
-        }else {
-            if(me)
+        } else if (assign.getrValue() instanceof MethodCall) {
+                Type right_type = get_type(assign.getrValue());
+                assign.getrValue().accept(this);
+        } else {
             SymbolTable.error = true;
             add_error(Integer.valueOf(assign.get_line_number()), ":left side of assignment must be a valid lvalue");
         }

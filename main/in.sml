@@ -12,6 +12,7 @@ class aa extends bb{
     var man : aa;
     var kooft : Object;
     var dard : bb;
+
     var a : aa;
     var b : cc ;
     var c : int;
@@ -23,6 +24,7 @@ class aa extends bb{
         #(ali=mili)[2] = 5;
         if(man == a) then
             c = 2;
+        new aa().ggg(2);
         if(kooft == dard) then
             c = 2;
         man = dard;
@@ -58,7 +60,7 @@ class aa extends bb{
 class bb extends cc{
     var sag : cc;
     var goh : int;
-    def ggg(x : bb):faskjflk{
+    def ggg(x : int):faskjflk{
         return fksaja;
     }
 }
