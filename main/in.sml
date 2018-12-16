@@ -22,8 +22,9 @@ class aa extends bb{
     def bb():int{
         new a().b();
         (ali=mili)[2] = 2;
-        x = new aa().ggg(assfa);
-        x = new aa().pedarr();
+        #TODO: this is error
+        #TODO: Method Call should be improved
+        x = new aa().ggg(2, asf);
         ali[2] = 5;
         c = (ali==mili)[2];
         if(man == a) then
@@ -63,7 +64,7 @@ class aa extends bb{
 class bb extends cc{
     var sag : cc;
     var goh : int;
-    def ggg(x : aa):int{
+    def ggg(x : asfs, f : int):int{
         return fksaja;
     }
 }

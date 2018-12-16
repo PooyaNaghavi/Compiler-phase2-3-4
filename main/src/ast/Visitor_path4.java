@@ -334,6 +334,7 @@ public class Visitor_path4 extends VisitorImpl{
                                     arg_flag = true;
                                     for (int i = 0; i < arg_types.size(); i++) {
                                         come_in = false;
+                                        //TODO: if Arguman is not delclared become NoTYPE INSTEAD OF flag
                                         if (method_args.get(i) instanceof UserDefinedType) {
                                             for (UserDefinedType class_defined : class_defined_declaration) {
                                                 if (class_defined.getName().getName().equals(((UserDefinedType) method_args.get(i)).getName().getName())) {
