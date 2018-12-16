@@ -1,7 +1,7 @@
 class MainClass{
  def main(): int{
     writeln(a.main());
-    new a().b();
+    new har().ggg(new aa());
     2*3;
     return 0;
  }
@@ -20,11 +20,14 @@ class aa extends bb{
     var mili : int[];
     var salam : boolean;
     def bb():int{
+        new a().b();
+        (ali=mili)[2] = 2;
+        x = new aa().ggg(assfa);
+        x = new aa().pedarr();
         ali[2] = 5;
-        #(ali=mili)[2] = 5;
+        c = (ali==mili)[2];
         if(man == a) then
             c = 2;
-        new aa().ggg(2);
         if(kooft == dard) then
             c = 2;
         man = dard;
@@ -52,7 +55,7 @@ class aa extends bb{
         writeln(new aa().ggg());
         writeln(new aa().gggdfdff());
         writeln(this.koo());
-        writeln(this.ggg(b));
+        writeln(this.ggg(a));
         return "string";
         #return new fsdfs().fds();
     }
@@ -60,7 +63,7 @@ class aa extends bb{
 class bb extends cc{
     var sag : cc;
     var goh : int;
-    def ggg(x : int):faskjflk{
+    def ggg(x : aa):int{
         return fksaja;
     }
 }

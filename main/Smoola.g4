@@ -98,8 +98,10 @@ grammar Smoola;
                 $syn_expression_assign = new Assign(null, $exp_assign.syn_expression_assignment, $exp_assign.line);
             }
         }
-        else
+        else {
             $syn_expression_assign = new Assign($exp_assign.syn_assign_left, $exp_assign.syn_assign_right, $exp_assign.line);
+            $syn_expression = $exp_assign.syn_expression_assignment;
+         }
       }
 	  ;
 
@@ -247,7 +249,6 @@ grammar Smoola;
           }
           $syn_expression_cmp_temp.set_line_num($op_cmp.getLine());
           global_line = $op_cmp.getLine();
-
       }
   	  |
 
@@ -346,8 +347,9 @@ grammar Smoola;
       {
         if($exp_mem_temp.syn_expression_mem_temp == null)
             $syn_expression_mem = $exp_method.syn_expression_method;
-        else
+        else{
             $syn_expression_mem = new ArrayCall($exp_method.syn_expression_method, $exp_mem_temp.syn_expression_mem_temp, $exp_mem_temp.line);
+           }
       }
   	;
 
@@ -365,8 +367,9 @@ grammar Smoola;
         {
           if($exp_method_temp.syn_expression_method_temp == null)
             $syn_expression_method = $exp_other.syn_expression_other;
-          else
+          else{
             $syn_expression_method = $exp_method_temp.syn_expression_method_temp;
+           }
         }
   	;
 

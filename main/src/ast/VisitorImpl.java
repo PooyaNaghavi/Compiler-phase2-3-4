@@ -202,7 +202,7 @@ public class VisitorImpl implements Visitor {
                 }
             }
         }
-        if(classDeclaration.getName().getName().equals(class_defined_declaration.get(1))){
+        if(classDeclaration.getName().getName().equals(class_defined_declaration.get(1).getName().getName())){
             main_class_flag = true;
         }
         classDeclaration.getName().accept(this);

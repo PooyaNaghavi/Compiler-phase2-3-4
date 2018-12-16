@@ -315,8 +315,10 @@ public class Visitor_path4 extends VisitorImpl{
         }
         if(expression instanceof MethodCall) {
             boolean arg_flag = false;
+            boolean come_in = false;
             Type instance_exp_type_prev;
             Type instance_exp_type = get_type(((MethodCall) expression).getInstance());
+            Type first_instance_exp = instance_exp_type;
             Type identifier_type = get_type(((MethodCall) expression).getMethodName());
             ArrayList <Type> arg_types = new ArrayList<>();
             for (Expression arg_exp : ((MethodCall) expression).getArgs())
@@ -331,21 +333,39 @@ public class Visitor_path4 extends VisitorImpl{
                                 if (arg_types.size() == method_args.size()) {
                                     arg_flag = true;
                                     for (int i = 0; i < arg_types.size(); i++) {
-                                        if(!(method_args.get(i).toString().equals(arg_types.get(i).toString()) || check_sub_type(method_args.get(i), arg_types.get(i)))) {
-                                            arg_flag = false;
+                                        come_in = false;
+                                        if (method_args.get(i) instanceof UserDefinedType) {
+                                            for (UserDefinedType class_defined : class_defined_declaration) {
+                                                if (class_defined.getName().getName().equals(((UserDefinedType) method_args.get(i)).getName().getName())) {
+                                                    come_in = true;
+                                                    if(!(class_defined.getName().getName().toString().equals(arg_types.get(i).toString()) || check_sub_type(method_args.get(i), arg_types.get(i)) || arg_types.get(i) instanceof NoType)) {
+                                                        arg_flag = false;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }else{
+                                            come_in = true;
+                                            if(!(method_args.get(i).toString().equals(arg_types.get(i).toString()) || arg_types.get(i) instanceof NoType)) {
+                                                arg_flag = false;
+                                            }
+                                        }
+                                        if(come_in == false && arg_types.get(i) instanceof NoType){
+                                            come_in = true;
                                         }
                                     }
                                 }
-                                if(arg_flag == true){
+                                if(arg_flag == true && come_in == true){
                                     Type return_type = method.getReturnType();
                                     if (return_type instanceof UserDefinedType) {
                                         for (UserDefinedType class_defined : class_defined_declaration) {
                                             if (class_defined.getName().getName().equals(((UserDefinedType) return_type).getName().getName())) {
                                                 return_type = class_defined;
+                                                return return_type;
                                             }
                                         }
                                     }
-                                    return return_type;
+                                    return new NoType();
                                 }
                             }
                         }
@@ -366,7 +386,7 @@ public class Visitor_path4 extends VisitorImpl{
                     }
                     SymbolTable.error = true;
                     add_error(Integer.valueOf(expression.get_line_number()), "classNoType " + ((MethodCall) expression).getMethodName().getName());
-                    add_error(Integer.valueOf(expression.get_line_number()), ":there is no method named " + ((MethodCall) expression).getMethodName().getName() + " in class " + ((UserDefinedType) instance_exp_type).getName().getName());
+                    add_error(Integer.valueOf(expression.get_line_number()), ":there is no method named " + ((MethodCall) expression).getMethodName().getName() + " in class " + ((UserDefinedType) first_instance_exp).getName().getName());
                     return new NoType();
                 }else{
                     SymbolTable.error = true;
@@ -379,7 +399,6 @@ public class Visitor_path4 extends VisitorImpl{
                     add_error(Integer.valueOf(expression.get_line_number()), ":there is no class type for method call");
                     return new NoType();
                 }else{
-                    //TODO :
                     SymbolTable.error = true;
                     if(!(((MethodCall) expression).getInstance() instanceof NewClass)) {
                         String str = ((MethodCall) expression).getInstance().toString().replace("Identifier ", "");
@@ -479,6 +498,9 @@ public class Visitor_path4 extends VisitorImpl{
                 add_error(Integer.valueOf(classDeclaration.get_line_number()), ":main class should have one method");
             }
         }
+        if(classDeclaration.getName().getName().equals(class_defined_declaration.get(1).getName().getName())){
+            main_class_flag = true;
+        }
         classDeclaration.getName().accept(this);
 
         if(classDeclaration.getParentName() != null) {
@@ -503,6 +525,7 @@ public class Visitor_path4 extends VisitorImpl{
         for(MethodDeclaration methodDec : classDeclaration.getMethodDeclarations()) {
             methodDec.accept(this);
         }
+        main_class_flag = false;
         SymbolTable.pop();
     }
 
@@ -687,8 +710,13 @@ public class Visitor_path4 extends VisitorImpl{
             assign.getlValue().accept(this);
             assign.getrValue().accept(this);
         } else if (assign.getrValue() instanceof MethodCall) {
+            if( main_class_flag == true) {
                 Type right_type = get_type(assign.getrValue());
                 assign.getrValue().accept(this);
+            }else {
+                SymbolTable.error = true;
+                add_error(Integer.valueOf(assign.get_line_number()), ":invalid statement out of main method");
+            }
         } else {
             SymbolTable.error = true;
             add_error(Integer.valueOf(assign.get_line_number()), ":left side of assignment must be a valid lvalue");
