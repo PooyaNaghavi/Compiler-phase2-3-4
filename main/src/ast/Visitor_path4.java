@@ -18,14 +18,16 @@ import ast.node.expression.Value.StringValue;
 import ast.node.statement.*;
 import symbolTable.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Visitor_path4 extends VisitorImpl{
     public SymbolTable symbolTable_top;
     public String line_number;
 
-    public boolean check_sub_type(Type right, Type left) {
+    static public boolean check_sub_type(Type left, Type right) {
         if (right instanceof UserDefinedType && left instanceof UserDefinedType) {
             while(symbol_table_items.get(((UserDefinedType) right).getName().getName()).getPre() != null) {
                 for (String key : symbol_table_items.keySet()) {
@@ -55,20 +57,29 @@ public class Visitor_path4 extends VisitorImpl{
             ArrayList<String> class_error_array = new ArrayList<>();
             ArrayList<String> method_error_array = new ArrayList<>();
             ArrayList<String> deleted_array = new ArrayList<>();
+            ArrayList<String> deleted_variable = new ArrayList<>();
             boolean flag = false;
             for(String error : error_temp)
             {
-                if(error.toLowerCase().contains("class".toLowerCase()))
-                    if(error.toLowerCase().contains("is not declared".toLowerCase())) {
+                if(error.toLowerCase().contains("class".toLowerCase())) {
+                    if (error.toLowerCase().contains("is not declared".toLowerCase())) {
                         class_error_array.add(error);
                     }
+                }
+                if(error.toLowerCase().contains("classNoType".toLowerCase())){
+                    deleted_array.add(error);
+                    deleted_variable.add(error);
+
+                }
+
             }
             for(String error : error_temp)
             {
-                if(error.toLowerCase().contains("method".toLowerCase()))
-                    if(error.toLowerCase().contains("is not declared".toLowerCase())) {
+                if(error.toLowerCase().contains("method".toLowerCase())) {
+                    if (error.toLowerCase().contains("is not declared".toLowerCase())) {
                         method_error_array.add(error);
                     }
+                }
             }
             for(String class_error : class_error_array) {
                 for (String error : error_temp) {
@@ -94,6 +105,21 @@ public class Visitor_path4 extends VisitorImpl{
                             String str1 = method_error.substring(7, method_index);
                             String str2 = error.substring(9, variable_index);
                             if(str1.equals(str2)) {
+                                deleted_array.add(error);
+                            }
+                        }
+                    }
+                }
+            }
+            for(String deleted_method : deleted_variable){
+                for (String error : error_temp) {
+                    if (error.toLowerCase().contains("variable".toLowerCase())) {
+                        if (error.toLowerCase().contains("is not declared".toLowerCase())) {
+                            int variable_index = error.indexOf("is not declared");
+                            int deleted_method_index = deleted_method.indexOf("classNoType");
+                            String str1 = deleted_method.substring(12);
+                            String str2 = error.substring(10, variable_index-1);
+                            if(str1.equals(str2)){
                                 deleted_array.add(error);
                             }
                         }
@@ -288,7 +314,8 @@ public class Visitor_path4 extends VisitorImpl{
             }
         }
         if(expression instanceof MethodCall) {
-            boolean arg_flag = true;
+            boolean arg_flag = false;
+            Type instance_exp_type_prev;
             Type instance_exp_type = get_type(((MethodCall) expression).getInstance());
             Type identifier_type = get_type(((MethodCall) expression).getMethodName());
             ArrayList <Type> arg_types = new ArrayList<>();
@@ -304,7 +331,7 @@ public class Visitor_path4 extends VisitorImpl{
                                 if (arg_types.size() == method_args.size()) {
                                     arg_flag = true;
                                     for (int i = 0; i < arg_types.size(); i++) {
-                                        if(!(method_args.get(i).toString().equals(arg_types.get(i).toString()))) {
+                                        if(!(method_args.get(i).toString().equals(arg_types.get(i).toString()) || check_sub_type(method_args.get(i), arg_types.get(i)))) {
                                             arg_flag = false;
                                         }
                                     }
@@ -322,6 +349,7 @@ public class Visitor_path4 extends VisitorImpl{
                                 }
                             }
                         }
+                        instance_exp_type_prev = instance_exp_type;
                         if(((UserDefinedType) instance_exp_type).getClassDeclaration().getParentName() != null) {
                             for (UserDefinedType class_defined : class_defined_declaration) {
                                 if (class_defined.getName().getName().equals(((UserDefinedType) instance_exp_type).getClassDeclaration().getParentName().getName())) {
@@ -329,23 +357,37 @@ public class Visitor_path4 extends VisitorImpl{
                                     break;
                                 }
                             }
+                            if(((UserDefinedType) instance_exp_type).getName().getName().equals(((UserDefinedType) instance_exp_type_prev).getName().getName())){
+                                break;
+                            }
                         }else{
                             break;
                         }
                     }
                     SymbolTable.error = true;
-                    add_error(Integer.valueOf(expression.get_line_number()), ":method " + ((MethodCall) expression).getMethodName().getName() +  " is not declared");
+                    add_error(Integer.valueOf(expression.get_line_number()), "classNoType " + ((MethodCall) expression).getMethodName().getName());
                     add_error(Integer.valueOf(expression.get_line_number()), ":there is no method named " + ((MethodCall) expression).getMethodName().getName() + " in class " + ((UserDefinedType) instance_exp_type).getName().getName());
                     return new NoType();
-                } else {
+                }else{
                     SymbolTable.error = true;
                     add_error(Integer.valueOf(expression.get_line_number()), ":there is no class type for method call");
                     return new NoType();
                 }
             }else{
-                SymbolTable.error = true;
-                add_error(Integer.valueOf(expression.get_line_number()), ":there is no class type for method call");
-                return new NoType();
+                if(!(instance_exp_type instanceof NoType)) {
+                    SymbolTable.error = true;
+                    add_error(Integer.valueOf(expression.get_line_number()), ":there is no class type for method call");
+                    return new NoType();
+                }else{
+                    //TODO :
+                    SymbolTable.error = true;
+                    if(!(((MethodCall) expression).getInstance() instanceof NewClass)) {
+                        String str = ((MethodCall) expression).getInstance().toString().replace("Identifier ", "");
+                        add_error(Integer.valueOf(expression.get_line_number()), ":class " + str + " is not declared");
+                    }
+                    add_error(Integer.valueOf(expression.get_line_number()), "classNoType " + ((MethodCall) expression).getMethodName().getName());
+                    return new NoType();
+                }
             }
         }
         if(expression instanceof NewArray) {
@@ -424,10 +466,32 @@ public class Visitor_path4 extends VisitorImpl{
     @Override
     public void visit(ClassDeclaration classDeclaration) {
         String className = classDeclaration.getName().getName();
-
+        if(className.equals(class_defined_declaration.get(1).getName().getName())){
+            ArrayList <MethodDeclaration> methods = classDeclaration.getMethodDeclarations();
+            if(methods.size() == 1){
+                if(!(methods.get(0).getName().getName().equals("main"))){
+                    SymbolTable.error = true;
+                    add_error(Integer.valueOf(classDeclaration.get_line_number()), ":method name of main class should be \"main\"");
+                }
+            }else
+            {
+                SymbolTable.error = true;
+                add_error(Integer.valueOf(classDeclaration.get_line_number()), ":main class should have one method");
+            }
+        }
         classDeclaration.getName().accept(this);
 
         if(classDeclaration.getParentName() != null) {
+            boolean unDefined_class = false;
+            for (UserDefinedType class_dec : class_defined_declaration){
+                if(class_dec.getName().getName().equals(classDeclaration.getParentName().getName())){
+                    unDefined_class = true;
+                }
+            }
+            if(unDefined_class == false){
+                SymbolTable.error = true;
+                add_error(Integer.valueOf(classDeclaration.get_line_number()), ":class " + classDeclaration.getParentName().getName() + " is not declared");
+            }
             classDeclaration.getParentName().accept(this);
         }
         SymbolTable.push(symbol_table_items.get(className));
@@ -449,20 +513,29 @@ public class Visitor_path4 extends VisitorImpl{
         currentMethod.setPre(top);
         SymbolTable.push(currentMethod);
 
+        boolean flag = false;
         Type return_value_type = get_type(methodDeclaration.getReturnValue());
         Type return_type = methodDeclaration.getReturnType();
         if(return_type instanceof UserDefinedType) {
             for (UserDefinedType class_defined : class_defined_declaration) {
                 if (class_defined.getName().getName().equals(((UserDefinedType) return_type).getName().getName())) {
+                    flag = true;
                     return_type = class_defined;
                 }
             }
-        }
-        if(!(return_type instanceof NoType)){
-           if(!(return_type.toString().equals(return_value_type.toString()))){
+            if(flag == false){
                 SymbolTable.error = true;
-                add_error(Integer.valueOf(methodDeclaration.get_line_number()), ":" + methodDeclaration.getName().getName() + " return type must be " + return_type.toString());
-           }
+                add_error(Integer.valueOf(methodDeclaration.get_line_number()), ":class " + ((UserDefinedType) return_type).getName().getName() + " is not declared");
+                return_type = new NoType();
+            }
+        }
+        if(!(return_value_type instanceof NoType && return_type instanceof NoType)) {
+            if (!(return_value_type instanceof NoType)) {
+                if (!(return_type.toString().equals(return_value_type.toString()) || check_sub_type(return_type, return_value_type))) {
+                    SymbolTable.error = true;
+                    add_error(Integer.valueOf(methodDeclaration.get_line_number()), ":" + methodDeclaration.getName().getName() + " return type must be " + return_type.toString());
+                }
+            }
         }
         for(VarDeclaration argDec : methodDeclaration.getArgs()) {
             argDec.accept(this);
@@ -490,7 +563,7 @@ public class Visitor_path4 extends VisitorImpl{
             } catch (ItemNotFoundException e) {
 
                 SymbolTable.error = true;
-                add_error(Integer.valueOf(varDeclaration.get_line_number()), ":variable " + ((UserDefinedType) varDeclaration.getType()).getName().getName() + " is not declared");
+                add_error(Integer.valueOf(varDeclaration.get_line_number()), ":class " + ((UserDefinedType) varDeclaration.getType()).getName().getName() + " is not declared");
                 //errors.put(Integer.valueOf(varDeclaration.get_line_number()), ":variable " + ((UserDefinedType) varDeclaration.getType()).getName().getName() + " is not declared");
             }
         }
@@ -606,7 +679,7 @@ public class Visitor_path4 extends VisitorImpl{
                     SymbolTable.error = true;
                     add_error(Integer.valueOf(assign.get_line_number()), ":left side of assignment must be a valid lvalue");
                 }
-            } else if (!(right_type instanceof NoType || right_type.toString().equals(left_type.toString()) || check_sub_type(right_type, left_type))) {
+            } else if (!(right_type instanceof NoType || right_type.toString().equals(left_type.toString()) || check_sub_type(left_type, right_type))) {
                 SymbolTable.error = true;
                 add_error(Integer.valueOf(assign.get_line_number()), ":left side of assignment must be a valid lvalue");
             }
@@ -614,6 +687,7 @@ public class Visitor_path4 extends VisitorImpl{
             assign.getlValue().accept(this);
             assign.getrValue().accept(this);
         }else {
+            if(me)
             SymbolTable.error = true;
             add_error(Integer.valueOf(assign.get_line_number()), ":left side of assignment must be a valid lvalue");
         }

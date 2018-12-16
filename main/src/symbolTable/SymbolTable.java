@@ -15,6 +15,7 @@ public class SymbolTable {
 	public static boolean path4_error;
 	public static boolean has_error;
 	public static boolean error;
+	public static boolean circular_inheritance;
 
 	public static SymbolTable top;
 

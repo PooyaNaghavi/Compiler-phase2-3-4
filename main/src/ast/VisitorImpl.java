@@ -21,6 +21,7 @@ public class VisitorImpl implements Visitor {
     public int index;
     public int name_index;
     public boolean flag;
+    public boolean main_class_flag = false;
     static HashMap<String, SymbolTable> symbol_table_items = new HashMap<>();
     static HashMap<Integer, ArrayList<String>> errors = new HashMap<>();
     public static ArrayList<UserDefinedType> user_defined_declaration = new ArrayList<>();
@@ -47,23 +48,53 @@ public class VisitorImpl implements Visitor {
         }
     }
 
+    public boolean check_circular_inheritance(){
+        int counter = 0;
+        for(UserDefinedType class_type : class_defined_declaration){
+            counter = 0;
+            SymbolTable class_symbol_table = symbol_table_items.get(class_type.getName().getName());
+            while(class_symbol_table.getPre() != null && counter < 1000){
+                counter += 1;
+                for ( String key : symbol_table_items.keySet() ) {
+                    if(symbol_table_items.get(key) == class_symbol_table.getPre()){
+                        if(class_type.getName().getName().equals(key)){
+                            return true;
+                        }
+                    }
+                }
+                class_symbol_table = class_symbol_table.getPre();
+            }
+        }
+        return false;
+    }
+
     @Override
     public void visit(Program program) {
+        SymbolTable.circular_inheritance = false;
         SymbolTableClassItem class_item = new SymbolTableClassItem("Object");
         class_defined_declaration.add(new UserDefinedType(new Identifier("Object"), new ClassDeclaration(new Identifier("Object"))));
         user_defined_declaration.add(new UserDefinedType(new Identifier("Object"), new ClassDeclaration(new Identifier("Object"))));
         symbol_table_items.put("Object", SymbolTable.top);
-        try {
-            SymbolTable.top.put(class_item);
-        }catch(ItemAlreadyExistsException e1){ }
-
-        flag = true;
-        if (!SymbolTable.has_error) {
-            print(program.toString());
+        if(!SymbolTable.path3_error){
+            SymbolTable.circular_inheritance = check_circular_inheritance();
+            if(SymbolTable.circular_inheritance == true){
+                SymbolTable.error = true;
+                add_error(0, ":Circular Inheritance");
+            }
         }
-        program.getMainClass().accept(this);
-        for (ClassDeclaration classDec : program.getClasses()) {
-            classDec.accept(this);
+        if(SymbolTable.circular_inheritance == false) {
+            try {
+                SymbolTable.top.put(class_item);
+            } catch (ItemAlreadyExistsException e1) { }
+
+            flag = true;
+            if (!SymbolTable.has_error) {
+                print(program.toString());
+            }
+            program.getMainClass().accept(this);
+            for (ClassDeclaration classDec : program.getClasses()) {
+                classDec.accept(this);
+            }
         }
     }
 
@@ -171,6 +202,9 @@ public class VisitorImpl implements Visitor {
                 }
             }
         }
+        if(classDeclaration.getName().getName().equals(class_defined_declaration.get(1))){
+            main_class_flag = true;
+        }
         classDeclaration.getName().accept(this);
         if (classDeclaration.getParentName() != null) {
             classDeclaration.getParentName().accept(this);
@@ -183,6 +217,7 @@ public class VisitorImpl implements Visitor {
         for (MethodDeclaration methodDec : classDeclaration.getMethodDeclarations()) {
             methodDec.accept(this);
         }
+        main_class_flag = false;
         if (!SymbolTable.path1_error) {
             if(new_class_name == null)
                 new_class_name = class_name;
@@ -220,6 +255,9 @@ public class VisitorImpl implements Visitor {
                 SymbolTable.error = true;
             }
             SymbolTable.push(current_method);
+        }
+        if(methodDeclaration.getName().getName().equals("main") && main_class_flag == true){
+            //TODO
         }
         methodDeclaration.getName().accept(this);
 

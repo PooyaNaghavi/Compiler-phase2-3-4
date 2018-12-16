@@ -20,51 +20,11 @@ grammar Smoola;
 @members{
     int global_line = 0;
 }
-    program:
-        main_class = mainClass {Program syn_program = new Program(); syn_program.setMainClass($main_class.syn_main_class); }
+    program returns[Program p]:
+        main_class = mainClass {Program syn_program = new Program(); syn_program.setMainClass($main_class.syn_main_class);}
         (class_dec = classDeclaration {syn_program.addClass($class_dec.syn_class_declaration); })*
-        {
-          SymbolTable.push(new SymbolTable());
-          SymbolTable.error = false;
-          SymbolTable.has_error = true;
-          SymbolTable.path1_error = false;
-          SymbolTable.path2_error = true;
-          SymbolTable.path3_error = true;
-          SymbolTable.path4_error = true;
-        }
-        EOF
-        {
-          Visitor visitor = new VisitorImpl();
-          syn_program.accept(visitor);
-          SymbolTable.path1_error = true;
-          SymbolTable.path2_error = false;
-          syn_program.accept(visitor);
-          SymbolTable.path2_error = true;
-          SymbolTable.path3_error = false;
-          syn_program.accept(visitor);
-          SymbolTable.path3_error = true;
-          SymbolTable.path4_error = false;
-          //syn_program.accept(visitor);
-          Visitor_path4 path4 = new Visitor_path4();
-          syn_program.accept(path4);
-          SymbolTable.path4_error = true;
-          if(SymbolTable.error == false){
-              SymbolTable.has_error = false;
-          }
-          if(SymbolTable.has_error == false)
-            syn_program.accept(visitor);
-          else{
-              HashMap<Integer, ArrayList<String>> errors = visitor.getErrors();
-              ArrayList<Integer> keys = new ArrayList(errors.keySet());
-              Collections.sort(keys);
-              for (Integer i : keys)
-              {
-                  ArrayList<String> error_temp = errors.get(i);
-                  for(String error : error_temp)
-                    System.out.println("Line:" + i + error);
-              }
-          }
-        }
+        { $p = syn_program; }
+        EOF { }
     ;
     mainClass returns[ClassDeclaration syn_main_class]:
         // name should be checked later
@@ -124,16 +84,17 @@ grammar Smoola;
     statementAssignment returns[Assign syn_statement_assign]:
         exp = expression
         {
-             $syn_statement_assign = $exp.syn_expression_assign;
+            $syn_statement_assign = $exp.syn_expression_assign;
         } ';'
     ;
     expression returns[Assign syn_expression_assign, Expression syn_expression]:
 
 	  exp_assign = expressionAssignment
       {
+
         if($exp_assign.syn_assign_right == null){
             $syn_expression = $exp_assign.syn_expression_assignment;
-            if($syn_expression instanceof BinaryExpression){
+            if($syn_expression instanceof BinaryExpression || $syn_expression instanceof MethodCall){
                 $syn_expression_assign = new Assign(null, $exp_assign.syn_expression_assignment, $exp_assign.line);
             }
         }
@@ -427,8 +388,8 @@ grammar Smoola;
         {$syn_expression_other = new StringValue($const_str.text, new StringType()); $syn_expression_other.set_line_num($const_str.getLine()); }
         |   const_str = 'new ' 'int' '[' const_num = CONST_NUM ']'
         {$syn_expression_other = new NewArray($const_num.int); $syn_expression_other.set_line_num($const_num.getLine());}
-        |   'new ' class_name = ID '(' ')'
-        {$syn_expression_other = new NewClass(new Identifier($class_name.text, $class_name.getLine())); $syn_expression_other.set_line_num($class_name.getLine());}
+        |   new_id = 'new ' class_name = ID '(' ')'
+        {$syn_expression_other = new NewClass(new Identifier($class_name.text, $class_name.getLine())); $syn_expression_other.set_line_num($class_name.getLine()); global_line = $new_id.getLine();}
         |   pointer_str = 'this'
         {$syn_expression_other = new This(); $syn_expression_other.set_line_num($pointer_str.getLine());}
         |   bool_str = 'true'
