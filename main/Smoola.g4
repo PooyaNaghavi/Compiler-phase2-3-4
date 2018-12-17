@@ -28,11 +28,11 @@ grammar Smoola;
     ;
     mainClass returns[ClassDeclaration syn_main_class]:
         // name should be checked later
-        'class' class_name = ID {ClassDeclaration main_class = new ClassDeclaration(new Identifier($class_name.text, $class_name.getLine())); main_class.set_line_num($class_name.getLine());}
+        class_index = 'class' class_name = ID {ClassDeclaration main_class = new ClassDeclaration(new Identifier($class_name.text, $class_name.getLine())); main_class.set_line_num($class_name.getLine());}
         '{' 'def' method_name = ID '(' ')' ':' 'int' {MethodDeclaration method_dec = new MethodDeclaration(new Identifier($method_name.text, $method_name.getLine())); method_dec.set_line_num($method_name.getLine());}
         {method_dec.setReturnType(new IntType()); }
         '{'  stms = statements {method_dec.addStatements($stms.syn_statements); }
-        return_name = 'return' return_exp = expression {method_dec.setReturnValue($return_exp.syn_expression); method_dec.set_line_num($return_name.getLine());} ';' '}' '}'
+        return_name = 'return' return_exp = expression {method_dec.setReturnValue($return_exp.syn_expression); method_dec.set_line_num($class_index.getLine());} ';' '}' '}'
         {main_class.addMethodDeclaration(method_dec); $syn_main_class = main_class;}
     ;
     classDeclaration returns[ClassDeclaration syn_class_declaration]:
@@ -45,14 +45,14 @@ grammar Smoola;
         'var' var_name = ID ':' var_type = type ';' {$syn_var_declaration = new VarDeclaration(new Identifier($var_name.text, $var_name.getLine()), $var_type.syn_type); $syn_var_declaration.set_line_num($var_name.getLine());}
     ;
     methodDeclaration returns[MethodDeclaration syn_method_declaration]:
-        'def' method_name = ID {MethodDeclaration method_dec = new MethodDeclaration(new Identifier($method_name.text, $method_name.getLine())); method_dec.set_line_num($method_name.getLine()); } ('(' ')'
+        def_name = 'def' method_name = ID {MethodDeclaration method_dec = new MethodDeclaration(new Identifier($method_name.text, $method_name.getLine())); method_dec.set_line_num($method_name.getLine()); } ('(' ')'
         |
         ('(' var_name1 = ID ':' var_type1 = type {VarDeclaration var1 = new VarDeclaration(new Identifier($var_name1.text, $var_name1.getLine()), $var_type1.syn_type); method_dec.addArg(var1); var1.set_line_num($var_name1.getLine());}
         (',' var_name2 = ID ':' var_type2 = type {VarDeclaration var2 = new VarDeclaration(new Identifier($var_name2.text, $var_name2.getLine()), $var_type2.syn_type); method_dec.addArg(var2); var2.set_line_num($var_name2.getLine());} )* ')'))
         ':' return_type = type {method_dec.setReturnType($return_type.syn_type); }
         '{' (var_dec = varDeclaration {method_dec.addLocalVar($var_dec.syn_var_declaration); })*
         stms = statements {method_dec.addStatements($stms.syn_statements); }
-        return_name = 'return' return_exp = expression {method_dec.setReturnValue($return_exp.syn_expression); method_dec.set_line_num($return_name.getLine()); $syn_method_declaration = method_dec; }';' '}'
+        return_name = 'return' return_exp = expression {method_dec.setReturnValue($return_exp.syn_expression); method_dec.set_line_num($def_name.getLine()); $syn_method_declaration = method_dec; }';' '}'
     ;
     statements returns[ArrayList<Statement> syn_statements]:
         {$syn_statements = new ArrayList<Statement>();}

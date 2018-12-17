@@ -27,6 +27,24 @@ public class Visitor_path4 extends VisitorImpl{
     public SymbolTable symbolTable_top;
     public String line_number;
 
+    public ArrayList<Type> check_arg_type(ArrayList<Type> method_args){
+        boolean arg_flag = true;
+        for (int i = 0; i < method_args.size(); i++) {
+            arg_flag = true;
+            if (method_args.get(i) instanceof UserDefinedType) {
+                for (UserDefinedType class_defined : class_defined_declaration) {
+                    if (class_defined.getName().getName().equals(((UserDefinedType) method_args.get(i)).getName().getName())) {
+                        method_args.set(i, class_defined);
+                        arg_flag = false;
+                    }
+                }
+                if(arg_flag == true){
+                    method_args.set(i, new NoType());
+                }
+            }
+        }
+        return method_args;
+    }
     static public boolean check_sub_type(Type left, Type right) {
         if (right instanceof UserDefinedType && left instanceof UserDefinedType) {
             while(symbol_table_items.get(((UserDefinedType) right).getName().getName()).getPre() != null) {
@@ -243,7 +261,7 @@ public class Visitor_path4 extends VisitorImpl{
         if(expression instanceof ArrayCall) {
             Type instance_type = get_type(((ArrayCall) expression).getInstance());
             Type index_type = get_type(((ArrayCall) expression).getIndex());
-            if(!(index_type instanceof IntType)){
+            if(!(index_type instanceof IntType || index_type instanceof NoType)){
                 SymbolTable.error = true;
                 add_error(Integer.valueOf(expression.get_line_number()), ":ArrayCall index is not Integer" );
                 return new NoType();
@@ -251,8 +269,11 @@ public class Visitor_path4 extends VisitorImpl{
             }
             if(instance_type instanceof ArrayType){
                 return new IntType();
-            }else
+            }else {
+                SymbolTable.error = true;
+                add_error(Integer.valueOf(expression.get_line_number()), ":ArrayCall instance is not ArrayType" );
                 return new NoType();
+            }
         }
         if(expression instanceof BinaryExpression){
             Type left_type = get_type(((BinaryExpression) expression).getLeft());
@@ -332,41 +353,40 @@ public class Visitor_path4 extends VisitorImpl{
                                 ArrayList<Type> method_args = method.getArgsType();
                                 if (arg_types.size() == method_args.size()) {
                                     arg_flag = true;
-                                    for (int i = 0; i < arg_types.size(); i++) {
-                                        come_in = false;
-                                        //TODO: if Arguman is not delclared become NoTYPE INSTEAD OF flag
+                                    method_args = check_arg_type(method_args);
+                                    for (int i = 0; i < method_args.size(); i++) {
                                         if (method_args.get(i) instanceof UserDefinedType) {
+                                            if (!(((UserDefinedType) method_args.get(i)).getName().getName().toString().equals(arg_types.get(i).toString()) || check_sub_type(method_args.get(i), arg_types.get(i)) || arg_types.get(i) instanceof NoType)) {
+                                                arg_flag = false;
+                                                break;
+                                            }
+                                        } else if (method_args.get(i) instanceof NoType) {
+                                            if (!(arg_types.get(i) instanceof NoType)) {
+                                                arg_flag = false;
+                                                break;
+                                            }
+                                        } else {
+                                            if (!(method_args.get(i).toString().equals(arg_types.get(i).toString()) || arg_types.get(i) instanceof NoType)) {
+                                                arg_flag = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (arg_flag == true) {
+                                        if (main_class_flag == true)
+                                            add_error(Integer.valueOf(expression.get_line_number()), "classNoType " + ((MethodCall) expression).getMethodName().getName());
+                                        Type return_type = method.getReturnType();
+                                        if (return_type instanceof UserDefinedType) {
                                             for (UserDefinedType class_defined : class_defined_declaration) {
-                                                if (class_defined.getName().getName().equals(((UserDefinedType) method_args.get(i)).getName().getName())) {
-                                                    come_in = true;
-                                                    if(!(class_defined.getName().getName().toString().equals(arg_types.get(i).toString()) || check_sub_type(method_args.get(i), arg_types.get(i)) || arg_types.get(i) instanceof NoType)) {
-                                                        arg_flag = false;
-                                                        break;
-                                                    }
+                                                if (class_defined.getName().getName().equals(((UserDefinedType) return_type).getName().getName())) {
+                                                    return_type = class_defined;
+                                                    return return_type;
                                                 }
                                             }
-                                        }else{
-                                            come_in = true;
-                                            if(!(method_args.get(i).toString().equals(arg_types.get(i).toString()) || arg_types.get(i) instanceof NoType)) {
-                                                arg_flag = false;
-                                            }
+                                            return new NoType();
                                         }
-                                        if(come_in == false && arg_types.get(i) instanceof NoType){
-                                            come_in = true;
-                                        }
+                                        return return_type;
                                     }
-                                }
-                                if(arg_flag == true && come_in == true){
-                                    Type return_type = method.getReturnType();
-                                    if (return_type instanceof UserDefinedType) {
-                                        for (UserDefinedType class_defined : class_defined_declaration) {
-                                            if (class_defined.getName().getName().equals(((UserDefinedType) return_type).getName().getName())) {
-                                                return_type = class_defined;
-                                                return return_type;
-                                            }
-                                        }
-                                    }
-                                    return new NoType();
                                 }
                             }
                         }
@@ -536,7 +556,10 @@ public class Visitor_path4 extends VisitorImpl{
         SymbolTable currentMethod = new SymbolTable();
         currentMethod.setPre(top);
         SymbolTable.push(currentMethod);
-
+        if(main_class_flag == false && methodDeclaration.getName().getName().equals("main")){
+            SymbolTable.error = true;
+            add_error(Integer.valueOf(methodDeclaration.get_line_number()), ":main function should be in main class");
+        }
         boolean flag = false;
         Type return_value_type = get_type(methodDeclaration.getReturnValue());
         Type return_type = methodDeclaration.getReturnType();
@@ -652,6 +675,10 @@ public class Visitor_path4 extends VisitorImpl{
 
         methodCall.getInstance().accept(this);
         methodCall.getMethodName().accept(this);
+        ArrayList<Expression> args = methodCall.getArgs();
+        for(Expression exp : args){
+            exp.accept(this);
+        }
     }
 
     @Override

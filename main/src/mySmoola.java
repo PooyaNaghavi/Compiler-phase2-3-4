@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 // Visit https://stackoverflow.com/questions/26451636/how-do-i-use-antlr-generated-parser-and-lexer
-public class mySmoola {
+public class MySmoola {
     public static void main(String[] args) throws IOException {
         CharStream reader = CharStreams.fromFileName(args[0]);
         SmoolaLexer lexer = new SmoolaLexer(reader);   // SmoolaLexer in your project

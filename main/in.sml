@@ -1,7 +1,7 @@
 class MainClass{
  def main(): int{
     writeln(a.main());
-    new har().ggg(new aa());
+    new aa().ggg(2);
     2*3;
     return 0;
  }
@@ -19,7 +19,7 @@ class aa extends bb{
     var ali : int[];
     var mili : int[];
     var salam : boolean;
-    def bb():int{
+    def main():int{
         new a().b();
         (ali=mili)[2] = 2;
         #TODO: this is error
@@ -38,7 +38,7 @@ class aa extends bb{
         a = 0;
         a = a.length;
         x = laslkfj.kos();
-        a[ad] = a == new MainClass() ;
+        a["string"] = a == new MainClass() ;
         #a = 2 * true;
         2 * 3;
         c[2] = 2;
@@ -49,7 +49,9 @@ class aa extends bb{
         2+3 = 2 + 3;
         if(2+4) then
             goh = pedarsag;
-        2 = 2 * 3 + true > 2;
+         #TODO : CHECK
+        a = 1 + (2 = 3)  + true > 2;
+        a = flkjas;
         x = 2.a();
         goh = 2 == 2 < 3;
         ali["sag"] = 2;
@@ -57,6 +59,7 @@ class aa extends bb{
         writeln(new aa().gggdfdff());
         writeln(this.koo());
         writeln(this.ggg(a));
+        a = new aa().ggg(ksalf, 2);
         return "string";
         #return new fsdfs().fds();
     }
@@ -64,8 +67,8 @@ class aa extends bb{
 class bb extends cc{
     var sag : cc;
     var goh : int;
-    def ggg(x : asfs, f : int):int{
-        return fksaja;
+    def ggg(f : bb, h : int):int{
+        return asfk;
     }
 }
 class cc{
