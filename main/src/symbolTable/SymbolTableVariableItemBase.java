@@ -26,6 +26,10 @@ public class SymbolTableVariableItemBase extends SymbolTableItem {
         return type;
     }
 
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     public int getIndex() {
         return index;
     }

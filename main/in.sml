@@ -16,6 +16,7 @@ class aa extends bb{
     var a : aa;
     var b : cc ;
     var c : int;
+    var f : string;
     var ali : int[];
     var mili : int[];
     var salam : boolean;
@@ -32,6 +33,7 @@ class aa extends bb{
         if(kooft == dard) then
             c = 2;
         man = dard;
+        f = new aa() + 2;
         writeln(this.bb());
         writeln(a.bb());
         a = 2 +-----!(true) + -32 ;

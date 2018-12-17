@@ -316,6 +316,7 @@ public class Visitor_path4 extends VisitorImpl{
                                 return user_defined;
                             }
                         }
+                        return new NoType();
                     }else return identifier_type;
 
                 }
@@ -602,15 +603,20 @@ public class Visitor_path4 extends VisitorImpl{
     public void visit(VarDeclaration varDeclaration) {
 
         String varName = varDeclaration.getIdentifier().getName();
-
         if(varDeclaration.getType() instanceof UserDefinedType){
-
             try {
                 symbolTable_top.get("#Class_" + ((UserDefinedType)varDeclaration.getType()).getName().getName());
             } catch (ItemNotFoundException e) {
 
                 SymbolTable.error = true;
                 add_error(Integer.valueOf(varDeclaration.get_line_number()), ":class " + ((UserDefinedType) varDeclaration.getType()).getName().getName() + " is not declared");
+                varDeclaration.setType(new NoType());
+                try {
+                    SymbolTableItem identifier_symbolTableItem = SymbolTable.top.get("#Variable_" + varDeclaration.getIdentifier().getName());
+                    if (identifier_symbolTableItem instanceof SymbolTableVariableItemBase) {
+                        ((SymbolTableVariableItemBase) identifier_symbolTableItem).setType(new NoType());
+                    }
+                }catch(ItemNotFoundException e2) { }
                 //errors.put(Integer.valueOf(varDeclaration.get_line_number()), ":variable " + ((UserDefinedType) varDeclaration.getType()).getName().getName() + " is not declared");
             }
         }
@@ -621,6 +627,7 @@ public class Visitor_path4 extends VisitorImpl{
 
         }
         varDeclaration.getIdentifier().accept(this);
+
     }
 
     @Override
