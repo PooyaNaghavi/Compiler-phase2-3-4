@@ -9,10 +9,11 @@ public class SymbolTable {
 	HashMap<String, SymbolTableItem> items;
 
 	// Static members region
-	public static boolean path1_error;
-	public static boolean path2_error;
-	public static boolean path3_error;
-	public static boolean path4_error;
+	public static boolean pass1_error;
+	public static boolean pass2_error;
+	public static boolean pass3_error;
+	public static boolean pass4_error;
+	public static boolean pass5_error;
 	public static boolean has_error;
 	public static boolean error;
 	public static boolean circular_inheritance;

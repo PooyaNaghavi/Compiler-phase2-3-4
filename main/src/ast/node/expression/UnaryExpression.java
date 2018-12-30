@@ -2,6 +2,8 @@ package ast.node.expression;
 
 import ast.Visitor;
 
+import java.util.ArrayList;
+
 public class UnaryExpression extends Expression {
 
     private UnaryOperator unaryOperator;
@@ -32,6 +34,12 @@ public class UnaryExpression extends Expression {
     public String toString() {
         return "UnaryExpression " + unaryOperator.name();
     }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        return null;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

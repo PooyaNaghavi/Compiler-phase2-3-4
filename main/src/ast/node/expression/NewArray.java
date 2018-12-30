@@ -2,6 +2,8 @@ package ast.node.expression;
 
 import ast.Visitor;
 
+import java.util.ArrayList;
+
 public class NewArray extends Expression {
     private Expression expression;
     private int size;
@@ -33,6 +35,12 @@ public class NewArray extends Expression {
     public String toString() {
         return "NewArray";
     }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        return null;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

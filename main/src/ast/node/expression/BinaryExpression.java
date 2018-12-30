@@ -2,6 +2,8 @@ package ast.node.expression;
 
 import ast.Visitor;
 
+import java.util.ArrayList;
+
 public class BinaryExpression extends Expression {
 
     private Expression left;
@@ -42,6 +44,12 @@ public class BinaryExpression extends Expression {
     public String toString() {
         return "BinaryExpression " + binaryOperator.name();
     }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        return null;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

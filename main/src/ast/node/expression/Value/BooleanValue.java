@@ -3,6 +3,8 @@ package ast.node.expression.Value;
 import ast.Type.Type;
 import ast.Visitor;
 
+import java.util.ArrayList;
+
 public class BooleanValue extends Value {
     private boolean constant;
 
@@ -23,6 +25,12 @@ public class BooleanValue extends Value {
     public String toString() {
         return "BooleanValue " + constant;
     }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        return null;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

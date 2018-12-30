@@ -19,6 +19,7 @@ grammar Smoola;
 }
 @members{
     int global_line = 0;
+    Expression expression_method_temp;
 }
     program returns[Program p]:
         main_class = mainClass {Program syn_program = new Program(); syn_program.setMainClass($main_class.syn_main_class);}
@@ -94,9 +95,9 @@ grammar Smoola;
 
         if($exp_assign.syn_assign_right == null){
             $syn_expression = $exp_assign.syn_expression_assignment;
-            if($syn_expression instanceof BinaryExpression || $syn_expression instanceof MethodCall){
+           // if($syn_expression instanceof BinaryExpression || $syn_expression instanceof MethodCall || $syn_expression instanceof NewClass || $syn_expression instanceof Length){
                 $syn_expression_assign = new Assign(null, $exp_assign.syn_expression_assignment, $exp_assign.line);
-            }
+            //}
         }
         else {
             $syn_expression_assign = new Assign($exp_assign.syn_assign_left, $exp_assign.syn_assign_right, $exp_assign.line);
@@ -289,7 +290,6 @@ grammar Smoola;
       }
   	  |
   	;
-
     expressionMult returns[Expression syn_expression_mult]:
 
   		exp_unary = expressionUnary exp_mult_temp = expressionMultTemp
@@ -304,7 +304,8 @@ grammar Smoola;
         }
       }
   	;
-    expressionMultTemp returns[Expression syn_expression_mult_temp, String syn_mult_op]:
+
+expressionMultTemp returns[Expression syn_expression_mult_temp, String syn_mult_op]:
   		op_mult = ('*' | '/') exp_unary = expressionUnary exp_mult_temp = expressionMultTemp
       {
           if($exp_mult_temp.syn_expression_mult_temp == null) {
@@ -376,12 +377,15 @@ grammar Smoola;
   	expressionMethodsTemp [Expression inh_expression_other] returns[Expression syn_expression_method_temp]:
 
   	    '.' (method_name1 = ID '(' ')'
-        {$syn_expression_method_temp = new MethodCall($inh_expression_other, new Identifier($method_name1.text, $method_name1.getLine())); $syn_expression_method_temp.set_line_num($method_name1.getLine());}
-        | method_name2 = ID {MethodCall method_call = new MethodCall($inh_expression_other, new Identifier($method_name2.text, $method_name2.getLine())); method_call.set_line_num($method_name2.getLine());}
-        '(' (exp_arg1 = expression {method_call.addArg($exp_arg1.syn_expression); }(',' exp_arg2 = expression {method_call.addArg($exp_arg2.syn_expression); })*) ')' { $syn_expression_method_temp = method_call; }
-        | len = 'length' {$syn_expression_method_temp = new Length($inh_expression_other); $syn_expression_method_temp.set_line_num($len.getLine());} )
-        exp_method_temp = expressionMethodsTemp[$syn_expression_method_temp]
-        { $syn_expression_method_temp = $exp_method_temp.syn_expression_method_temp; }
+            {MethodCall method_call = new MethodCall($inh_expression_other, new Identifier($method_name1.text, $method_name1.getLine())); method_call.set_line_num($method_name1.getLine()); expression_method_temp = method_call;}
+            | method_name2 = ID {MethodCall method_call = new MethodCall($inh_expression_other, new Identifier($method_name2.text, $method_name2.getLine())); method_call.set_line_num($method_name2.getLine());}
+            '(' (exp_arg1 = expression {method_call.addArg($exp_arg1.syn_expression); }(',' exp_arg2 = expression {method_call.addArg($exp_arg2.syn_expression); })*) ')' {expression_method_temp = method_call;}
+            | len = 'length' {Length len = new Length($inh_expression_other); len.set_line_num($len.getLine()); expression_method_temp = len;}
+        )
+        exp_method_temp = expressionMethodsTemp[expression_method_temp]
+        {
+            $syn_expression_method_temp = $exp_method_temp.syn_expression_method_temp;
+        }
   	    | { $syn_expression_method_temp = $inh_expression_other;}
   	;
     expressionOther returns[Expression syn_expression_other]:

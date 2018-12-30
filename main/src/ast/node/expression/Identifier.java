@@ -2,6 +2,8 @@ package ast.node.expression;
 
 import ast.Visitor;
 
+import java.util.ArrayList;
+
 public class Identifier extends Expression {
     private String name;
 
@@ -25,6 +27,12 @@ public class Identifier extends Expression {
     public String toString() {
         return "Identifier " + name;
     }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        return null;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

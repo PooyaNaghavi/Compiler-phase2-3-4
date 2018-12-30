@@ -8,4 +8,9 @@ public class StringType extends Type {
     public String toString() {
         return "string";
     }
+
+    @Override
+    public String to_byte_code() {
+        return "Ljava/lang/String";
+    }
 }

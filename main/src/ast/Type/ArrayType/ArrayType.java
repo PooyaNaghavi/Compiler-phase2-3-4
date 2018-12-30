@@ -14,6 +14,11 @@ public class ArrayType extends Type {
         return "int[]";
     }
 
+    @Override
+    public String to_byte_code() {
+        return "[I";
+    }
+
     public int getSize() {
         return size;
     }

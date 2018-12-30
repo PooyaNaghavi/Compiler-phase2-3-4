@@ -2,6 +2,8 @@ package ast.node.expression;
 
 import ast.Visitor;
 
+import java.util.ArrayList;
+
 public class Length extends Expression {
     private Expression expression;
 
@@ -21,6 +23,12 @@ public class Length extends Expression {
     public String toString() {
         return "Length";
     }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        return null;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

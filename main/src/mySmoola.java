@@ -3,15 +3,6 @@ import ast.node.Program;
 import org.antlr.v4.runtime.*;
 import java.io.IOException;
 import ast.*;
-import ast.node.*;
-import ast.node.declaration.*;
-import ast.node.expression.*;
-import ast.node.statement.*;
-import ast.node.expression.Value.*;
-import ast.Type.*;
-import ast.Type.ArrayType.*;
-import ast.Type.PrimitiveType.*;
-import ast.Type.UserDefinedType.*;
 import symbolTable.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,27 +20,31 @@ public class MySmoola {
         SymbolTable.push(new SymbolTable());
         SymbolTable.error = false;
         SymbolTable.has_error = true;
-        SymbolTable.path1_error = false;
-        SymbolTable.path2_error = true;
-        SymbolTable.path3_error = true;
-        SymbolTable.path4_error = true;
+        SymbolTable.pass1_error = false;
+        SymbolTable.pass2_error = true;
+        SymbolTable.pass3_error = true;
+        SymbolTable.pass4_error = true;
 
         VisitorImpl visitor = new VisitorImpl();
         p.accept(visitor);
-        SymbolTable.path1_error = true;
-        SymbolTable.path2_error = false;
+        SymbolTable.pass1_error = true;
+        SymbolTable.pass2_error = false;
         p.accept(visitor);
-        SymbolTable.path2_error = true;
-        SymbolTable.path3_error = false;
+        SymbolTable.pass2_error = true;
+        SymbolTable.pass3_error = false;
         p.accept(visitor);
-        SymbolTable.path3_error = true;
-        SymbolTable.path4_error = false;
+        SymbolTable.pass3_error = true;
+        SymbolTable.pass4_error = false;
         //syn_program.accept(visitor);
-        Visitor_path4 path4 = new Visitor_path4();
+        Visitor_pass4 pass4 = new Visitor_pass4();
         if(SymbolTable.circular_inheritance == false) {
-            p.accept(path4);
+            p.accept(pass4);
         }
-        SymbolTable.path4_error = true;
+        SymbolTable.pass4_error = true;
+        SymbolTable.pass5_error = false;
+        Visitor_pass5 pass5 = new Visitor_pass5();
+        SymbolTable.pass5_error = true;
+
         if(SymbolTable.error == false){
             SymbolTable.has_error = false;
         }

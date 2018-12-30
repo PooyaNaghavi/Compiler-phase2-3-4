@@ -4,6 +4,8 @@ import ast.Type.Type;
 import ast.Visitor;
 import ast.node.expression.Identifier;
 
+import java.util.ArrayList;
+
 public class VarDeclaration extends Declaration {
     private Identifier identifier;
     private Type type;
@@ -37,6 +39,12 @@ public class VarDeclaration extends Declaration {
     public String toString() {
         return "VarDeclaration";
     }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        return null;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

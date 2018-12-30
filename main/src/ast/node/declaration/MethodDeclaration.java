@@ -1,6 +1,11 @@
 package ast.node.declaration;
 
+import ast.Type.ArrayType.ArrayType;
+import ast.Type.PrimitiveType.BooleanType;
+import ast.Type.PrimitiveType.IntType;
+import ast.Type.PrimitiveType.StringType;
 import ast.Type.Type;
+import ast.Type.UserDefinedType.UserDefinedType;
 import ast.Visitor;
 import ast.node.expression.Expression;
 import ast.node.expression.Identifier;
@@ -84,6 +89,23 @@ public class MethodDeclaration extends Declaration {
     public String toString() {
         return "MethodDeclaration";
     }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+
+        ArrayList<String> byte_code = new ArrayList<String>();
+        String arg_types = "";
+
+        for(VarDeclaration var : this.args){
+            Type var_type = var.getType();
+            arg_types += var_type.to_byte_code();
+        }
+        byte_code.add(".method public " + this.name.getName() + "(" + arg_types + ")" + returnType.to_byte_code());
+
+        return byte_code;
+
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

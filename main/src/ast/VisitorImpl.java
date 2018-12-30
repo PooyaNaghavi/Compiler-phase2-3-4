@@ -75,7 +75,7 @@ public class VisitorImpl implements Visitor {
         class_defined_declaration.add(new UserDefinedType(new Identifier("Object"), new ClassDeclaration(new Identifier("Object"))));
         user_defined_declaration.add(new UserDefinedType(new Identifier("Object"), new ClassDeclaration(new Identifier("Object"))));
         symbol_table_items.put("Object", SymbolTable.top);
-        if(!SymbolTable.path3_error){
+        if(!SymbolTable.pass3_error){
             SymbolTable.circular_inheritance = check_circular_inheritance();
             if(SymbolTable.circular_inheritance == true){
                 SymbolTable.error = true;
@@ -104,7 +104,7 @@ public class VisitorImpl implements Visitor {
         String new_class_name = null;
         if (!SymbolTable.has_error) {
             print(classDeclaration.toString());
-        } else if (!SymbolTable.path1_error) {
+        } else if (!SymbolTable.pass1_error) {
             SymbolTableClassItem class_item = new SymbolTableClassItem(class_name);
             SymbolTable current_class = new SymbolTable();
             class_defined_declaration.add(new UserDefinedType(new Identifier(class_name), classDeclaration));
@@ -130,7 +130,7 @@ public class VisitorImpl implements Visitor {
                 SymbolTable.error = true;
             }
             SymbolTable.push(current_class);
-        } else if (!SymbolTable.path2_error) {
+        } else if (!SymbolTable.pass2_error) {
             if (classDeclaration.getParentName() != null) {
                 String parent_class_name = classDeclaration.getParentName().getName();
                 symbol_table_items.get(class_name).setPre(symbol_table_items.get(parent_class_name));
@@ -139,7 +139,7 @@ public class VisitorImpl implements Visitor {
             }else{
                 symbol_table_items.get(class_name).setPre(symbol_table_items.get("Object"));
             }
-        } else if (!SymbolTable.path3_error) {
+        } else if (!SymbolTable.pass3_error) {
             // SymbolTable new_symbol_table;
             // if(symbol_table_items.get(class_name).getPre() != null)
             //     new_symbol_table = new SymbolTable(symbol_table_items.get(class_name).getPre());
@@ -218,7 +218,7 @@ public class VisitorImpl implements Visitor {
             methodDec.accept(this);
         }
         main_class_flag = false;
-        if (!SymbolTable.path1_error) {
+        if (!SymbolTable.pass1_error) {
             if(new_class_name == null)
                 new_class_name = class_name;
             symbol_table_items.put(new_class_name, SymbolTable.top);
@@ -230,7 +230,7 @@ public class VisitorImpl implements Visitor {
     public void visit(MethodDeclaration methodDeclaration) {
         if (!SymbolTable.has_error) {
             print(methodDeclaration.toString());
-        } else if (!SymbolTable.path1_error) {
+        } else if (!SymbolTable.pass1_error) {
             String method_name = methodDeclaration.getName().getName();
             ArrayList<Type> args = methodDeclaration.getArgsType();
             SymbolTableMethodItem method_item = new SymbolTableMethodItem(method_name, args);
@@ -272,7 +272,7 @@ public class VisitorImpl implements Visitor {
             stmt.accept(this);
         }
         methodDeclaration.getReturnValue().accept(this);
-        if(!SymbolTable.path1_error)
+        if(!SymbolTable.pass1_error)
             SymbolTable.pop();
     }
 
@@ -282,7 +282,7 @@ public class VisitorImpl implements Visitor {
         Type var_type = varDeclaration.getType();
         if (!SymbolTable.has_error) {
             print(varDeclaration.toString());
-        } else if (!SymbolTable.path1_error) {
+        } else if (!SymbolTable.pass1_error) {
 
             SymbolTableVariableItemBase var_item = new SymbolTableVariableItemBase(var_name, var_type, index);
             index++;
@@ -307,7 +307,7 @@ public class VisitorImpl implements Visitor {
                 SymbolTable.error = true;
             }
             //SymbolTable.push(current_var);
-        }else if(!SymbolTable.path2_error){
+        }else if(!SymbolTable.pass2_error){
 //
             if(var_type instanceof UserDefinedType) {
                 user_defined_declaration.add((UserDefinedType) var_type);
@@ -376,7 +376,7 @@ public class VisitorImpl implements Visitor {
     public void visit(NewArray newArray) {
         if (!SymbolTable.has_error) {
             print(newArray.toString());
-        } else if (!SymbolTable.path1_error) {
+        } else if (!SymbolTable.pass1_error) {
             if (newArray.getSize() <= 0) {
                 add_error(Integer.valueOf(newArray.get_line_number()), ":Array length should not be zero or negative");
                 //errors.put(Integer.valueOf(newArray.get_line_number()), ":Array length should not be zero or negative");

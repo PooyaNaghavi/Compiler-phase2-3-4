@@ -51,6 +51,25 @@ public class ClassDeclaration extends Declaration{
     public String toString() {
         return "ClassDeclaration";
     }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        ArrayList<String> byte_code = new ArrayList<String>();
+        byte_code.add(".class public " + this.name.getName());
+        String parent_name;
+        if(this.parentName != null) {
+            parent_name = this.parentName.getName();
+        }
+        else{
+            parent_name = "Object";
+        }
+
+        byte_code.add(".super " + parent_name);
+        byte_code.add("aload_0");
+        byte_code.add("invokespecial " + parent_name);
+        return byte_code;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

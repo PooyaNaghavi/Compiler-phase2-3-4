@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Visitor_path4 extends VisitorImpl{
+public class Visitor_pass4 extends VisitorImpl{
     public SymbolTable symbolTable_top;
     public String line_number;
 
@@ -339,6 +339,7 @@ public class Visitor_path4 extends VisitorImpl{
             boolean arg_flag = false;
             boolean come_in = false;
             Type instance_exp_type_prev;
+            //print(((MethodCall) expression).getInstance().toString());
             Type instance_exp_type = get_type(((MethodCall) expression).getInstance());
             Type first_instance_exp = instance_exp_type;
             Type identifier_type = get_type(((MethodCall) expression).getMethodName());
@@ -381,11 +382,13 @@ public class Visitor_path4 extends VisitorImpl{
                                             for (UserDefinedType class_defined : class_defined_declaration) {
                                                 if (class_defined.getName().getName().equals(((UserDefinedType) return_type).getName().getName())) {
                                                     return_type = class_defined;
+                                                    add_error(Integer.valueOf(expression.get_line_number()), "classNoType " + ((MethodCall) expression).getMethodName().getName());
                                                     return return_type;
                                                 }
                                             }
                                             return new NoType();
                                         }
+                                        add_error(Integer.valueOf(expression.get_line_number()), "classNoType " + ((MethodCall) expression).getMethodName().getName());
                                         return return_type;
                                     }
                                 }
@@ -462,7 +465,7 @@ public class Visitor_path4 extends VisitorImpl{
         if(expression instanceof This) {
             for ( String key : symbol_table_items.keySet() ) {
                 if(symbol_table_items.get(key) == SymbolTable.top.getPre()){
-                    for(UserDefinedType user_defined : user_defined_declaration){
+                    for(UserDefinedType user_defined : class_defined_declaration){
                         if(user_defined.getName().getName().equals(key)){
                             return user_defined;
                         }
@@ -739,7 +742,7 @@ public class Visitor_path4 extends VisitorImpl{
                 }
             } else if (!(right_type instanceof NoType || right_type.toString().equals(left_type.toString()) || check_sub_type(left_type, right_type))) {
                 SymbolTable.error = true;
-                add_error(Integer.valueOf(assign.get_line_number()), ":left side of assignment must be a valid lvalue");
+                add_error(Integer.valueOf(assign.get_line_number()), ":unsupported operand type for assign");
             }
 
             assign.getlValue().accept(this);

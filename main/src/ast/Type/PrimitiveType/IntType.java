@@ -7,4 +7,9 @@ public class IntType extends Type {
     public String toString() {
         return "int";
     }
+
+    @Override
+    public String to_byte_code() {
+        return "I";
+    }
 }

@@ -2,6 +2,8 @@ package ast.node.expression;
 
 import ast.Visitor;
 
+import java.util.ArrayList;
+
 public class ArrayCall extends Expression {
     private Expression instance;
     private Expression index;
@@ -37,6 +39,12 @@ public class ArrayCall extends Expression {
     public String toString() {
         return "ArrayCall";
     }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        return null;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
