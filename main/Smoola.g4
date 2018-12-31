@@ -95,7 +95,7 @@ grammar Smoola;
 
         if($exp_assign.syn_assign_right == null){
             $syn_expression = $exp_assign.syn_expression_assignment;
-           // if($syn_expression instanceof BinaryExpression || $syn_expression instanceof MethodCall || $syn_expression instanceof NewClass || $syn_expression instanceof Length){
+            //if($syn_expression instanceof BinaryExpression || $syn_expression instanceof MethodCall || $syn_expression instanceof NewClass || $syn_expression instanceof Length){
                 $syn_expression_assign = new Assign(null, $exp_assign.syn_expression_assignment, $exp_assign.line);
             //}
         }

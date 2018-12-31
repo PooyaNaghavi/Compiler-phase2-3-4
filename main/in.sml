@@ -2,7 +2,9 @@ class MainClass{
   def main(): int{
     writeln((new SecondClass()).test());
     new SecondClass().sala().goh();
+    !2;
     return 23;
+
   }
 }
 class SecondClass{
