@@ -3,3 +3,6 @@
 gen/
 *.jar
 *.xml
+main/.idea
+workspace.xml
+.idea/workspace.xml
