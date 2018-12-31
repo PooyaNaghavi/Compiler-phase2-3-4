@@ -42,7 +42,12 @@ public class VarDeclaration extends Declaration {
 
     @Override
     public ArrayList<String> to_byte_code() {
-        return null;
+
+        ArrayList<String> byte_code = new ArrayList<String>();
+
+        byte_code.add(".field protected " + this.identifier.getName() + " " + this.type.to_byte_code());
+
+        return byte_code;
     }
 
     @Override

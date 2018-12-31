@@ -19,30 +19,52 @@ import ast.node.statement.*;
 import symbolTable.*;
 
 import java.lang.reflect.Array;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+
 public class Visitor_pass5 extends VisitorImpl{
 
-    ArrayList<ArrayList<String> > lines = new ArrayList<ArrayList<String>>();
-    int class_index = 0;
+    public ArrayList<ArrayList<String> > lines = new ArrayList<ArrayList<String>>();
+    public boolean is_class = false;
+
+    public void writeUsingFiles(ArrayList<String> class_lines, String class_name) {
+        try {
+            Path file = Paths.get("./output/" + class_name + ".j");
+            Files.write(file, class_lines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     @Override
     public void visit(Program program) {
         program.getMainClass().accept(this);
+        writeUsingFiles(lines.get(lines.size() - 1), program.getMainClass().getName().getName());
         for (ClassDeclaration classDec : program.getClasses()) {
             classDec.accept(this);
+            writeUsingFiles(lines.get(lines.size() - 1), classDec.getName().getName());
         }
     }
 
     @Override
     public void visit(ClassDeclaration classDeclaration) {
 
-        for (String s : classDeclaration.to_byte_code())
-            lines.get(class_index).add(s);
+        lines.add(classDeclaration.to_byte_code());
 
-        class_index++;
         classDeclaration.getName().accept(this);
 
         if(classDeclaration.getParentName() != null) {
@@ -50,8 +72,14 @@ public class Visitor_pass5 extends VisitorImpl{
         }
 
         for(VarDeclaration varDec : classDeclaration.getVarDeclarations()) {
+            is_class = true;
             varDec.accept(this);
         }
+        is_class = false;
+
+        ArrayList<String> class_byte_code = lines.get(lines.size() - 1);
+        class_byte_code.addAll(classDeclaration.constructor_byte_code());
+        lines.set(lines.size() - 1, class_byte_code);
 
         for(MethodDeclaration methodDec : classDeclaration.getMethodDeclarations()) {
             methodDec.accept(this);
@@ -60,6 +88,10 @@ public class Visitor_pass5 extends VisitorImpl{
 
     @Override
     public void visit(MethodDeclaration methodDeclaration) {
+
+        ArrayList<String> method_byte_code = lines.get(lines.size() - 1);
+        method_byte_code.addAll(methodDeclaration.to_byte_code());
+        lines.set(lines.size() - 1, method_byte_code);
 
         methodDeclaration.getName().accept(this);
 
@@ -74,10 +106,22 @@ public class Visitor_pass5 extends VisitorImpl{
         }
         methodDeclaration.getReturnValue().accept(this);
 
+        method_byte_code = lines.get(lines.size() - 1);
+        method_byte_code.addAll(methodDeclaration.return_byte_code());
+        lines.set(lines.size() - 1, method_byte_code);
+
+
     }
 
     @Override
     public void visit(VarDeclaration varDeclaration) {
+
+        if(is_class) {
+            ArrayList<String> variable_byte_code = lines.get(lines.size() - 1);
+            variable_byte_code.addAll(varDeclaration.to_byte_code());
+            lines.set(lines.size() - 1, variable_byte_code);
+        }
+
         varDeclaration.getIdentifier().accept(this);
 
     }
@@ -127,7 +171,9 @@ public class Visitor_pass5 extends VisitorImpl{
 
     @Override
     public void visit(This instance) {
-
+        ArrayList<String> this_byte_code = lines.get(lines.size() - 1);
+        this_byte_code.addAll(instance.to_byte_code());
+        lines.set(lines.size() - 1, this_byte_code);
     }
 
     @Override

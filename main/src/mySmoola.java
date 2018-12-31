@@ -43,6 +43,7 @@ public class MySmoola {
         SymbolTable.pass4_error = true;
         SymbolTable.pass5_error = false;
         Visitor_pass5 pass5 = new Visitor_pass5();
+        p.accept(pass5);
         SymbolTable.pass5_error = true;
 
         if(SymbolTable.error == false){

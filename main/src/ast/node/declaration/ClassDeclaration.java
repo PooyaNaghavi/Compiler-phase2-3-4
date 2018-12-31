@@ -65,8 +65,27 @@ public class ClassDeclaration extends Declaration{
         }
 
         byte_code.add(".super " + parent_name);
+
+        return byte_code;
+    }
+
+    public ArrayList<String> constructor_byte_code() {
+
+        ArrayList<String> byte_code = new ArrayList<String>();
+        String parent_name;
+        if(this.parentName != null) {
+            parent_name = this.parentName.getName();
+        }
+        else{
+            parent_name = "Object";
+        }
+
+        byte_code.add(".method public <init>()V");
         byte_code.add("aload_0");
-        byte_code.add("invokespecial " + parent_name);
+        byte_code.add("invokespecial " + parent_name + "()V");
+        byte_code.add("return");
+        byte_code.add(".end method");
+
         return byte_code;
     }
 

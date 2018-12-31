@@ -102,8 +102,25 @@ public class MethodDeclaration extends Declaration {
         }
         byte_code.add(".method public " + this.name.getName() + "(" + arg_types + ")" + returnType.to_byte_code());
 
+        int variables_count = this.args.size() + this.localVars.size();
+        byte_code.add(".limit stack " + Integer.toString(variables_count + 20));
+        byte_code.add(".limit locals " + Integer.toString(variables_count));
+
         return byte_code;
 
+    }
+
+    public ArrayList<String> return_byte_code() {
+
+        ArrayList<String> byte_code = new ArrayList<String>();
+
+        if(returnType instanceof IntType)
+            byte_code.add("ireturn");
+        else
+            byte_code.add("areturn");
+
+        byte_code.add(".end method");
+        return byte_code;
     }
 
     @Override
