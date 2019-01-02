@@ -11,6 +11,6 @@ public class StringType extends Type {
 
     @Override
     public String to_byte_code() {
-        return "Ljava/lang/String";
+        return "Ljava/lang/String;";
     }
 }
