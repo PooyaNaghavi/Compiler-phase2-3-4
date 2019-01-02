@@ -1,7 +1,5 @@
 package ast.node.expression;
-
 import ast.Visitor;
-
 import java.util.ArrayList;
 
 public class BinaryExpression extends Expression {
