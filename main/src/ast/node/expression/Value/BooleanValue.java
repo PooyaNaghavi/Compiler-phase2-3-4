@@ -12,7 +12,9 @@ public class BooleanValue extends Value {
         this.constant = constant;
         this.type = type;
     }
-
+    public int get_constant(){
+        return constant ? 1:0;
+    }
     public boolean isConstant() {
         return constant;
     }
