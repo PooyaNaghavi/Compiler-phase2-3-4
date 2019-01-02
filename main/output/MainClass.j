@@ -9,8 +9,8 @@ return
 .limit stack 20
 .limit locals 1
 getstatic java/lang/System/out Ljava/io/PrintStream;
-ldc "Hello World"
-invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+ldc 1
+invokevirtual java/io/PrintStream/println(Z)V
 ldc 23
 ireturn
 .end method
