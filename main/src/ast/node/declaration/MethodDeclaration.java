@@ -9,6 +9,8 @@ import ast.Type.UserDefinedType.UserDefinedType;
 import ast.Visitor;
 import ast.node.expression.Expression;
 import ast.node.expression.Identifier;
+import ast.node.expression.Value.IntValue;
+import ast.node.expression.Value.StringValue;
 import ast.node.statement.Statement;
 
 import java.util.ArrayList;
@@ -104,7 +106,7 @@ public class MethodDeclaration extends Declaration {
 
         int variables_count = this.args.size() + this.localVars.size();
         byte_code.add(".limit stack " + Integer.toString(variables_count + 20));
-        byte_code.add(".limit locals " + Integer.toString(variables_count));
+        byte_code.add(".limit locals " + Integer.toString(variables_count+1));
 
         return byte_code;
 
@@ -113,9 +115,10 @@ public class MethodDeclaration extends Declaration {
     public ArrayList<String> return_byte_code() {
 
         ArrayList<String> byte_code = new ArrayList<String>();
-
-        if(returnType instanceof IntType)
+        if(returnType instanceof IntType) {
+            byte_code.add("ldc " + (((IntValue) returnValue).getConstant()));
             byte_code.add("ireturn");
+        }
         else
             byte_code.add("areturn");
 
