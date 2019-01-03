@@ -11,6 +11,11 @@ return
 getstatic java/lang/System/out Ljava/io/PrintStream;
 ldc 1
 invokevirtual java/io/PrintStream/println(Z)V
+new SecondClass
+dup
+invokespecial SecondClass/<init>()V
+invokevirtual SecondClass/method()I
+
 ldc 23
 ireturn
 .end method
