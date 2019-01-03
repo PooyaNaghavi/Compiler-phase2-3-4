@@ -46,6 +46,7 @@ public class UserDefinedType extends Type {
 
     @Override
     public String to_byte_code() {
-        return name.getName();
+
+        return "L" + name.getName() + ";";
     }
 }

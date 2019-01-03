@@ -1,5 +1,6 @@
 .class public SecondClass
 .super ThirdClass
+.field protected x LThirdClass;
 .method public <init>()V
 aload_0
 invokespecial ThirdClass/<init>()V
@@ -9,7 +10,10 @@ return
 .limit stack 20
 .limit locals 2
 aload_0
-ldc 5
+new ThirdClass
+dup
+invokespecial ThirdClass/<init>()V
+invokevirtual ThirdClass/m()I
 putfield SecondClass/a I
 getstatic java/lang/System/out Ljava/io/PrintStream;
 aload_0

@@ -388,12 +388,14 @@ public class Visitor_pass4 extends VisitorImpl{
                                                 if (class_defined.getName().getName().equals(((UserDefinedType) return_type).getName().getName())) {
                                                     return_type = class_defined;
                                                     add_error(Integer.valueOf(expression.get_line_number()), "classNoType " + ((MethodCall) expression).getMethodName().getName());
+                                                    ((MethodCall) expression).getMethodName().setType(return_type);
                                                     return return_type;
                                                 }
                                             }
                                             return new NoType();
                                         }
                                         add_error(Integer.valueOf(expression.get_line_number()), "classNoType " + ((MethodCall) expression).getMethodName().getName());
+                                        ((MethodCall) expression).getMethodName().setType(return_type);
                                         return return_type;
                                     }
                                 }

@@ -6,8 +6,9 @@ class MainClass{
  }
 
  class SecondClass extends ThirdClass{
+    var x : ThirdClass;
    def method(): int{
-       a = 5;
+       a = x.m();
        writeln(a);
        return 23;
    }
@@ -15,4 +16,7 @@ class MainClass{
 
   class ThirdClass {
     var a : int;
+    def m(): int {
+        return 5;
+    }
   }

@@ -6,3 +6,9 @@ aload_0
 invokespecial java/lang/Object/<init>()V
 return
 .end method
+.method public m()I
+.limit stack 20
+.limit locals 2
+ldc 5
+ireturn
+.end method

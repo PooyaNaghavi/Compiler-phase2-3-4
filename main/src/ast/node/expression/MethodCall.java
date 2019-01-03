@@ -1,5 +1,6 @@
 package ast.node.expression;
 
+import ast.Type.Type;
 import ast.Visitor;
 
 import java.util.ArrayList;
@@ -45,7 +46,14 @@ public class MethodCall extends Expression {
 
     @Override
     public ArrayList<String> to_byte_code() {
-        return null;
+        ArrayList<String> byte_code = new ArrayList<String>();
+        Type instance_type = instance.getType();
+
+        byte_code.add("new " + instance_type);
+        byte_code.add("dup");
+        byte_code.add("invokespecial " + instance_type + "/<init>()V");
+        byte_code.add("invokevirtual " + instance_type + "/" + methodName.getName() + "()" + methodName.getType().to_byte_code());
+        return byte_code;
     }
 
     @Override
