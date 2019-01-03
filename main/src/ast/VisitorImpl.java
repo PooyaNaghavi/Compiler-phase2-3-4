@@ -22,8 +22,8 @@ public class VisitorImpl implements Visitor {
     public int name_index;
     public boolean flag;
     public boolean main_class_flag = false;
-    static HashMap<String, SymbolTable> symbol_table_items = new HashMap<>();
-    static HashMap<Integer, ArrayList<String>> errors = new HashMap<>();
+    public static HashMap<String, SymbolTable> symbol_table_items = new HashMap<>();
+    public static HashMap<Integer, ArrayList<String>> errors = new HashMap<>();
     public static ArrayList<UserDefinedType> user_defined_declaration = new ArrayList<>();
     public static ArrayList<UserDefinedType> class_defined_declaration = new ArrayList<>();
 

@@ -308,16 +308,21 @@ public class Visitor_pass4 extends VisitorImpl{
                     if(identifier_type instanceof UserDefinedType) {
                         for (UserDefinedType class_defined : class_defined_declaration) {
                             if (class_defined.getName().getName().equals(((UserDefinedType) identifier_type).getName().getName())) {
+                                expression.setType(class_defined);
                                 return class_defined;
                             }
                         }
                         for (UserDefinedType user_defined : user_defined_declaration) {
                             if(user_defined.getName().getName().equals(((UserDefinedType) identifier_type).getName().getName())) {
+                                expression.setType(user_defined);
                                 return user_defined;
                             }
                         }
                         return new NoType();
-                    }else return identifier_type;
+                    }else{
+                        expression.setType(identifier_type);
+                        return identifier_type;
+                    }
 
                 }
             } catch (ItemNotFoundException e) {

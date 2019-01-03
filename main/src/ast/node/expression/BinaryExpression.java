@@ -45,6 +45,32 @@ public class BinaryExpression extends Expression {
 
     @Override
     public ArrayList<String> to_byte_code() {
+        ArrayList<String> byte_code = new ArrayList<String>();
+        switch (binaryOperator){
+            case gt:
+                break;
+            case lt:
+                break;
+            case eq:
+                break;
+            case or:
+                break;
+            case add:
+
+                break;
+            case and:
+                break;
+            case div:
+                break;
+            case neq:
+                break;
+            case sub:
+                break;
+            case mult:
+                break;
+            case assign:
+                break;
+        }
         return null;
     }
 

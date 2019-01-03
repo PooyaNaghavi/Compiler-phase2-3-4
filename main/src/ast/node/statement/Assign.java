@@ -1,7 +1,18 @@
 package ast.node.statement;
 
+import ast.Type.Type;
 import ast.Visitor;
 import ast.node.expression.Expression;
+import ast.node.expression.Identifier;
+import symbolTable.ItemNotFoundException;
+import symbolTable.SymbolTable;
+import symbolTable.SymbolTableItem;
+import symbolTable.SymbolTableVariableItemBase;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import static ast.VisitorImpl.symbol_table_items;
 
 public class Assign extends Statement {
     private Expression lValue;
@@ -33,6 +44,27 @@ public class Assign extends Statement {
         this.rValue = rValue;
     }
 
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        ArrayList<String> byte_code = new ArrayList<String>();
+        if(lValue instanceof Identifier){
+            if(SymbolTable.top.getInCurrentScope("#Variable_" + ((Identifier) lValue).getName()) == null)
+            {
+                 byte_code.add("aload_0");
+            }
+        }
+
+        if(rValue instanceof Identifier)
+            byte_code.addAll(((Identifier) rValue).to_byte_code("right"));
+        else
+            byte_code.addAll(rValue.to_byte_code());
+
+        if(lValue instanceof Identifier)
+            byte_code.addAll(((Identifier) lValue).to_byte_code("left"));
+
+        return byte_code;
+    }
     @Override
     public String toString() {
         return "Assign";

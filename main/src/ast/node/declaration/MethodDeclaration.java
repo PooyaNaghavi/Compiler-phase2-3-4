@@ -106,7 +106,7 @@ public class MethodDeclaration extends Declaration {
 
         int variables_count = this.args.size() + this.localVars.size();
         byte_code.add(".limit stack " + Integer.toString(variables_count + 20));
-        byte_code.add(".limit locals " + Integer.toString(variables_count+1));
+        byte_code.add(".limit locals " + Integer.toString(variables_count + 2));
 
         return byte_code;
 

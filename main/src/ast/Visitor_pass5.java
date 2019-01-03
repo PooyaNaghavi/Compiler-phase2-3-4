@@ -10,6 +10,9 @@ import ast.node.expression.Value.BooleanValue;
 import ast.node.expression.Value.IntValue;
 import ast.node.expression.Value.StringValue;
 import ast.node.statement.*;
+import symbolTable.ItemAlreadyExistsException;
+import symbolTable.SymbolTable;
+import symbolTable.SymbolTableVariableItemBase;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,6 +25,8 @@ public class Visitor_pass5 extends VisitorImpl {
 
     public ArrayList<ArrayList<String>> lines = new ArrayList<ArrayList<String>>();
     public boolean is_class = false;
+    public SymbolTable symbolTable_top;
+    public int method_index = 1;
 
     public void writeUsingFiles(ArrayList<String> class_lines, String class_name) {
         try {
@@ -57,6 +62,7 @@ public class Visitor_pass5 extends VisitorImpl {
 
     @Override
     public void visit(Program program) {
+        symbolTable_top = SymbolTable.top;
         program.getMainClass().accept(this);
         writeUsingFiles(lines.get(lines.size() - 1), program.getMainClass().getName().getName());
         writeUsingFiles(java_main_gen(program.getMainClass().getName().getName()), "JavaMain");
@@ -70,12 +76,14 @@ public class Visitor_pass5 extends VisitorImpl {
     public void visit(ClassDeclaration classDeclaration) {
 
         lines.add(classDeclaration.to_byte_code());
+        String className = classDeclaration.getName().getName();
 
         classDeclaration.getName().accept(this);
 
         if (classDeclaration.getParentName() != null) {
             classDeclaration.getParentName().accept(this);
         }
+        SymbolTable.push(symbol_table_items.get(className));
 
         for (VarDeclaration varDec : classDeclaration.getVarDeclarations()) {
             is_class = true;
@@ -90,10 +98,16 @@ public class Visitor_pass5 extends VisitorImpl {
         for (MethodDeclaration methodDec : classDeclaration.getMethodDeclarations()) {
             methodDec.accept(this);
         }
+        SymbolTable.pop();
     }
 
     @Override
     public void visit(MethodDeclaration methodDeclaration) {
+
+        SymbolTable top = SymbolTable.top;
+        SymbolTable currentMethod = new SymbolTable();
+        currentMethod.setPre(top);
+        SymbolTable.push(currentMethod);
 
         ArrayList<String> method_byte_code = lines.get(lines.size() - 1);
         method_byte_code.addAll(methodDeclaration.to_byte_code());
@@ -103,10 +117,13 @@ public class Visitor_pass5 extends VisitorImpl {
 
         for (VarDeclaration argDec : methodDeclaration.getArgs()) {
             argDec.accept(this);
+            method_index += 1;
         }
         for (VarDeclaration localVarDec : methodDeclaration.getLocalVars()) {
             localVarDec.accept(this);
+            method_index += 1;
         }
+        method_index = 0;
         for (Statement stmt : methodDeclaration.getBody()) {
             stmt.accept(this);
         }
@@ -115,21 +132,25 @@ public class Visitor_pass5 extends VisitorImpl {
         method_byte_code = lines.get(lines.size() - 1);
         method_byte_code.addAll(methodDeclaration.return_byte_code());
         lines.set(lines.size() - 1, method_byte_code);
-
+        SymbolTable.pop();
 
     }
 
     @Override
     public void visit(VarDeclaration varDeclaration) {
 
+        String varName = varDeclaration.getIdentifier().getName();
         if (is_class) {
             ArrayList<String> variable_byte_code = lines.get(lines.size() - 1);
             variable_byte_code.addAll(varDeclaration.to_byte_code());
             lines.set(lines.size() - 1, variable_byte_code);
         }
+        SymbolTableVariableItemBase variable_item = new SymbolTableVariableItemBase(varName, varDeclaration.getType(), method_index);
+        try {
+            SymbolTable.top.put(variable_item);
+        } catch (ItemAlreadyExistsException e) { }
 
         varDeclaration.getIdentifier().accept(this);
-
     }
 
     @Override
@@ -208,6 +229,10 @@ public class Visitor_pass5 extends VisitorImpl {
         if (!(assign.getlValue() == null || assign.getrValue() == null)) {
             assign.getlValue().accept(this);
             assign.getrValue().accept(this);
+
+            ArrayList<String> assign_byte_code = lines.get(lines.size() - 1);
+            assign_byte_code.addAll(assign.to_byte_code());
+            lines.set(lines.size() - 1, assign_byte_code);
 
         } else if (assign.getrValue() != null) {
             assign.getrValue().accept(this);

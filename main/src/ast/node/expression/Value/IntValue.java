@@ -28,7 +28,9 @@ public class IntValue extends Value {
 
     @Override
     public ArrayList<String> to_byte_code() {
-        return null;
+        ArrayList<String> byte_code = new ArrayList<String>();
+        byte_code.add("ldc " + Integer.toString(constant));
+        return byte_code;
     }
 
     @Override

@@ -77,12 +77,12 @@ public class ClassDeclaration extends Declaration{
             parent_name = this.parentName.getName();
         }
         else{
-            parent_name = "java/lang/Object/<init>";
+            parent_name = "java/lang/Object";
         }
 
         byte_code.add(".method public <init>()V");
         byte_code.add("aload_0");
-        byte_code.add("invokespecial " + parent_name + "()V");
+        byte_code.add("invokespecial " + parent_name + "/<init>()V");
         byte_code.add("return");
         byte_code.add(".end method");
 
