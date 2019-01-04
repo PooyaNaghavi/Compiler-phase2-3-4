@@ -40,7 +40,7 @@ public class Identifier extends Expression {
 
     @Override
     public ArrayList<String>to_byte_code() {
-        return null;
+        return to_byte_code("right");
     }
 
     public ArrayList<String> to_byte_code(String left_or_right) {

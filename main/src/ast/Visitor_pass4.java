@@ -268,6 +268,7 @@ public class Visitor_pass4 extends VisitorImpl{
                 //errors.put(Integer.valueOf(expression.get_line_number()), ":ArrayCall index is not Integer" );
             }
             if(instance_type instanceof ArrayType){
+                expression.setType(new IntType());
                 return new IntType();
             }else {
                 SymbolTable.error = true;

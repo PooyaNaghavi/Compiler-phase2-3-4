@@ -42,7 +42,17 @@ public class ArrayCall extends Expression {
 
     @Override
     public ArrayList<String> to_byte_code() {
-        return null;
+        return to_byte_code("right");
+    }
+
+    public ArrayList<String> to_byte_code(String right_or_left) {
+        ArrayList<String> byte_code = new ArrayList<String>();
+        byte_code.addAll(instance.to_byte_code());
+        byte_code.addAll(index.to_byte_code());
+        if(right_or_left.equals("right"))
+            byte_code.add("iaload");
+        else { }
+        return byte_code;
     }
 
     @Override

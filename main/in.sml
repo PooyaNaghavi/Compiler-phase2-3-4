@@ -7,9 +7,12 @@ class MainClass{
 
  class SecondClass extends ThirdClass{
     var x : ThirdClass;
+    var b : int[];
    def method(): int{
+       b = new int[10];
+       b[2] = 2;
        a = x.m();
-       writeln(a);
+       writeln(b[2]);
        return 23;
    }
   }

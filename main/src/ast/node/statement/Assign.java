@@ -2,6 +2,7 @@ package ast.node.statement;
 
 import ast.Type.Type;
 import ast.Visitor;
+import ast.node.expression.ArrayCall;
 import ast.node.expression.Expression;
 import ast.node.expression.Identifier;
 import symbolTable.ItemNotFoundException;
@@ -54,14 +55,21 @@ public class Assign extends Statement {
                  byte_code.add("aload_0");
             }
         }
-
+        if(lValue instanceof ArrayCall)
+        {
+            byte_code.addAll(((ArrayCall)lValue).to_byte_code("left"));
+        }
         if(rValue instanceof Identifier)
             byte_code.addAll(((Identifier) rValue).to_byte_code("right"));
+        else if(rValue instanceof ArrayCall)
+            byte_code.addAll(((ArrayCall) rValue).to_byte_code("right"));
         else
             byte_code.addAll(rValue.to_byte_code());
 
         if(lValue instanceof Identifier)
             byte_code.addAll(((Identifier) lValue).to_byte_code("left"));
+        else if(lValue instanceof ArrayCall)
+            byte_code.add("iastore");
 
         return byte_code;
     }

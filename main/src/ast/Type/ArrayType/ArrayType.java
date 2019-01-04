@@ -5,10 +5,7 @@ import ast.Type.Type;
 public class ArrayType extends Type {
     private int size;
 
-    public ArrayType()
-    {
-
-    }
+    public ArrayType() { }
     @Override
     public String toString() {
         return "int[]";
