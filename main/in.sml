@@ -11,14 +11,17 @@ class MainClass{
     var c : ThirdClass;
     var d : boolean;
     var e : int;
+    var f : boolean;
    def method(): int{
        #b = new int[10];
        #b[2] = 2;
        #a = x.m();
        d = !false;
-       e = -(-2);
+       f = 3 <> 2;
+       #f = e < 3;
        #c = new ThirdClass();
-       writeln(e);
+       #writeln(e);
+       writeln(f);
        return 23;
    }
   }
