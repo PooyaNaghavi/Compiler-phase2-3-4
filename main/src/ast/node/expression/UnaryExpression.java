@@ -37,7 +37,17 @@ public class UnaryExpression extends Expression {
 
     @Override
     public ArrayList<String> to_byte_code() {
-        return null;
+        ArrayList<String> byte_code = new ArrayList<String>();
+
+        if(unaryOperator.equals(UnaryOperator.minus)) {
+            byte_code.addAll(value.to_byte_code());
+            byte_code.add("ineg");
+        }else if(unaryOperator.equals(UnaryOperator.not)){
+            byte_code.add("ldc 1");
+            byte_code.addAll(value.to_byte_code());
+            byte_code.add("isub");
+        }
+        return byte_code;
     }
 
     @Override

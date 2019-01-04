@@ -13,7 +13,7 @@ public class BooleanValue extends Value {
         this.type = type;
     }
     public int get_constant(){
-        return constant ? 1:0;
+        return constant ? 1 : 0;
     }
     public boolean isConstant() {
         return constant;
@@ -30,7 +30,9 @@ public class BooleanValue extends Value {
 
     @Override
     public ArrayList<String> to_byte_code() {
-        return null;
+        ArrayList<String> byte_code = new ArrayList<String>();
+        byte_code.add("ldc " + Integer.toString(get_constant()));
+        return byte_code;
     }
 
     @Override

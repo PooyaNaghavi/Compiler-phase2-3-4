@@ -26,7 +26,11 @@ public class NewClass extends Expression {
 
     @Override
     public ArrayList<String> to_byte_code() {
-        return null;
+        ArrayList<String> byte_code = new ArrayList<String>();;
+        byte_code.add("new " + className.getName());
+        byte_code.add("dup");
+        byte_code.add("invokespecial " + className.getName() + "/<init>()V");
+        return byte_code;
     }
 
     @Override

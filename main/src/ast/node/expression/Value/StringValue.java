@@ -28,7 +28,9 @@ public class StringValue extends Value {
 
     @Override
     public ArrayList<String> to_byte_code() {
-        return null;
+        ArrayList<String> byte_code = new ArrayList<String>();
+        byte_code.add("ldc " + constant);
+        return byte_code;
     }
 
     @Override

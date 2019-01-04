@@ -9,6 +9,6 @@ return
 .method public m()I
 .limit stack 20
 .limit locals 2
-ldc 5
+ldc 11
 ireturn
 .end method

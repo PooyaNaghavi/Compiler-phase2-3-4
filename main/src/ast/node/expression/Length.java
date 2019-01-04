@@ -26,7 +26,10 @@ public class Length extends Expression {
 
     @Override
     public ArrayList<String> to_byte_code() {
-        return null;
+        ArrayList<String> byte_code = new ArrayList<String>();
+        byte_code.addAll(expression.to_byte_code());
+        byte_code.add("arraylength");
+        return byte_code;
     }
 
     @Override

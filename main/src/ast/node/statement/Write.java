@@ -43,16 +43,12 @@ public class Write extends Statement {
         ArrayList<String> byte_code = new ArrayList<String>();
         byte_code.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
 
-        if (this.arg instanceof StringValue)
-            byte_code.add("ldc " + ((StringValue) this.arg).getConstant());
-        else if (this.arg instanceof IntValue)
-            byte_code.add("ldc " + ((IntValue) this.arg).getConstant());
-        else if (this.arg instanceof BooleanValue)
-            byte_code.add("ldc " + ((BooleanValue) this.arg).get_constant());
-        else if  (this.arg instanceof Identifier)
+        if (this.arg instanceof Identifier)
             byte_code.addAll(((Identifier)arg).to_byte_code("right"));
         else if (this.arg instanceof ArrayCall)
             byte_code.addAll(((ArrayCall)arg).to_byte_code("right"));
+        else
+            byte_code.addAll(arg.to_byte_code());
         byte_code.add("invokevirtual java/io/PrintStream/println("+ arg.getType().to_byte_code() + ")V");
         return byte_code;
     }

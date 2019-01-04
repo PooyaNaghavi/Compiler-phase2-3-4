@@ -194,7 +194,7 @@ public class Visitor_pass4 extends VisitorImpl{
 
     public Type binary_subType(Type left_expression_type, Type right_expression_type, BinaryOperator op){
         if(op.equals(BinaryOperator.eq) || op.equals(BinaryOperator.neq)) {
-            if(!((left_expression_type instanceof  NoType || right_expression_type instanceof NoType) ||
+            if(!((left_expression_type instanceof NoType || right_expression_type instanceof NoType) ||
                     ((left_expression_type.toString().equals(right_expression_type.toString())) &&
                     (left_expression_type instanceof IntType || left_expression_type instanceof ArrayType ||
                             left_expression_type instanceof StringType || left_expression_type instanceof UserDefinedType ||
@@ -243,21 +243,27 @@ public class Visitor_pass4 extends VisitorImpl{
                 add_error(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
                 //errors.put(Integer.valueOf(line_number), ":unsupported operand type for " + op.toString());
                 return new NoType();
-            }else
+            }else {
                 return new BooleanType();
+            }
         }
         return new NoType();
 
     }
 
     public Type get_type(Expression expression){
-        if(expression instanceof IntValue)
+        if(expression instanceof IntValue) {
+            expression.setType(new IntType());
             return new IntType();
-        if(expression instanceof BooleanValue)
+        }
+        if(expression instanceof BooleanValue) {
+            expression.setType(new BooleanType());
             return new BooleanType();
-        if(expression instanceof StringValue)
+        }
+        if(expression instanceof StringValue) {
+            expression.setType(new StringType());
             return new StringType();
-
+        }
         if(expression instanceof ArrayCall) {
             Type instance_type = get_type(((ArrayCall) expression).getInstance());
             Type index_type = get_type(((ArrayCall) expression).getIndex());
@@ -295,9 +301,11 @@ public class Visitor_pass4 extends VisitorImpl{
                     add_error(Integer.valueOf(line_number), ":left side of assignment must be a valid lvalue");
                     return new NoType();
                 }else{
+                    expression.setType(left_type);
                     return left_type;
                 }
             }
+            expression.setType(result);
             return result;
 
         }
@@ -333,6 +341,7 @@ public class Visitor_pass4 extends VisitorImpl{
         if(expression instanceof Length) {
             Type exp_type = get_type(((Length) expression).getExpression());
             if(exp_type instanceof ArrayType || exp_type instanceof NoType){
+                expression.setType(new IntType());
                 return new IntType();
             }else {
                 SymbolTable.error = true;
@@ -390,6 +399,7 @@ public class Visitor_pass4 extends VisitorImpl{
                                                     return_type = class_defined;
                                                     add_error(Integer.valueOf(expression.get_line_number()), "classNoType " + ((MethodCall) expression).getMethodName().getName());
                                                     ((MethodCall) expression).getMethodName().setType(return_type);
+                                                    expression.setType(return_type);
                                                     return return_type;
                                                 }
                                             }
@@ -397,6 +407,7 @@ public class Visitor_pass4 extends VisitorImpl{
                                         }
                                         add_error(Integer.valueOf(expression.get_line_number()), "classNoType " + ((MethodCall) expression).getMethodName().getName());
                                         ((MethodCall) expression).getMethodName().setType(return_type);
+                                        expression.setType(return_type);
                                         return return_type;
                                     }
                                 }
@@ -444,6 +455,7 @@ public class Visitor_pass4 extends VisitorImpl{
         }
         if(expression instanceof NewArray) {
             //It doesn't have any error
+            expression.setType(new ArrayType());
             return new ArrayType();
         }
         if(expression instanceof  NewClass) {
@@ -453,6 +465,7 @@ public class Visitor_pass4 extends VisitorImpl{
                 if(new_class_symbolTable != null){
                     for(UserDefinedType class_defined : class_defined_declaration){
                         if(class_defined.getName().getName().equals(((NewClass) expression).getClassName().getName())){
+                            expression.setType(class_defined);
                             return class_defined;
                         }
                     }
@@ -475,6 +488,7 @@ public class Visitor_pass4 extends VisitorImpl{
                 if(symbol_table_items.get(key) == SymbolTable.top.getPre()){
                     for(UserDefinedType user_defined : class_defined_declaration){
                         if(user_defined.getName().getName().equals(key)){
+                            expression.setType(user_defined);
                             return user_defined;
                         }
                     }
@@ -486,6 +500,7 @@ public class Visitor_pass4 extends VisitorImpl{
             Type unary_expression_type = get_type(((UnaryExpression) expression).getValue());
             UnaryOperator op = ((UnaryExpression) expression).getUnaryOperator();
             line_number = expression.get_line_number();
+            expression.setType(unary_subType(unary_expression_type, op));
             return unary_subType(unary_expression_type, op);
         }
         return new NoType();
