@@ -2,6 +2,9 @@ package ast.node.expression;
 import ast.Type.PrimitiveType.BooleanType;
 import ast.Type.PrimitiveType.IntType;
 import ast.Visitor;
+import ast.node.statement.Assign;
+import symbolTable.SymbolTable;
+
 import java.util.ArrayList;
 
 public class BinaryExpression extends Expression {
@@ -9,6 +12,7 @@ public class BinaryExpression extends Expression {
     private Expression left;
     private Expression right;
     private BinaryOperator binaryOperator;
+    private static int lable_index = 0;
 
     public BinaryExpression(Expression left, Expression right, BinaryOperator binaryOperator) {
         this.left = left;
@@ -72,37 +76,59 @@ public class BinaryExpression extends Expression {
             if(binaryOperator.equals(BinaryOperator.lt)){
                 byte_code.add("swap");
             }
-            byte_code.add("if_icmple ELSE");
+            byte_code.add("if_icmple ELSE" + Integer.toString(lable_index));
             byte_code.add("ldc 1");
-            byte_code.add("goto END");
-            byte_code.add("ELSE :");
+            byte_code.add("goto END" + Integer.toString(lable_index));
+            byte_code.add("ELSE" + Integer.toString(lable_index) + " :");
             byte_code.add("ldc 0");
-            byte_code.add("END :");
+            byte_code.add("END" + Integer.toString(lable_index) + " :");
+            lable_index ++;
         } else if(binaryOperator.equals(BinaryOperator.or)){
-
+            byte_code.addAll(left.to_byte_code());
+            byte_code.add("ifne ELSE" + Integer.toString(lable_index));
+            byte_code.addAll(right.to_byte_code());
+            byte_code.add("ifne ELSE" + Integer.toString(lable_index));
+            byte_code.add("ldc 0");
+            byte_code.add("goto END" + Integer.toString(lable_index));
+            byte_code.add("ELSE" + Integer.toString(lable_index) + " :");
+            byte_code.add("ldc 1");
+            byte_code.add("END" + Integer.toString(lable_index) + " :");
+            lable_index ++;
         } else if(binaryOperator.equals(BinaryOperator.and)){
-
+            byte_code.addAll(left.to_byte_code());
+            byte_code.add("ifeq ELSE" + Integer.toString(lable_index));
+            byte_code.addAll(right.to_byte_code());
+            byte_code.add("ifeq ELSE" + Integer.toString(lable_index));
+            byte_code.add("ldc 1");
+            byte_code.add("goto END" + Integer.toString(lable_index));
+            byte_code.add("ELSE" + Integer.toString(lable_index) + " :");
+            byte_code.add("ldc 0");
+            byte_code.add("END" + Integer.toString(lable_index) + " :");
+            lable_index++;
         } else if(binaryOperator.equals(BinaryOperator.eq) || binaryOperator.equals(BinaryOperator.neq)) {
             byte_code.addAll(left.to_byte_code());
             byte_code.addAll(right.to_byte_code());
             if (left.getType() instanceof IntType || left.getType() instanceof BooleanType) {
                 if (binaryOperator.equals(BinaryOperator.neq))
-                    byte_code.add("if_icmpeq ELSE");
+                    byte_code.add("if_icmpeq ELSE" + Integer.toString(lable_index));
                 else
-                    byte_code.add("if_icmpne ELSE");
+                    byte_code.add("if_icmpne ELSE" + Integer.toString(lable_index));
             } else {
                 if (binaryOperator.equals(BinaryOperator.neq))
-                    byte_code.add("if_acmpeq ELSE");
+                    byte_code.add("if_acmpeq ELSE" + Integer.toString(lable_index));
                 else
-                    byte_code.add("if_acmpne ELSE");
+                    byte_code.add("if_acmpne ELSE" + Integer.toString(lable_index));
             }
             byte_code.add("ldc 1");
-            byte_code.add("goto END");
-            byte_code.add("ELSE :");
+            byte_code.add("goto END" + Integer.toString(lable_index));
+            byte_code.add("ELSE" + Integer.toString(lable_index) + " :");
             byte_code.add("ldc 0");
-            byte_code.add("END :");
+            byte_code.add("END" + Integer.toString(lable_index) + " :");
+            lable_index ++;
         } else if(binaryOperator.equals(BinaryOperator.assign)){
-
+            Assign assignment = new Assign(left, right);
+            byte_code.addAll(assignment.to_byte_code());
+            byte_code.addAll(right.to_byte_code());
         }
         return byte_code;
     }

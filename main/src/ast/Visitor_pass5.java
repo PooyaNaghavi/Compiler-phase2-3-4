@@ -123,7 +123,7 @@ public class Visitor_pass5 extends VisitorImpl {
             localVarDec.accept(this);
             method_index += 1;
         }
-        method_index = 0;
+        method_index = 1;
         for (Statement stmt : methodDeclaration.getBody()) {
             stmt.accept(this);
         }

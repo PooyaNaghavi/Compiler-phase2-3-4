@@ -10,18 +10,22 @@ class MainClass{
     var b : int[];
     var c : ThirdClass;
     var d : boolean;
-    var e : int;
+    #var e : int;
     var f : boolean;
+    var g : int;
+    var e : int;
+    var h : int;
    def method(): int{
        #b = new int[10];
        #b[2] = 2;
        #a = x.m();
-       d = !false;
-       f = 3 <> 2;
+       #d = !false;
+       #f = (2 + 3) < 3 || false;
+       e = g = h = 2;
        #f = e < 3;
        #c = new ThirdClass();
-       #writeln(e);
-       writeln(f);
+       writeln(e);
+       #writeln(f);
        return 23;
    }
   }

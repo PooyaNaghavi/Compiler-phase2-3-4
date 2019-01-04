@@ -4,8 +4,10 @@
 .field protected b [I
 .field protected c LThirdClass;
 .field protected d Z
-.field protected e I
 .field protected f Z
+.field protected g I
+.field protected e I
+.field protected h I
 .method public <init>()V
 aload_0
 invokespecial ThirdClass/<init>()V
@@ -15,24 +17,21 @@ return
 .limit stack 20
 .limit locals 2
 aload_0
-ldc 1
-ldc 0
-isub
-putfield SecondClass/d Z
 aload_0
-ldc 3
+aload_0
 ldc 2
-if_icmpeq ELSE
-ldc 1
-goto END
-ELSE :
-ldc 0
-END :
-putfield SecondClass/f Z
+putfield SecondClass/h I
+ldc 2
+putfield SecondClass/g I
+aload_0
+ldc 2
+putfield SecondClass/h I
+ldc 2
+putfield SecondClass/e I
 getstatic java/lang/System/out Ljava/io/PrintStream;
 aload_0
-getfield SecondClass/f Z
-invokevirtual java/io/PrintStream/println(Z)V
+getfield SecondClass/e I
+invokevirtual java/io/PrintStream/println(I)V
 ldc 23
 ireturn
 .end method
