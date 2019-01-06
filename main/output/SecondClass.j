@@ -77,11 +77,10 @@ getstatic java/lang/System/out Ljava/io/PrintStream;
 ldc 4
 invokevirtual java/io/PrintStream/println(I)V
 END_IF_0 :
-getstatic java/lang/System/out Ljava/io/PrintStream
+getstatic java/lang/System/out Ljava/io/PrintStream;
 aload_0
 getfield SecondClass/b [I
-invokestatic java/util/Arrays.toString([I)Ljava/lang/String
-invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+invokevirtual java/io/PrintStream/println([I)V
 new ThirdClass
 dup
 invokespecial ThirdClass/<init>()V

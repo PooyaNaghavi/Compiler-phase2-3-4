@@ -116,7 +116,7 @@ public class MethodDeclaration extends Declaration {
 
         ArrayList<String> byte_code = new ArrayList<String>();
         byte_code.addAll(returnValue.to_byte_code());
-        if(returnType instanceof IntType)
+        if(returnType instanceof IntType ||returnType instanceof BooleanType)
             byte_code.add("ireturn");
         else
             byte_code.add("areturn");
