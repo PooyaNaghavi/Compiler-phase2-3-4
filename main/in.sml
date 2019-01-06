@@ -1,7 +1,7 @@
 class MainClass{
   def main(): int{
       #writeln(new ThirdClass().m());
-      new SecondClass().method();
+      new SecondClass().method(3);
       return 23;
   }
  }
@@ -18,10 +18,11 @@ class MainClass{
     var e : int;
     var h : int;
     var i : int;
-   def method(): ThirdClass{
-       b = new int[10];
+   def method(s : int): ThirdClass{
+       b = new int[2];
        #aa = new int[10];
-       b[2] = 2;
+       b[0] = 2;
+       b[1] = 3;
        #a = x.m();
        #d = !false;
        #f = (2 + 3) < 3 || false;
@@ -31,7 +32,7 @@ class MainClass{
        #f = (3 < 2) || (3 > 2);
        #f = e < 3;
        #c = new ThirdClass();
-       i = this.method2().m();
+       i = this.method2().m(5);
        #if(g > 2) then
        #{
         #  g = 1;
@@ -45,7 +46,7 @@ class MainClass{
        #writeln(b[2]);
        #writeln(g > 2);
        #writeln(new ThirdClass().m());
-       writeln(this.method2());
+       writeln(i);
        return new ThirdClass();
    }
    def method2(): ThirdClass{
@@ -55,7 +56,9 @@ class MainClass{
 
   class ThirdClass {
     var a : int;
-    def m(): int {
-        return 11;
+    def m(s : int): int {
+        a = 5;
+        s = a;
+        return s;
     }
   }

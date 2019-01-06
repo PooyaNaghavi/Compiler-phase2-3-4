@@ -49,10 +49,15 @@ public class MethodCall extends Expression {
         ArrayList<String> byte_code = new ArrayList<String>();
         Type instance_type = instance.getType();
 
-        byte_code.add("new " + instance_type);
-        byte_code.add("dup");
-        byte_code.add("invokespecial " + instance_type + "/<init>()V");
-        byte_code.add("invokevirtual " + instance_type + "/" + methodName.getName() + "()" + methodName.getType().to_byte_code());
+//        byte_code.add("new " + instance_type);
+//        byte_code.add("dup");
+        byte_code.addAll(instance.to_byte_code());
+        String args_type = "";
+        for(Expression arg : args){
+            byte_code.addAll(arg.to_byte_code());
+            args_type += arg.getType().to_byte_code();
+        }
+        byte_code.add("invokevirtual " + instance_type + "/" + methodName.getName() + "(" + args_type + ")" + methodName.getType().to_byte_code());
         return byte_code;
     }
 

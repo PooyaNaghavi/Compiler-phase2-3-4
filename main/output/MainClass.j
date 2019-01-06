@@ -11,7 +11,7 @@ return
 new SecondClass
 dup
 invokespecial SecondClass/<init>()V
-invokevirtual SecondClass/method()LThirdClass;
-ldc 23
+invokevirtual SecondClass/method()I
+ldc 0
 ireturn
 .end method
