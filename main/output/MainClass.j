@@ -9,11 +9,13 @@ return
 .limit stack 20
 .limit locals 2
 getstatic java/lang/System/out Ljava/io/PrintStream;
-new sag
+new Tataloo
 dup
-invokespecial sag/<init>()V
+invokespecial Tataloo/<init>()V
 ldc 12
-invokevirtual sag/sex1(I)I
+ldc "s"
+ldc 2
+invokevirtual Tataloo/sex(ILjava/lang/String;I)I
 invokevirtual java/io/PrintStream/println(I)V
 ldc 0
 ireturn

@@ -1,7 +1,6 @@
 .class public sag
 .super java/lang/Object
 .field protected ff Lsag;
-.field protected p [I
 .method public <init>()V
 aload_0
 invokespecial java/lang/Object/<init>()V
@@ -10,25 +9,12 @@ return
 .method public sex1(I)I
 .limit stack 21
 .limit locals 3
-aload_0
-ldc 2
-newarray int
-putfield sag/p [I
-aload_0
-getfield sag/p [I
-ldc 0
-ldc 1
-iastore
-aload_0
-getfield sag/p [I
-ldc 1
-ldc 1
-iastore
-getstatic java/lang/System/out Ljava/io/PrintStream;
-aload_0
-getfield sag/p [I
-invokestatic java/util/Arrays.toString([I)Ljava/lang/String;
-invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 ldc 10
+ireturn
+.end method
+.method public sex2()Z
+.limit stack 20
+.limit locals 2
+ldc 1
 ireturn
 .end method

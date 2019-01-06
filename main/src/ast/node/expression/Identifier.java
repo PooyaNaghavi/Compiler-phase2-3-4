@@ -1,5 +1,6 @@
 package ast.node.expression;
 
+import ast.Type.PrimitiveType.BooleanType;
 import ast.Type.PrimitiveType.IntType;
 import ast.Type.Type;
 import ast.Visitor;
@@ -51,7 +52,7 @@ public class Identifier extends Expression {
             if (local_param instanceof SymbolTableVariableItemBase) {
                 Type local_param_type = ((SymbolTableVariableItemBase) local_param).getType();
                 int local_param_index = ((SymbolTableVariableItemBase) local_param).getIndex();
-                if (local_param_type instanceof IntType) {
+                if (local_param_type instanceof IntType || local_param_type instanceof BooleanType) {
                     if (left_or_right.equals("right"))
                         byte_code.add("iload " + Integer.toString(local_param_index));
                     else

@@ -1,19 +1,32 @@
 class MainClass{
  def main(): int{
-   writeln((new sag().sex1(12)));
+   writeln((new Tataloo().sex(12,"s", 2)));
     return 0;
  }
 }
-class sag {
-    var ff : sag;
-    var p: int [];
- def sex1(x : int): int{
-        p = new int[2];
-        p[0] = 1;
-        p[1] = 1;
-        writeln(p);
+class Tataloo extends sag{
+
+var xx: MainClass;
+    def sex(x:int, f:string, h:int): int{
+        var jj : boolean ;
+        h = (new sag().sex1(2));
+        xx = new MainClass();
+        jj = new sag().sex2();
+        writeln(10+33);
+        writeln((new sag().sex1(2)));
         return 10;
     }
 
+}
+class sag {
+var ff : sag;
+ def sex1(x : int): int{
+
+        return 10;
+    }
+    def sex2(): boolean{
+
+            return true;
+        }
 
 }
