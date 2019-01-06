@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class While extends Statement {
     private Expression condition;
     private Statement body;
+    private static int lable_index = 0;
 
     public While(Expression condition, Statement body) {
         this.condition = condition;
@@ -32,7 +33,15 @@ public class While extends Statement {
 
     @Override
     public ArrayList<String> to_byte_code() {
-        return null;
+        ArrayList<String> byte_code = new ArrayList<String>();
+        byte_code.add("BEGIN_WHILE_" + Integer.toString(lable_index) + " :");
+        byte_code.addAll(condition.to_byte_code());
+        byte_code.add("ifeq END_WHILE_" + Integer.toString(lable_index));
+        byte_code.addAll(body.to_byte_code());
+        byte_code.add("goto BEGIN_WHILE_" + Integer.toString(lable_index));
+        byte_code.add("END_WHILE_" + Integer.toString(lable_index) + " :");
+        lable_index ++;
+        return byte_code;
     }
 
     @Override

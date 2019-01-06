@@ -267,7 +267,10 @@ public class Visitor_pass5 extends VisitorImpl {
     @Override
     public void visit(While loop) {
         loop.getCondition().accept(this);
-        loop.getBody().accept(this);
+        //loop.getBody().accept(this);
+        ArrayList<String> loop_byte_code = lines.get(lines.size() - 1);
+        loop_byte_code.addAll(loop.to_byte_code());
+        lines.set(lines.size() - 1, loop_byte_code);
     }
 
     @Override

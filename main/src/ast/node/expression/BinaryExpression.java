@@ -128,7 +128,7 @@ public class BinaryExpression extends Expression {
         } else if(binaryOperator.equals(BinaryOperator.assign)){
             Assign assignment = new Assign(left, right);
             byte_code.addAll(assignment.to_byte_code());
-            byte_code.addAll(right.to_byte_code());
+            byte_code.addAll(left.to_byte_code());
         }
         return byte_code;
     }

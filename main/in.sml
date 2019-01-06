@@ -29,17 +29,20 @@ class MainClass{
        #f = (3 < 2) || (3 > 2);
        #f = e < 3;
        #c = new ThirdClass();
-       g = 3;
+       g = 6;
        #if(g > 2) then
        #{
         #  g = 1;
          # writeln(g = 5);
        #}
+       while((g = g - 1) > 3){
+            writeln(g);
+       }
        #writeln(g + 2);
        #writeln(g);
        #writeln(b[2]);
        #writeln(g > 2);
-       3writeln(new ThirdClass().m());
+       #writeln(new ThirdClass().m());
        #writeln(f);
        return new ThirdClass();
    }
