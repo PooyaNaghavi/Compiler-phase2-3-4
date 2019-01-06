@@ -53,14 +53,14 @@ public class Identifier extends Expression {
                 int local_param_index = ((SymbolTableVariableItemBase) local_param).getIndex();
                 if (local_param_type instanceof IntType) {
                     if (left_or_right.equals("right"))
-                        byte_code.add("iload_" + Integer.toString(local_param_index));
+                        byte_code.add("iload " + Integer.toString(local_param_index));
                     else
-                        byte_code.add("istore_" + Integer.toString(local_param_index));
+                        byte_code.add("istore " + Integer.toString(local_param_index));
                 } else {
                     if (left_or_right.equals("right"))
-                        byte_code.add("aload_" + Integer.toString(local_param_index));
+                        byte_code.add("aload " + Integer.toString(local_param_index));
                     else
-                        byte_code.add("astore_" + Integer.toString(local_param_index));
+                        byte_code.add("astore " + Integer.toString(local_param_index));
                 }
             }
         }

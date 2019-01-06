@@ -23,9 +23,9 @@ class MainClass{
        #aa = new int[10];
        b[0] = 2;
        b[1] = 3;
-       #a = x.m();
-       #d = !false;
-       #f = (2 + 3) < 3 || false;
+       a = x.m();
+       d = !false;
+       f = (2 + 3) < 3 || false;
        #aa[1] = 1;
        #b[1] = 10;
        #e = (aa = b)[1] + 2;

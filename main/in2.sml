@@ -12,7 +12,7 @@ class MainClass{
    var arr_size : int;
    var temp : int;
    def method(): int{
-    arr = new int[10];
+    arr = new int[6];
     arr[0] = 12;
     arr[1] = 11;
     arr[2] = 13;
