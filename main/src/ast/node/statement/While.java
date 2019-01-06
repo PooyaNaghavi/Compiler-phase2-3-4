@@ -3,6 +3,8 @@ package ast.node.statement;
 import ast.Visitor;
 import ast.node.expression.Expression;
 
+import java.util.ArrayList;
+
 public class While extends Statement {
     private Expression condition;
     private Statement body;
@@ -26,6 +28,11 @@ public class While extends Statement {
 
     public void setBody(Statement body) {
         this.body = body;
+    }
+
+    @Override
+    public ArrayList<String> to_byte_code() {
+        return null;
     }
 
     @Override

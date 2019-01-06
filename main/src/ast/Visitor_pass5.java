@@ -198,9 +198,7 @@ public class Visitor_pass5 extends VisitorImpl {
 
     @Override
     public void visit(This instance) {
-        ArrayList<String> this_byte_code = lines.get(lines.size() - 1);
-        this_byte_code.addAll(instance.to_byte_code());
-        lines.set(lines.size() - 1, this_byte_code);
+        //TODO check this
     }
 
     @Override
@@ -253,9 +251,12 @@ public class Visitor_pass5 extends VisitorImpl {
     @Override
     public void visit(Conditional conditional) {
         conditional.getExpression().accept(this);
-        conditional.getConsequenceBody().accept(this);
-        if (conditional.getAlternativeBody() != null)
-            conditional.getAlternativeBody().accept(this);
+//        conditional.getConsequenceBody().accept(this);
+//        if (conditional.getAlternativeBody() != null)
+//            conditional.getAlternativeBody().accept(this);
+        ArrayList<String> conditional_byte_code = lines.get(lines.size() - 1);
+        conditional_byte_code.addAll(conditional.to_byte_code());
+        lines.set(lines.size() - 1, conditional_byte_code);
     }
 
     @Override

@@ -42,6 +42,11 @@ public class MethodCallInMain extends Statement {
     }
 
     @Override
+    public ArrayList<String> to_byte_code() {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return "MethodCallInMain";
     }
