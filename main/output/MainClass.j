@@ -14,7 +14,11 @@ dup
 invokespecial Tataloo/<init>()V
 ldc 12
 ldc "s"
+<<<<<<< HEAD
 ldc 1
+=======
+ldc 2
+>>>>>>> 4f7ed848764a6a0587ff32c6678c4d5c25678890
 invokevirtual Tataloo/sex(ILjava/lang/String;I)I
 invokevirtual java/io/PrintStream/println(I)V
 ldc 0

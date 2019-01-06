@@ -1,13 +1,13 @@
 
 class MainClass{
  def main(): int{
-   writeln((new Tataloo().sex(12, "s", 1)));
+    writeln((new Tataloo().sex(12, "s", 1)));
     return 0;
  }
 }
 class Tataloo extends sag{
 
-    var xx: MainClass;
+var xx: MainClass;
     def sex(x:int, f:string, h:int): int{
         var jj : boolean ;
         h = (new sag().sex1(2));
