@@ -44,7 +44,13 @@ public class Write extends Statement {
         ArrayList<String> byte_code = new ArrayList<String>();
         byte_code.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
         byte_code.addAll(arg.to_byte_code());
-        byte_code.add("invokevirtual java/io/PrintStream/println("+ arg.getType().to_byte_code() + ")V");
+        if (!(arg.getType() instanceof ArrayType))
+            byte_code.add("invokevirtual java/io/PrintStream/println("+ arg.getType().to_byte_code() + ")V");
+        else {
+            byte_code.add("invokestatic java/util/Arrays.toString([I)Ljava/lang/String;");
+            byte_code.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
+
+        }
         return byte_code;
     }
 }
