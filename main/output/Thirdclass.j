@@ -14,7 +14,7 @@ ldc 5
 putfield ThirdClass/a I
 aload_0
 getfield ThirdClass/a I
-istore_1
-iload_1
+istore 1
+iload 1
 ireturn
 .end method

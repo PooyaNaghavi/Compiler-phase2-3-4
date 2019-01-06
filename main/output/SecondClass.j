@@ -229,8 +229,8 @@ aload_0
 getfield SecondClass/array [I
 iload 2
 ldc 1
-iload 5
 iadd
+iload 5
 iadd
 iaload
 iastore

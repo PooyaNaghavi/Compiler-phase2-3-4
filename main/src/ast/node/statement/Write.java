@@ -1,5 +1,6 @@
 package ast.node.statement;
 
+import ast.Type.ArrayType.ArrayType;
 import ast.Type.PrimitiveType.StringType;
 import ast.Visitor;
 import ast.node.expression.ArrayCall;

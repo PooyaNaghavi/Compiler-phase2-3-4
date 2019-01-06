@@ -66,7 +66,7 @@ class MainClass{
         var R : int[];
         var x : int;
 
-        n1 = (m - l) + 1;
+        n1 = m - l + 1;
         n2 = r - m;
 
         i = 0;

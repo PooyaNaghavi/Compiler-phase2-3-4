@@ -126,205 +126,160 @@ grammar Smoola;
 	  ;
 
     expressionOr returns[Expression syn_expression_or]:
-  		exp_and = expressionAnd exp_or_temp = expressionOrTemp
-      {
-
-        if($exp_or_temp.syn_expression_or_temp == null)
-            $syn_expression_or = $exp_and.syn_expression_and;
-        else
-            $syn_expression_or = new BinaryExpression($exp_and.syn_expression_and, $exp_or_temp.syn_expression_or_temp, BinaryOperator.or);
-
+  		exp_and = expressionAnd exp_or_temp = expressionOrTemp[$exp_and.syn_expression_and]
+        {
+            $syn_expression_or = $exp_or_temp.syn_expression_or_temp;
         }
   	;
 
-    expressionOrTemp returns[Expression syn_expression_or_temp, String syn_or_op]:
-  		or_op = '||' exp_and = expressionAnd exp_or_temp = expressionOrTemp
+    expressionOrTemp[Expression inh_expression_or] returns[Expression syn_expression_or_temp, String syn_or_op]:
+  		or_op = '||' exp_and = expressionAnd
+  		{
+  		    BinaryExpression realorExpr = new BinaryExpression( $inh_expression_or , $exp_and.syn_expression_and , BinaryOperator.or );
+  		}
+  		exp_or_temp = expressionOrTemp[realorExpr]
         {
-            if($exp_or_temp.syn_expression_or_temp == null) {
-                $syn_expression_or_temp = $exp_and.syn_expression_and;
-                $syn_or_op = $or_op.text;
-            }
-            else {
-                $syn_or_op = $or_op.text;
-                $syn_expression_or_temp = new BinaryExpression($exp_and.syn_expression_and, $exp_or_temp.syn_expression_or_temp, BinaryOperator.or);
-            }
+            $syn_expression_or_temp = $exp_or_temp.syn_expression_or_temp;
             $syn_expression_or_temp.set_line_num($or_op.getLine());
             global_line = $or_op.getLine();
         }
-  	    |
+  	    |{$syn_expression_or_temp = inh_expression_or;}
     ;
     expressionAnd returns[Expression syn_expression_and]:
-  		exp_eq = expressionEq exp_and_temp =expressionAndTemp
+  	   exp_eq = expressionEq exp_and_temp =expressionAndTemp[$exp_eq.syn_expression_eq]
       {
-        if($exp_and_temp.syn_expression_and_temp == null)
-            $syn_expression_and = $exp_eq.syn_expression_eq;
-        else
-            $syn_expression_and = new BinaryExpression($exp_eq.syn_expression_eq, $exp_and_temp.syn_expression_and_temp, BinaryOperator.and);
+        $syn_expression_and = $exp_and_temp.syn_expression_and_temp;
       }
   	;
-    expressionAndTemp returns[Expression syn_expression_and_temp, String syn_and_op]:
-  		and_op = '&&' exp_eq = expressionEq exp_and_temp = expressionAndTemp
+    expressionAndTemp[Expression inh_expression_and] returns[Expression syn_expression_and_temp, String syn_and_op]:
+  		and_op = '&&' exp_eq = expressionEq
         {
-          if($exp_and_temp.syn_expression_and_temp == null)
-          {
-              $syn_expression_and_temp = $exp_eq.syn_expression_eq;
-              $syn_and_op = $and_op.text;
-          }
-          else
-          {
-              $syn_and_op = $and_op.text;
-              $syn_expression_and_temp = new BinaryExpression($exp_eq.syn_expression_eq, $exp_and_temp.syn_expression_and_temp, BinaryOperator.and);
-          }
+            BinaryExpression realandExpr = new BinaryExpression( $inh_expression_and , $exp_eq.syn_expression_eq , BinaryOperator.and );
+        }
+  		exp_and_temp = expressionAndTemp[realandExpr]
+        {
+          $syn_expression_and_temp = $exp_and_temp.syn_expression_and_temp;
           $syn_expression_and_temp.set_line_num($and_op.getLine());
           global_line = $and_op.getLine();
 
       }
-  	  |
+  	  |{$syn_expression_and_temp = inh_expression_and;}
   	;
     expressionEq returns[Expression syn_expression_eq]:
-  		exp_cmp = expressionCmp exp_eq_temp = expressionEqTemp
+  		exp_cmp = expressionCmp exp_eq_temp = expressionEqTemp[$exp_cmp.syn_expression_cmp]
       {
-       if($exp_eq_temp.syn_expression_eq_temp == null)
-          $syn_expression_eq = $exp_cmp.syn_expression_cmp;
-      else {
-           if($exp_eq_temp.syn_eq_op.equals("=="))
-               $syn_expression_eq = new BinaryExpression($exp_cmp.syn_expression_cmp, $exp_eq_temp.syn_expression_eq_temp, BinaryOperator.eq);
-           else if($exp_eq_temp.syn_eq_op.equals("<>"))
-               $syn_expression_eq = new BinaryExpression($exp_cmp.syn_expression_cmp, $exp_eq_temp.syn_expression_eq_temp, BinaryOperator.neq);
-       }
-     }
+           $syn_expression_eq = $exp_eq_temp.syn_expression_eq_temp;
+      }
   	;
 
-    expressionEqTemp returns[Expression syn_expression_eq_temp, String syn_eq_op]:
-  		op_eq = ('==' | '<>') exp_cmp = expressionCmp exp_eq_temp = expressionEqTemp
+    expressionEqTemp[Expression inh_expression_eq] returns[Expression syn_expression_eq_temp, String syn_eq_op]:
+  		op_eq = ('==' | '<>') exp_cmp = expressionCmp
+  		{
+  		    BinaryOperator cmpBinOp = BinaryOperator.eq;
+  		    if( $op_eq.text.equals( "==" ))
+                cmpBinOp = BinaryOperator.eq;
+            else if( $op_eq.text.equals( "<>" ))
+                cmpBinOp = BinaryOperator.neq;
+            BinaryExpression realeqExpr = new BinaryExpression( $inh_expression_eq , $exp_cmp.syn_expression_cmp ,  cmpBinOp );
+  		}
+  		exp_eq_temp = expressionEqTemp[realeqExpr]
         {
-          if($exp_eq_temp.syn_expression_eq_temp == null) {
-              $syn_expression_eq_temp = $exp_cmp.syn_expression_cmp;
-              $syn_eq_op = $op_eq.text;
-          }
-          else {
-              $syn_eq_op = $op_eq.text;
-              if($exp_eq_temp.syn_eq_op.equals("==")){
-                  $syn_expression_eq_temp = new BinaryExpression($exp_cmp.syn_expression_cmp, $exp_eq_temp.syn_expression_eq_temp, BinaryOperator.eq);
-              }
-              else if($exp_eq_temp.syn_eq_op.equals("<>")){
-                  $syn_expression_eq_temp = new BinaryExpression($exp_cmp.syn_expression_cmp, $exp_eq_temp.syn_expression_eq_temp, BinaryOperator.neq);
-              }
-          }
+          $syn_expression_eq_temp = $exp_eq_temp.syn_expression_eq_temp;
           $syn_expression_eq_temp.set_line_num($op_eq.getLine());
           global_line = $op_eq.getLine();
 
       }
-  	  |
+  	  | {$syn_expression_eq_temp = $inh_expression_eq;}
   	;
 
     expressionCmp returns[Expression syn_expression_cmp]:
-  		exp_add = expressionAdd exp_cmp_temp = expressionCmpTemp
+  	exp_add = expressionAdd exp_cmp_temp = expressionCmpTemp[$exp_add.syn_expression_add]
       {
-        if($exp_cmp_temp.syn_expression_cmp_temp == null)
-            $syn_expression_cmp = $exp_add.syn_expression_add;
-        else {
-            if($exp_cmp_temp.syn_cmp_op.equals(">"))
-                $syn_expression_cmp = new BinaryExpression($exp_add.syn_expression_add, $exp_cmp_temp.syn_expression_cmp_temp, BinaryOperator.gt);
-            else if($exp_cmp_temp.syn_cmp_op.equals("<"))
-                $syn_expression_cmp = new BinaryExpression($exp_add.syn_expression_add, $exp_cmp_temp.syn_expression_cmp_temp, BinaryOperator.lt);
-        }
+        $syn_expression_cmp = $exp_cmp_temp.syn_expression_cmp_temp;
       }
   	;
 
-    expressionCmpTemp returns[Expression syn_expression_cmp_temp, String syn_cmp_op]:
-  		op_cmp = ('<' | '>') exp_add = expressionAdd exp_cmp_temp = expressionCmpTemp
-      {
-          if($exp_cmp_temp.syn_expression_cmp_temp == null) {
-              $syn_expression_cmp_temp = $exp_add.syn_expression_add;
-              $syn_cmp_op = $op_cmp.text;
-          }
-          else {
-                $syn_cmp_op = $op_cmp.text;
-                if($exp_cmp_temp.syn_cmp_op.equals(">")){
-                  $syn_expression_cmp_temp = new BinaryExpression($exp_add.syn_expression_add, $exp_cmp_temp.syn_expression_cmp_temp, BinaryOperator.gt);
-              }
-              else if($exp_cmp_temp.syn_cmp_op.equals("<")){
-                  $syn_expression_cmp_temp = new BinaryExpression($exp_add.syn_expression_add, $exp_cmp_temp.syn_expression_cmp_temp, BinaryOperator.lt);
-              }
-          }
+    expressionCmpTemp[Expression inh_expression_cmp] returns[Expression syn_expression_cmp_temp, String syn_cmp_op]:
+  		op_cmp = ('<' | '>') exp_add = expressionAdd
+  		{
+  		    BinaryOperator cmpBinOp = BinaryOperator.gt;
+            if( $op_cmp.text.equals( ">" ) )
+                cmpBinOp = BinaryOperator.gt;
+            else if( $op_cmp.text.equals( "<" ) )
+                cmpBinOp = BinaryOperator.lt;
+
+             BinaryExpression realcmpExpr = new BinaryExpression( $inh_expression_cmp , $exp_add.syn_expression_add ,  cmpBinOp );
+  		}
+  	    exp_cmp_temp = expressionCmpTemp[realcmpExpr]
+        {
+
+          $syn_expression_cmp_temp = $exp_cmp_temp.syn_expression_cmp_temp;
           $syn_expression_cmp_temp.set_line_num($op_cmp.getLine());
           global_line = $op_cmp.getLine();
-      }
-  	  |
+        }
+  	  | {$syn_expression_cmp_temp = $inh_expression_cmp;}
 
   	;
 
     expressionAdd returns[Expression syn_expression_add]:
-  		exp_mult = expressionMult exp_add_temp = expressionAddTemp
+  		exp_mult = expressionMult exp_add_temp = expressionAddTemp[$exp_mult.syn_expression_mult]
       {
-          if($exp_add_temp.syn_expression_add_temp == null)
-                $syn_expression_add = $exp_mult.syn_expression_mult;
-          else {
-              if($exp_add_temp.syn_add_op.equals("+"))
-                  $syn_expression_add = new BinaryExpression($exp_mult.syn_expression_mult, $exp_add_temp.syn_expression_add_temp, BinaryOperator.add);
-              else if($exp_add_temp.syn_add_op.equals("-"))
-                  $syn_expression_add = new BinaryExpression($exp_mult.syn_expression_mult, $exp_add_temp.syn_expression_add_temp, BinaryOperator.sub);
-          }
+          $syn_expression_add = $exp_add_temp.syn_expression_add_temp;
       }
   	;
 
-    expressionAddTemp returns[Expression syn_expression_add_temp, String syn_add_op]:
-  		op_add = ('+' | '-') exp_mult = expressionMult exp_temp_add = expressionAddTemp
+    expressionAddTemp[Expression inh_expression_add] returns[Expression syn_expression_add_temp, String syn_add_op]:
+  		op_add = ('+' | '-') exp_mult = expressionMult
+  		{
+  		    BinaryOperator addBinOp = BinaryOperator.add;
+  		    if( $op_add.text.equals( "+" ) )
+                addBinOp = BinaryOperator.add;
+            else if( $op_add.text.equals( "-" ) )
+                addBinOp = BinaryOperator.sub;
+
+             BinaryExpression realaddExpr = new BinaryExpression( $inh_expression_add , $exp_mult.syn_expression_mult ,  addBinOp );
+  		}
+
+  		exp_temp_add = expressionAddTemp[realaddExpr]
         {
-          if($exp_temp_add.syn_expression_add_temp == null) {
-              $syn_expression_add_temp = $exp_mult.syn_expression_mult;
-              $syn_add_op = $op_add.text;
-          }
-          else {
-              $syn_add_op = $op_add.text;
-              if($exp_temp_add.syn_add_op.equals("+")){
-                  $syn_expression_add_temp = new BinaryExpression($exp_mult.syn_expression_mult, $exp_temp_add.syn_expression_add_temp, BinaryOperator.add);
-              }
-              else if($exp_temp_add.syn_add_op.equals("-")){
-                  $syn_expression_add_temp = new BinaryExpression($exp_mult.syn_expression_mult, $exp_temp_add.syn_expression_add_temp, BinaryOperator.sub);
-              }
-          }
+          $syn_expression_add_temp = $exp_temp_add.syn_expression_add_temp;
           $syn_expression_add_temp.set_line_num($op_add.getLine());
           global_line = $op_add.getLine();
-      }
-  	  |
+        }
+  	  | {$syn_expression_add_temp = $inh_expression_add;}
   	;
     expressionMult returns[Expression syn_expression_mult]:
 
-  		exp_unary = expressionUnary exp_mult_temp = expressionMultTemp
+  		exp_unary = expressionUnary exp_mult_temp = expressionMultTemp[$exp_unary.syn_expression_unary]
       {
-        if($exp_mult_temp.syn_expression_mult_temp == null)
-            $syn_expression_mult = $exp_unary.syn_expression_unary;
-        else {
-          if($exp_mult_temp.syn_mult_op.equals("*"))
-              $syn_expression_mult = new BinaryExpression($exp_unary.syn_expression_unary, $exp_mult_temp.syn_expression_mult_temp, BinaryOperator.mult );
-          else if($exp_mult_temp.syn_mult_op.equals("/"))
-              $syn_expression_mult = new BinaryExpression($exp_unary.syn_expression_unary, $exp_mult_temp.syn_expression_mult_temp, BinaryOperator.div );
-        }
+         $syn_expression_mult = $exp_mult_temp.syn_expression_mult_temp;
       }
   	;
 
-expressionMultTemp returns[Expression syn_expression_mult_temp, String syn_mult_op]:
-  		op_mult = ('*' | '/') exp_unary = expressionUnary exp_mult_temp = expressionMultTemp
-      {
-          if($exp_mult_temp.syn_expression_mult_temp == null) {
-              $syn_expression_mult_temp = $exp_unary.syn_expression_unary;
-              $syn_mult_op = $op_mult.text;
-          }
-          else {
-              $syn_mult_op = $op_mult.text;
-              if($exp_mult_temp.syn_mult_op.equals("*")){
-                  $syn_expression_mult_temp = new BinaryExpression($exp_unary.syn_expression_unary, $exp_mult_temp.syn_expression_mult_temp, BinaryOperator.mult);
-              }
-              else if($exp_mult_temp.syn_mult_op.equals("/")){
-                  $syn_expression_mult_temp = new BinaryExpression($exp_unary.syn_expression_unary, $exp_mult_temp.syn_expression_mult_temp, BinaryOperator.div);
-              }
-          }
-          $syn_expression_mult_temp.set_line_num($op_mult.getLine());
-          global_line = $op_mult.getLine();
-      }
-  	  |
+    expressionMultTemp [Expression inh_expressiopn_mult] returns[Expression syn_expression_mult_temp, String syn_mult_op]:
+  		op_mult = ('*' | '/') exp_unary = expressionUnary
+  		 {
+
+           //$syn_expression_mult_temp = $exp_unary.syn_expression_unary;
+           BinaryOperator multBinOp = BinaryOperator.mult;
+           if( $op_mult.text.equals( "*" ) )
+               multBinOp = BinaryOperator.mult;
+           else if( $op_mult.text.equals( "/" ) )
+               multBinOp = BinaryOperator.div;
+           BinaryExpression realMultExpr = new BinaryExpression( $inh_expressiopn_mult , $exp_unary.syn_expression_unary ,  multBinOp );
+           $syn_mult_op = $op_mult.text;
+
+  	     }
+
+  		 exp_mult_temp = expressionMultTemp[realMultExpr]
+         {
+               $syn_expression_mult_temp = $exp_mult_temp.syn_expression_mult_temp;
+               $syn_expression_mult_temp.set_line_num($op_mult.getLine());
+                           global_line = $op_mult.getLine();
+         }
+
+  	  | {$syn_expression_mult_temp = $inh_expressiopn_mult;}
+
   	;
 
     expressionUnary returns[Expression syn_expression_unary]:
