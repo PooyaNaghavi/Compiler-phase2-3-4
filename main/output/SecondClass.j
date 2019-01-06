@@ -14,12 +14,38 @@ aload_0
 invokespecial ThirdClass/<init>()V
 return
 .end method
-.method public method()I
+.method public method()LThirdClass;
 .limit stack 20
 .limit locals 2
 aload_0
+ldc 10
+newarray int
+putfield SecondClass/b [I
+aload_0
+getfield SecondClass/b [I
+ldc 2
+ldc 2
+iastore
+aload_0
 ldc 3
 putfield SecondClass/g I
+getstatic java/lang/System/out Ljava/io/PrintStream;
+aload_0
+getfield SecondClass/g I
+ldc 2
+iadd
+invokevirtual java/io/PrintStream/println(I)V
+getstatic java/lang/System/out Ljava/io/PrintStream;
+aload_0
+getfield SecondClass/g I
+invokevirtual java/io/PrintStream/println(I)V
+getstatic java/lang/System/out Ljava/io/PrintStream;
+aload_0
+getfield SecondClass/b [I
+ldc 2
+iaload
+invokevirtual java/io/PrintStream/println(I)V
+getstatic java/lang/System/out Ljava/io/PrintStream;
 aload_0
 getfield SecondClass/g I
 ldc 2
@@ -29,21 +55,15 @@ goto END0
 ELSE0 :
 ldc 0
 END0 :
-ifeq ELSE_IF_0
-aload_0
-ldc 1
-putfield SecondClass/g I
+invokevirtual java/io/PrintStream/println(Z)V
 getstatic java/lang/System/out Ljava/io/PrintStream;
-aload_0
-ldc 5
-putfield SecondClass/g I
-ldc 5
+new ThirdClass
+dup
+invokespecial ThirdClass/<init>()V
+invokevirtual ThirdClass/m()I
 invokevirtual java/io/PrintStream/println(I)V
-ELSE_IF_0 :
-getstatic java/lang/System/out Ljava/io/PrintStream;
-aload_0
-getfield SecondClass/g I
-invokevirtual java/io/PrintStream/println(I)V
-ldc 23
-ireturn
+new ThirdClass
+dup
+invokespecial ThirdClass/<init>()V
+areturn
 .end method

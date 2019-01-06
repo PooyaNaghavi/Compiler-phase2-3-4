@@ -115,10 +115,9 @@ public class MethodDeclaration extends Declaration {
     public ArrayList<String> return_byte_code() {
 
         ArrayList<String> byte_code = new ArrayList<String>();
-        if(returnType instanceof IntType) {
-            byte_code.add("ldc " + (((IntValue) returnValue).getConstant()));
+        byte_code.addAll(returnValue.to_byte_code());
+        if(returnType instanceof IntType)
             byte_code.add("ireturn");
-        }
         else
             byte_code.add("areturn");
 

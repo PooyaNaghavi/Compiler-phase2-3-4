@@ -14,7 +14,7 @@ invokevirtual java/io/PrintStream/println(Z)V
 new SecondClass
 dup
 invokespecial SecondClass/<init>()V
-invokevirtual SecondClass/method()I
+invokevirtual SecondClass/method()LThirdClass;
 
 ldc 23
 ireturn

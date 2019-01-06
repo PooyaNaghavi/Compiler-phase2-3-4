@@ -16,10 +16,10 @@ class MainClass{
     var g : int;
     var e : int;
     var h : int;
-   def method(): int{
-       #b = new int[10];
+   def method(): ThirdClass{
+       b = new int[10];
        #aa = new int[10];
-       #b[2] = 2;
+       b[2] = 2;
        #a = x.m();
        #d = !false;
        #f = (2 + 3) < 3 || false;
@@ -30,15 +30,18 @@ class MainClass{
        #f = e < 3;
        #c = new ThirdClass();
        g = 3;
-       if(g > 2) then
-       {
-          g = 1;
-          writeln(g = 5);
-       }
-            writeln(g);
-
+       #if(g > 2) then
+       #{
+        #  g = 1;
+         # writeln(g = 5);
+       #}
+       #writeln(g + 2);
+       #writeln(g);
+       #writeln(b[2]);
+       #writeln(g > 2);
+       3writeln(new ThirdClass().m());
        #writeln(f);
-       return 23;
+       return new ThirdClass();
    }
   }
 
