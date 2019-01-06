@@ -19,6 +19,9 @@ class MainClass{
     var h : int;
     var i : int;
    def method(s : int): ThirdClass{
+       b = new int[2];
+       b[0] = 1;
+       b[1] = 2;
        #aa = new int[10];
        #aa[1] = 1;
        #b[1] = 10;
@@ -44,6 +47,8 @@ class MainClass{
            writeln(5);
         else
            writeln(4);
+
+       writeln(b);
 
        return new ThirdClass();
    }
