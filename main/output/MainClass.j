@@ -8,19 +8,10 @@ return
 .method public main()I
 .limit stack 20
 .limit locals 2
-getstatic java/lang/System/out Ljava/io/PrintStream;
-new Tataloo
+new SecondClass
 dup
-invokespecial Tataloo/<init>()V
-ldc 12
-ldc "s"
-<<<<<<< HEAD
-ldc 1
-=======
-ldc 2
->>>>>>> 4f7ed848764a6a0587ff32c6678c4d5c25678890
-invokevirtual Tataloo/sex(ILjava/lang/String;I)I
-invokevirtual java/io/PrintStream/println(I)V
+invokespecial SecondClass/<init>()V
+invokevirtual SecondClass/method()I
 ldc 0
 ireturn
 .end method
