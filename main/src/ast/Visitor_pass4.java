@@ -523,7 +523,9 @@ public class Visitor_pass4 extends VisitorImpl{
     @Override
     public void visit(Program program) {
         symbolTable_top = SymbolTable.top;
+        main_class_flag = true;
         program.getMainClass().accept(this);
+        main_class_flag = false;
         for (ClassDeclaration classDec : program.getClasses()) {
             classDec.accept(this);
         }
@@ -533,21 +535,17 @@ public class Visitor_pass4 extends VisitorImpl{
     @Override
     public void visit(ClassDeclaration classDeclaration) {
         String className = classDeclaration.getName().getName();
-        if(className.equals(class_defined_declaration.get(1).getName().getName())){
-            ArrayList <MethodDeclaration> methods = classDeclaration.getMethodDeclarations();
-            if(methods.size() == 1){
-                if(!(methods.get(0).getName().getName().equals("main"))){
+        if(className.equals(class_defined_declaration.get(1).getName().getName())) {
+            ArrayList<MethodDeclaration> methods = classDeclaration.getMethodDeclarations();
+            if (methods.size() == 1) {
+                if (!(methods.get(0).getName().getName().equals("main"))) {
                     SymbolTable.error = true;
                     add_error(Integer.valueOf(classDeclaration.get_line_number()), ":method name of main class should be \"main\"");
                 }
-            }else
-            {
+            } else {
                 SymbolTable.error = true;
                 add_error(Integer.valueOf(classDeclaration.get_line_number()), ":main class should have one method");
             }
-        }
-        if(classDeclaration.getName().getName().equals(class_defined_declaration.get(1).getName().getName())){
-            main_class_flag = true;
         }
         classDeclaration.getName().accept(this);
 
@@ -573,7 +571,6 @@ public class Visitor_pass4 extends VisitorImpl{
         for(MethodDeclaration methodDec : classDeclaration.getMethodDeclarations()) {
             methodDec.accept(this);
         }
-        main_class_flag = false;
         SymbolTable.pop();
     }
 

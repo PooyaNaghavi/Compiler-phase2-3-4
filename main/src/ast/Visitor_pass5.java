@@ -63,9 +63,11 @@ public class Visitor_pass5 extends VisitorImpl {
     @Override
     public void visit(Program program) {
         symbolTable_top = SymbolTable.top;
-        program.getMainClass().accept(this);
-        writeUsingFiles(lines.get(lines.size() - 1), program.getMainClass().getName().getName());
         writeUsingFiles(java_main_gen(program.getMainClass().getName().getName()), "JavaMain");
+        main_class_flag = true;
+        program.getMainClass().accept(this);
+        main_class_flag = false;
+        writeUsingFiles(lines.get(lines.size() - 1), program.getMainClass().getName().getName());
         for (ClassDeclaration classDec : program.getClasses()) {
             classDec.accept(this);
             writeUsingFiles(lines.get(lines.size() - 1), classDec.getName().getName());
@@ -234,6 +236,11 @@ public class Visitor_pass5 extends VisitorImpl {
 
         } else if (assign.getrValue() != null) {
             assign.getrValue().accept(this);
+            if(assign.getrValue() instanceof MethodCall && main_class_flag) {
+                ArrayList<String> methodCall_byte_code = lines.get(lines.size() - 1);
+                methodCall_byte_code.addAll(assign.getrValue().to_byte_code());
+                lines.set(lines.size() - 1, methodCall_byte_code);
+            }
 
         } else if (assign.getlValue() != null) {
             assign.getlValue().accept(this);

@@ -7,15 +7,11 @@ return
 .end method
 .method public main()I
 .limit stack 20
-.limit locals 1
-getstatic java/lang/System/out Ljava/io/PrintStream;
-ldc 1
-invokevirtual java/io/PrintStream/println(Z)V
+.limit locals 2
 new SecondClass
 dup
 invokespecial SecondClass/<init>()V
 invokevirtual SecondClass/method()LThirdClass;
-
 ldc 23
 ireturn
 .end method

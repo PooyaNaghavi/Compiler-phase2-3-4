@@ -9,6 +9,7 @@
 .field protected g I
 .field protected e I
 .field protected h I
+.field protected i I
 .method public <init>()V
 aload_0
 invokespecial ThirdClass/<init>()V
@@ -27,8 +28,11 @@ ldc 2
 ldc 2
 iastore
 aload_0
-ldc 6
-putfield SecondClass/g I
+new ThirdClass
+dup
+invokespecial ThirdClass/<init>()V
+invokevirtual ThirdClass/m()I
+putfield SecondClass/i I
 BEGIN_WHILE_0 :
 aload_0
 aload_0
@@ -52,6 +56,20 @@ getfield SecondClass/g I
 invokevirtual java/io/PrintStream/println(I)V
 goto BEGIN_WHILE_0
 END_WHILE_0 :
+getstatic java/lang/System/out Ljava/io/PrintStream;
+new SecondClass
+dup
+invokespecial SecondClass/<init>()V
+invokevirtual SecondClass/method2()LThirdClass;
+invokevirtual java/io/PrintStream/println(LThirdClass;)V
+new ThirdClass
+dup
+invokespecial ThirdClass/<init>()V
+areturn
+.end method
+.method public method2()LThirdClass;
+.limit stack 20
+.limit locals 2
 new ThirdClass
 dup
 invokespecial ThirdClass/<init>()V

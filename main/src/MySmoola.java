@@ -46,8 +46,24 @@ public class MySmoola {
         p.accept(pass5);
         SymbolTable.pass5_error = true;
 
+        HashMap<Integer, ArrayList<String>> dumb_erorrs = visitor.getErrors();
         if(SymbolTable.error == false){
             SymbolTable.has_error = false;
+        }
+        else {
+            boolean dumb_error_flag = false;
+            ArrayList<Integer> keys = new ArrayList(dumb_erorrs.keySet());
+            for (Integer i : keys)
+            {
+                ArrayList<String> error_temp = dumb_erorrs.get(i);
+                for(String error : error_temp) {
+                    if(error_temp != null)
+                        dumb_error_flag = true;
+                }
+            }
+
+            if(dumb_error_flag == false)
+                SymbolTable.has_error = false;
         }
         if(SymbolTable.has_error == false)
             p.accept(visitor);
