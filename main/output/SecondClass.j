@@ -19,7 +19,7 @@ return
 .limit stack 21
 .limit locals 3
 aload_0
-ldc 2
+ldc 4
 newarray int
 putfield SecondClass/b [I
 aload_0
@@ -31,6 +31,16 @@ aload_0
 getfield SecondClass/b [I
 ldc 1
 ldc 2
+iastore
+aload_0
+getfield SecondClass/b [I
+ldc 2
+ldc 3
+iastore
+aload_0
+getfield SecondClass/b [I
+ldc 3
+ldc 4
 iastore
 BEGIN_WHILE_0 :
 aload_0
@@ -80,7 +90,8 @@ END_IF_0 :
 getstatic java/lang/System/out Ljava/io/PrintStream;
 aload_0
 getfield SecondClass/b [I
-invokevirtual java/io/PrintStream/println([I)V
+invokestatic java/util/Arrays.toString([I)Ljava/lang/String;
+invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 new ThirdClass
 dup
 invokespecial ThirdClass/<init>()V
