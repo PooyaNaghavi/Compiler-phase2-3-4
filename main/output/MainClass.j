@@ -8,10 +8,17 @@ return
 .method public main()I
 .limit stack 20
 .limit locals 2
-new SecondClass
+getstatic java/lang/System/out Ljava/io/PrintStream;
+new sag
 dup
-invokespecial SecondClass/<init>()V
-invokevirtual SecondClass/method()I
+invokespecial sag/<init>()V
+ldc 10
+invokevirtual sag/sex2(I)Lsag;
+ldc 10
+invokevirtual sag/sex2(I)Lsag;
+ldc 12
+invokevirtual sag/sex1(I)I
+invokevirtual java/io/PrintStream/println(I)V
 ldc 0
 ireturn
 .end method

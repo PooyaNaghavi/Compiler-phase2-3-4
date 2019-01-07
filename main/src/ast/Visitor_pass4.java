@@ -585,6 +585,19 @@ public class Visitor_pass4 extends VisitorImpl{
             add_error(Integer.valueOf(methodDeclaration.get_line_number()), ":main function should be in main class");
         }
         boolean flag = false;
+
+        for(VarDeclaration argDec : methodDeclaration.getArgs()) {
+            argDec.accept(this);
+
+        }
+        for(VarDeclaration localVarDec : methodDeclaration.getLocalVars()) {
+            localVarDec.accept(this);
+        }
+        for(Statement stmt : methodDeclaration.getBody()) {
+            stmt.accept(this);
+        }
+        methodDeclaration.getReturnValue().accept(this);
+
         Type return_value_type = get_type(methodDeclaration.getReturnValue());
         Type return_type = methodDeclaration.getReturnType();
         if(return_type instanceof UserDefinedType) {
@@ -608,17 +621,6 @@ public class Visitor_pass4 extends VisitorImpl{
                 }
             }
         }
-        for(VarDeclaration argDec : methodDeclaration.getArgs()) {
-            argDec.accept(this);
-
-        }
-        for(VarDeclaration localVarDec : methodDeclaration.getLocalVars()) {
-            localVarDec.accept(this);
-        }
-        for(Statement stmt : methodDeclaration.getBody()) {
-            stmt.accept(this);
-        }
-        methodDeclaration.getReturnValue().accept(this);
         SymbolTable.pop();
     }
 
