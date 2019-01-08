@@ -16,7 +16,7 @@ ldc 10
 invokevirtual sag/sex2(I)Lsag;
 ldc 10
 invokevirtual sag/sex2(I)Lsag;
-ldc 12
+ldc 120
 invokevirtual sag/sex1(I)I
 invokevirtual java/io/PrintStream/println(I)V
 ldc 0
