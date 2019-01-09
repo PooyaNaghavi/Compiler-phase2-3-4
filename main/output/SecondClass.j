@@ -1,9 +1,9 @@
 .class public SecondClass
 .super Object
-.field protected arr_size I
+.field protected arr_size I = 0
 .field protected array [I
 .field protected array2 [I
-.field protected temp I
+.field protected temp I = 0
 .method public <init>()V
 aload_0
 invokespecial Object/<init>()V
@@ -91,6 +91,8 @@ ireturn
 .limit locals 4
 ldc 0
 istore 2
+ldc 0
+istore 2
 BEGIN_WHILE_0 :
 iload 2
 iload 1
@@ -120,6 +122,10 @@ ireturn
 .method public mergeSort(II)[I
 .limit stack 25
 .limit locals 7
+ldc 0
+istore 3
+ldc 0
+istore 4
 ldc 6
 newarray int
 astore 5
@@ -166,6 +172,18 @@ areturn
 .method public merge(III)[I
 .limit stack 31
 .limit locals 13
+ldc 0
+istore 4
+ldc 0
+istore 5
+ldc 0
+istore 6
+ldc 0
+istore 7
+ldc 0
+istore 8
+ldc 0
+istore 11
 iload 2
 iload 1
 isub

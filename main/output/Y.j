@@ -1,6 +1,6 @@
 .class public Y
 .super Object
-.field protected secret Ljava/lang/String;
+.field protected secret Ljava/lang/String; = " "
 .method public <init>()V
 aload_0
 invokespecial Object/<init>()V

@@ -1,11 +1,11 @@
 .class public Helper
 .super Object
-.field protected b Z
-.field protected i I
-.field protected s Ljava/lang/String;
+.field protected b Z = 0
+.field protected i I = 0
+.field protected s Ljava/lang/String; = " "
 .field protected a [I
 .field protected x LX;
-.field protected tmp I
+.field protected tmp I = 0
 .method public <init>()V
 aload_0
 invokespecial Object/<init>()V
@@ -14,6 +14,8 @@ return
 .method public pow(II)I
 .limit stack 23
 .limit locals 5
+ldc 0
+istore 3
 iload 2
 ldc 0
 if_icmpne ELSE13
@@ -89,6 +91,8 @@ ireturn
 .method public changeAll2(II)I
 .limit stack 23
 .limit locals 5
+ldc 0
+istore 3
 aload_0
 aload_0
 ldc 31
@@ -96,7 +100,7 @@ ldc 3123
 invokevirtual Helper/someFunc(II)I
 putfield Helper/tmp I
 aload_0
-ldc 1000
+ldc 100
 newarray int
 putfield Helper/a [I
 ldc 0

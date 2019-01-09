@@ -1,5 +1,8 @@
 package ast.node.declaration;
 
+import ast.Type.PrimitiveType.BooleanType;
+import ast.Type.PrimitiveType.IntType;
+import ast.Type.PrimitiveType.StringType;
 import ast.Type.Type;
 import ast.Visitor;
 import ast.node.expression.Identifier;
@@ -45,7 +48,14 @@ public class VarDeclaration extends Declaration {
 
         ArrayList<String> byte_code = new ArrayList<String>();
 
-        byte_code.add(".field protected " + this.identifier.getName() + " " + this.type.to_byte_code());
+        if (type instanceof IntType)
+            byte_code.add(".field protected " + this.identifier.getName() + " " + this.type.to_byte_code() + " = 0");
+        else if (type instanceof StringType)
+            byte_code.add(".field protected " + this.identifier.getName() + " " + this.type.to_byte_code() + " = \" \"");
+        else if (type instanceof BooleanType)
+            byte_code.add(".field protected " + this.identifier.getName() + " " + this.type.to_byte_code() + " = 0");
+        else
+            byte_code.add(".field protected " + this.identifier.getName() + " " + this.type.to_byte_code());
         return byte_code;
     }
 

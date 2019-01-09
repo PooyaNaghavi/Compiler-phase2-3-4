@@ -1,6 +1,6 @@
 .class public X
 .super Y
-.field protected i I
+.field protected i I = 0
 .method public <init>()V
 aload_0
 invokespecial Y/<init>()V

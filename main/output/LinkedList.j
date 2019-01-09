@@ -1,7 +1,7 @@
 .class public LinkedList
 .super Object
 .field protected head LNode;
-.field protected tmp I
+.field protected tmp I = 0
 .method public <init>()V
 aload_0
 invokespecial Object/<init>()V

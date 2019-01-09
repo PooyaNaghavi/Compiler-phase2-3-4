@@ -1,16 +1,16 @@
 .class public XXX
 .super Object
-.field protected a Z
-.field protected b Z
-.field protected c I
-.field protected d Ljava/lang/String;
-.field protected k I
+.field protected a Z = 0
+.field protected b Z = 0
+.field protected c I = 0
+.field protected d Ljava/lang/String; = " "
+.field protected k I = 0
 .method public <init>()V
 aload_0
 invokespecial Object/<init>()V
 return
 .end method
-.method public ss()I
+.method public main()I
 .limit stack 23
 .limit locals 5
 new Helper

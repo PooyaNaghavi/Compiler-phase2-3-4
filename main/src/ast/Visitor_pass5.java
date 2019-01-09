@@ -118,7 +118,6 @@ public class Visitor_pass5 extends VisitorImpl {
         ArrayList<String> class_byte_code = lines.get(lines.size() - 1);
         class_byte_code.addAll(classDeclaration.constructor_byte_code());
         lines.set(lines.size() - 1, class_byte_code);
-
         for (MethodDeclaration methodDec : classDeclaration.getMethodDeclarations()) {
             methodDec.accept(this);
         }
@@ -145,9 +144,24 @@ public class Visitor_pass5 extends VisitorImpl {
         }
         for (VarDeclaration localVarDec : methodDeclaration.getLocalVars()) {
             localVarDec.accept(this);
+            if(!is_class) {
+                ArrayList<String> initial_byte_code = lines.get(lines.size() - 1);
+                if (localVarDec.getType() instanceof IntType) {
+                    Assign assignment = new Assign(localVarDec.getIdentifier(), new IntValue(0, new IntType()));
+                    initial_byte_code.addAll(assignment.to_byte_code());
+                } else if (localVarDec.getType() instanceof StringType) {
+                    Assign assignment = new Assign(localVarDec.getIdentifier(), new StringValue("\"\"", new StringType()));
+                    initial_byte_code.addAll(assignment.to_byte_code());
+                } else if (localVarDec.getType() instanceof BooleanType) {
+                    Assign assignment = new Assign(localVarDec.getIdentifier(), new BooleanValue(false, new BooleanType()));
+                    initial_byte_code.addAll(assignment.to_byte_code());
+                }
+                lines.set(lines.size() - 1, method_byte_code);
+            }
             method_index += 1;
         }
         method_index = 1;
+
         for (Statement stmt : methodDeclaration.getBody()) {
             stmt.accept(this);
         }
@@ -168,26 +182,14 @@ public class Visitor_pass5 extends VisitorImpl {
         if (is_class) {
             variable_byte_code.addAll(varDeclaration.to_byte_code());
         }
+        lines.set(lines.size() - 1, variable_byte_code);
 
         SymbolTableVariableItemBase variable_item = new SymbolTableVariableItemBase(varName, varDeclaration.getType(), method_index);
         try {
             SymbolTable.top.put(variable_item);
         } catch (ItemAlreadyExistsException e) { }
 
-        if(varDeclaration.getType() instanceof IntType){
-            Assign assignment = new Assign(varDeclaration.getIdentifier(), new IntValue(0, new IntType()));
-            variable_byte_code.addAll(assignment.to_byte_code());
-        }
-        else if(varDeclaration.getType() instanceof StringType)
-        {
-            Assign assignment = new Assign(varDeclaration.getIdentifier(), new StringValue("", new StringType()));
-            variable_byte_code.addAll(assignment.to_byte_code());
-        }
-        else if(varDeclaration.getType() instanceof BooleanType){
-            Assign assignment = new Assign(varDeclaration.getIdentifier(), new BooleanValue(false, new BooleanType()));
-            variable_byte_code.addAll(assignment.to_byte_code());
-        }
-        lines.set(lines.size() - 1, variable_byte_code);
+
 
         varDeclaration.getIdentifier().accept(this);
     }

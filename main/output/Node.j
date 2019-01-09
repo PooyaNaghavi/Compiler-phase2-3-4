@@ -1,8 +1,8 @@
 .class public Node
 .super Object
-.field protected hasNext Z
+.field protected hasNext Z = 0
 .field protected next LNode;
-.field protected data I
+.field protected data I = 0
 .method public <init>()V
 aload_0
 invokespecial Object/<init>()V
