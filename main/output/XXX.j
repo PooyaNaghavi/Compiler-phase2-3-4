@@ -13,10 +13,16 @@ return
 .method public main()I
 .limit stack 23
 .limit locals 5
+aload_0
+ldc ""
+putfield XXX/d Ljava/lang/String;
 new Helper
 dup
 invokespecial Helper/<init>()V
 astore 1
+getstatic java/lang/System/out Ljava/io/PrintStream;
+ldc "##########"
+invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 new LinkedList
 dup
 invokespecial LinkedList/<init>()V

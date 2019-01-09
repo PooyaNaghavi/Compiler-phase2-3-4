@@ -9,6 +9,13 @@ return
 .method public setI(I)I
 .limit stack 21
 .limit locals 3
+aload_0
+ldc ""
+aload_0
+ldc ""
+aload_0
+ldc ""
+putfield X/secret Ljava/lang/String;
 iload 1
 istore 1
 iload 1

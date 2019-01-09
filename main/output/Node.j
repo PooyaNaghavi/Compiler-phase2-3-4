@@ -12,6 +12,12 @@ return
 .limit stack 20
 .limit locals 2
 aload_0
+ldc ""
+aload_0
+ldc ""
+aload_0
+ldc ""
+aload_0
 ldc 0
 putfield Node/hasNext Z
 aload_0

@@ -16,6 +16,11 @@ return
 .limit locals 5
 ldc 0
 istore 3
+aload_0
+ldc ""
+aload_0
+ldc ""
+putfield Helper/s Ljava/lang/String;
 iload 2
 ldc 0
 if_icmpne ELSE13

@@ -10,6 +10,13 @@ return
 .limit stack 21
 .limit locals 3
 aload_0
+ldc ""
+ldc ""
+astore 1
+aload_0
+ldc ""
+putfield Y/secret Ljava/lang/String;
+aload_0
 aload 1
 putfield Y/secret Ljava/lang/String;
 ldc 0

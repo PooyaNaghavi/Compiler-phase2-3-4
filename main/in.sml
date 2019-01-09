@@ -16,7 +16,8 @@ class XXX {
 	    var x : X;
 	    var linkedList1 : LinkedList;
 	    hhh = new Helper();
-
+	    writeln("##########");
+        writeln(d);
 	    linkedList1 = new LinkedList();
 	    k = linkedList1.constructor();
 
