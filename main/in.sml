@@ -1,6 +1,7 @@
 class RunThis {
     def main() : int {
         new XXX().ss();
+        writeln(this.toString());
         return 0;
     }
 }

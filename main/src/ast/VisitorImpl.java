@@ -1,5 +1,6 @@
 package ast;
 
+import ast.Type.PrimitiveType.StringType;
 import ast.Type.Type;
 import ast.Type.UserDefinedType.UserDefinedType;
 import ast.node.Program;
@@ -72,9 +73,14 @@ public class VisitorImpl implements Visitor {
     public void visit(Program program) {
         SymbolTable.circular_inheritance = false;
         SymbolTableClassItem class_item = new SymbolTableClassItem("Object");
-        class_defined_declaration.add(new UserDefinedType(new Identifier("Object"), new ClassDeclaration(new Identifier("Object"))));
-        user_defined_declaration.add(new UserDefinedType(new Identifier("Object"), new ClassDeclaration(new Identifier("Object"))));
+        ClassDeclaration object_class = new ClassDeclaration(new Identifier("Object"));
+        MethodDeclaration object_method = new MethodDeclaration(new Identifier("toString"));
+        object_method.setReturnType(new StringType());
+        object_class.addMethodDeclaration(object_method);
+        class_defined_declaration.add(new UserDefinedType(new Identifier("Object"), object_class));
+        user_defined_declaration.add(new UserDefinedType(new Identifier("Object"), object_class));
         symbol_table_items.put("Object", SymbolTable.top);
+
         if(!SymbolTable.pass3_error){
             SymbolTable.circular_inheritance = check_circular_inheritance();
             if(SymbolTable.circular_inheritance == true){
@@ -138,6 +144,7 @@ public class VisitorImpl implements Visitor {
                 // print(symbol_table_items.get(class_name).getPre().getInCurrentScope("#Variable_x").getKey());
             }else{
                 symbol_table_items.get(class_name).setPre(symbol_table_items.get("Object"));
+                classDeclaration.setParentName(new Identifier("Object"));
             }
         } else if (!SymbolTable.pass3_error) {
             // SymbolTable new_symbol_table;

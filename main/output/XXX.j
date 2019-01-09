@@ -66,16 +66,16 @@ ELSE2 :
 ldc 0
 END2 :
 ifeq ELSE3
-aload 1
-invokevirtual Helper/printAll()Ljava/lang/String;
-ldc "KHERS"
-if_acmpeq ELSE3
 ldc 1
 goto END3
 ELSE3 :
 ldc 0
 END3 :
 ifeq ELSE4
+aload 1
+invokevirtual Helper/printAll()Ljava/lang/String;
+ldc "KHERS"
+if_acmpeq ELSE4
 ldc 1
 goto END4
 ELSE4 :
@@ -131,7 +131,8 @@ aload 1
 ldc 1000
 ldc 20
 ineg
-ldc "salam"
+aload_0
+invokevirtual XXX/toString()Ljava/lang/String;
 invokevirtual Helper/changeAll(IILjava/lang/String;)I
 putfield XXX/k I
 getstatic java/lang/System/out Ljava/io/PrintStream;
