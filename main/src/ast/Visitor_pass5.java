@@ -1,6 +1,9 @@
 package ast;
 //import ast.VisitorImpl;
 
+import ast.Type.PrimitiveType.BooleanType;
+import ast.Type.PrimitiveType.IntType;
+import ast.Type.PrimitiveType.StringType;
 import ast.node.Program;
 import ast.node.declaration.ClassDeclaration;
 import ast.node.declaration.MethodDeclaration;
@@ -161,15 +164,30 @@ public class Visitor_pass5 extends VisitorImpl {
     public void visit(VarDeclaration varDeclaration) {
 
         String varName = varDeclaration.getIdentifier().getName();
+        ArrayList<String> variable_byte_code = lines.get(lines.size() - 1);
         if (is_class) {
-            ArrayList<String> variable_byte_code = lines.get(lines.size() - 1);
             variable_byte_code.addAll(varDeclaration.to_byte_code());
-            lines.set(lines.size() - 1, variable_byte_code);
         }
+
         SymbolTableVariableItemBase variable_item = new SymbolTableVariableItemBase(varName, varDeclaration.getType(), method_index);
         try {
             SymbolTable.top.put(variable_item);
         } catch (ItemAlreadyExistsException e) { }
+
+        if(varDeclaration.getType() instanceof IntType){
+            Assign assignment = new Assign(varDeclaration.getIdentifier(), new IntValue(0, new IntType()));
+            variable_byte_code.addAll(assignment.to_byte_code());
+        }
+        else if(varDeclaration.getType() instanceof StringType)
+        {
+            Assign assignment = new Assign(varDeclaration.getIdentifier(), new StringValue("", new StringType()));
+            variable_byte_code.addAll(assignment.to_byte_code());
+        }
+        else if(varDeclaration.getType() instanceof BooleanType){
+            Assign assignment = new Assign(varDeclaration.getIdentifier(), new BooleanValue(false, new BooleanType()));
+            variable_byte_code.addAll(assignment.to_byte_code());
+        }
+        lines.set(lines.size() - 1, variable_byte_code);
 
         varDeclaration.getIdentifier().accept(this);
     }

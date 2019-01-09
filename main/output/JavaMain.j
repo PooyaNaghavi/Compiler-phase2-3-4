@@ -7,10 +7,10 @@ return
 .end method
 .method public static main([Ljava/lang/String;)V
 .limit stack 2
-new RunThis 
+new MyMain 
 dup
-invokespecial RunThis/<init>()V
-invokevirtual RunThis/main()I
+invokespecial MyMain/<init>()V
+invokevirtual MyMain/main()I
 return
 .end method
 

@@ -46,7 +46,6 @@ public class VarDeclaration extends Declaration {
         ArrayList<String> byte_code = new ArrayList<String>();
 
         byte_code.add(".field protected " + this.identifier.getName() + " " + this.type.to_byte_code());
-
         return byte_code;
     }
 
