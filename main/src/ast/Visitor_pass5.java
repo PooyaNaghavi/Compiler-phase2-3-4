@@ -59,11 +59,30 @@ public class Visitor_pass5 extends VisitorImpl {
         );
         return lines;
     }
-
+    private ArrayList<String> java_object_gen(String MainClassName) {
+        ArrayList<String> lines = new ArrayList<String>();
+        lines.add(
+                ".class public Object\n" +
+                        ".super java/lang/Object\n" +
+                        ".method public <init>()V\n" +
+                        "aload_0 ; push this\n" +
+                        "invokespecial java/lang/Object/<init>()V ; call super\n" +
+                        "return\n" +
+                        ".end method\n" +
+                        ".method public toString()[Ljava/lang/String;\n" +
+                        ".limit stack 2\n" +
+                        "ldc " +'"' + "Object"+ '"' + "\n"+
+                        "areturn\n" +
+                        ".end method\n"
+        );
+        return lines;
+    }
     @Override
     public void visit(Program program) {
         symbolTable_top = SymbolTable.top;
         writeUsingFiles(java_main_gen(program.getMainClass().getName().getName()), "JavaMain");
+        writeUsingFiles(java_object_gen(program.getMainClass().getName().getName()), "Object");
+
         main_class_flag = true;
         program.getMainClass().accept(this);
         main_class_flag = false;

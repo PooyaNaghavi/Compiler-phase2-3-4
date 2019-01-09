@@ -61,7 +61,7 @@ public class ClassDeclaration extends Declaration{
             parent_name = this.parentName.getName();
         }
         else{
-            parent_name = "java/lang/Object";
+            parent_name = "Object";
         }
 
         byte_code.add(".super " + parent_name);
@@ -77,7 +77,7 @@ public class ClassDeclaration extends Declaration{
             parent_name = this.parentName.getName();
         }
         else{
-            parent_name = "java/lang/Object";
+            parent_name = "Object";
         }
 
         byte_code.add(".method public <init>()V");

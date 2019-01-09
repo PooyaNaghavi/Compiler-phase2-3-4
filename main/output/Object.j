@@ -1,16 +1,13 @@
-.class public JavaMain
+.class public Object
 .super java/lang/Object
 .method public <init>()V
 aload_0 ; push this
 invokespecial java/lang/Object/<init>()V ; call super
 return
 .end method
-.method public static main([Ljava/lang/String;)V
+.method public toString()[Ljava/lang/String;
 .limit stack 2
-new RunThis 
-dup
-invokespecial RunThis/<init>()V
-invokevirtual RunThis/main()I
-return
+ldc "Object"
+areturn
 .end method
 
