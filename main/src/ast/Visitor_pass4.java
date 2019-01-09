@@ -580,10 +580,10 @@ public class Visitor_pass4 extends VisitorImpl{
         SymbolTable currentMethod = new SymbolTable();
         currentMethod.setPre(top);
         SymbolTable.push(currentMethod);
-        if(main_class_flag == false && methodDeclaration.getName().getName().equals("main")){
-            SymbolTable.error = true;
-            add_error(Integer.valueOf(methodDeclaration.get_line_number()), ":main function should be in main class");
-        }
+//        if(main_class_flag == false && methodDeclaration.getName().getName().equals("main")){
+//            SymbolTable.error = true;
+//            add_error(Integer.valueOf(methodDeclaration.get_line_number()), ":main function should be in main class");
+//        }
         boolean flag = false;
 
         for(VarDeclaration argDec : methodDeclaration.getArgs()) {

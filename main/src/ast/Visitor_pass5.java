@@ -69,7 +69,7 @@ public class Visitor_pass5 extends VisitorImpl {
                         "invokespecial java/lang/Object/<init>()V ; call super\n" +
                         "return\n" +
                         ".end method\n" +
-                        ".method public toString()[Ljava/lang/String;\n" +
+                        ".method public toString()Ljava/lang/String;\n" +
                         ".limit stack 2\n" +
                         "ldc " +'"' + "Object"+ '"' + "\n"+
                         "areturn\n" +

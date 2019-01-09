@@ -58,8 +58,8 @@ iload 2
 iload 1
 iload 2
 imul
-iadd
 ldc 1
+iadd
 iadd
 idiv
 ldc 1
@@ -69,14 +69,14 @@ ldc 234
 iload 2
 ldc 1
 iadd
-idiv
+iload 2
+ldc 1
+iadd
 iload 2
 ldc 1
 iadd
 idiv
-iload 2
-ldc 1
-iadd
+idiv
 idiv
 istore 2
 iload 2
@@ -152,8 +152,8 @@ ldc 1
 iadd
 iaload
 ldc 100
-iadd
 iload 1
+iadd
 iadd
 iastore
 iload 3
@@ -237,13 +237,13 @@ aload_0
 getfield Helper/a [I
 ldc 10
 iaload
-iadd
 ldc 100
 isub
 iadd
 ldc 34
 ldc 3
 idiv
+iadd
 iadd
 iastore
 aload_0
@@ -293,13 +293,11 @@ invokevirtual java/io/PrintStream/println(I)V
 getstatic java/lang/System/out Ljava/io/PrintStream;
 ldc 3
 ldc 3
-iadd
 ldc 5
 ldc 6
-imul
 ldc 7
 idiv
-isub
+imul
 aload_0
 getfield Helper/a [I
 ldc 3
@@ -315,8 +313,10 @@ aload_0
 getfield Helper/i I
 iadd
 idiv
-iadd
 ldc 1
+iadd
+iadd
+isub
 iadd
 invokevirtual java/io/PrintStream/println(I)V
 getstatic java/lang/System/out Ljava/io/PrintStream;
