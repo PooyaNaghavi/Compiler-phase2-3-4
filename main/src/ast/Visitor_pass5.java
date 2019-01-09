@@ -27,10 +27,8 @@ import java.util.ArrayList;
 public class Visitor_pass5 extends VisitorImpl {
 
     public ArrayList<ArrayList<String>> lines = new ArrayList<ArrayList<String>>();
-    public ArrayList<VarDeclaration> class_var_dec = new ArrayList<>();
 
     public boolean is_class = false;
-    public boolean first_method = false;
     public SymbolTable symbolTable_top;
     public int method_index = 1;
 
@@ -114,7 +112,6 @@ public class Visitor_pass5 extends VisitorImpl {
 
         for (VarDeclaration varDec : classDeclaration.getVarDeclarations()) {
             is_class = true;
-            class_var_dec.add(varDec);
             varDec.accept(this);
         }
         is_class = false;
@@ -123,10 +120,8 @@ public class Visitor_pass5 extends VisitorImpl {
         class_byte_code.addAll(classDeclaration.constructor_byte_code());
         lines.set(lines.size() - 1, class_byte_code);
 
-        first_method = true;
         for (MethodDeclaration methodDec : classDeclaration.getMethodDeclarations()) {
             methodDec.accept(this);
-            first_method = false;
         }
         SymbolTable.pop();
     }
@@ -169,17 +164,6 @@ public class Visitor_pass5 extends VisitorImpl {
         }
         method_index = 1;
 
-        if(first_method)
-        {
-            ArrayList<String> initial_byte_code = lines.get(lines.size() - 1);
-            for (VarDeclaration localVarDec : class_var_dec) {
-                if (localVarDec.getType() instanceof StringType) {
-                    Assign assignment = new Assign(localVarDec.getIdentifier(), new StringValue("\"\"", new StringType()));
-                    initial_byte_code.addAll(assignment.to_byte_code());
-                }
-            }
-            lines.set(lines.size() - 1, method_byte_code);
-        }
         for (Statement stmt : methodDeclaration.getBody()) {
             stmt.accept(this);
         }

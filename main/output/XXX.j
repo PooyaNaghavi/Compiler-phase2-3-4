@@ -4,24 +4,45 @@
 .field protected b Z = 0
 .field protected c I = 0
 .field protected d Ljava/lang/String; = " "
+.field protected d1 Ljava/lang/String; = " "
+.field protected d2 Ljava/lang/String; = " "
 .field protected k I = 0
 .method public <init>()V
+.limit stack 2
 aload_0
 invokespecial Object/<init>()V
+aload_0
+ldc ""
+putfield XXX/d Ljava/lang/String;
+aload_0
+ldc ""
+putfield XXX/d1 Ljava/lang/String;
+aload_0
+ldc ""
+putfield XXX/d2 Ljava/lang/String;
 return
 .end method
 .method public main()I
 .limit stack 23
 .limit locals 5
-aload_0
-ldc ""
-putfield XXX/d Ljava/lang/String;
 new Helper
 dup
 invokespecial Helper/<init>()V
 astore 1
 getstatic java/lang/System/out Ljava/io/PrintStream;
 ldc "##########"
+invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+getstatic java/lang/System/out Ljava/io/PrintStream;
+aload_0
+getfield XXX/d Ljava/lang/String;
+invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+getstatic java/lang/System/out Ljava/io/PrintStream;
+aload_0
+getfield XXX/d1 Ljava/lang/String;
+invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+getstatic java/lang/System/out Ljava/io/PrintStream;
+aload_0
+getfield XXX/d2 Ljava/lang/String;
 invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 new LinkedList
 dup

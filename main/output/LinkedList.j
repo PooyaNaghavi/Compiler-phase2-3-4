@@ -3,6 +3,7 @@
 .field protected head LNode;
 .field protected tmp I = 0
 .method public <init>()V
+.limit stack 2
 aload_0
 invokespecial Object/<init>()V
 return
@@ -10,12 +11,6 @@ return
 .method public constructor()I
 .limit stack 20
 .limit locals 2
-aload_0
-ldc ""
-aload_0
-ldc ""
-aload_0
-ldc ""
 aload_0
 new Node
 dup

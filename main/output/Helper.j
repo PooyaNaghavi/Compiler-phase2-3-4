@@ -7,8 +7,12 @@
 .field protected x LX;
 .field protected tmp I = 0
 .method public <init>()V
+.limit stack 2
 aload_0
 invokespecial Object/<init>()V
+aload_0
+ldc ""
+putfield Helper/s Ljava/lang/String;
 return
 .end method
 .method public pow(II)I
@@ -16,11 +20,6 @@ return
 .limit locals 5
 ldc 0
 istore 3
-aload_0
-ldc ""
-aload_0
-ldc ""
-putfield Helper/s Ljava/lang/String;
 iload 2
 ldc 0
 if_icmpne ELSE13

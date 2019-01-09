@@ -4,6 +4,7 @@
 .field protected next LNode;
 .field protected data I = 0
 .method public <init>()V
+.limit stack 2
 aload_0
 invokespecial Object/<init>()V
 return
@@ -11,12 +12,6 @@ return
 .method public constructor()I
 .limit stack 20
 .limit locals 2
-aload_0
-ldc ""
-aload_0
-ldc ""
-aload_0
-ldc ""
 aload_0
 ldc 0
 putfield Node/hasNext Z

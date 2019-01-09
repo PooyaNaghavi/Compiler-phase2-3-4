@@ -1,7 +1,10 @@
 package ast.node.declaration;
 
+import ast.Type.PrimitiveType.StringType;
 import ast.Visitor;
 import ast.node.expression.Identifier;
+import ast.node.expression.Value.StringValue;
+import ast.node.statement.Assign;
 
 import java.util.ArrayList;
 
@@ -81,8 +84,17 @@ public class ClassDeclaration extends Declaration{
         }
 
         byte_code.add(".method public <init>()V");
+        byte_code.add(".limit stack 2");
         byte_code.add("aload_0");
         byte_code.add("invokespecial " + parent_name + "/<init>()V");
+        for(VarDeclaration var_dec : varDeclarations)
+        {
+            if(var_dec.getType() instanceof StringType){
+                byte_code.add("aload_0");
+                byte_code.add("ldc \"\"");
+                byte_code.add("putfield " + name.getName() + "/" + var_dec.getIdentifier().getName() + " " + var_dec.getType().to_byte_code());
+            }
+        }
         byte_code.add("return");
         byte_code.add(".end method");
 

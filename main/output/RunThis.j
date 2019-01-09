@@ -1,6 +1,7 @@
 .class public RunThis
 .super Object
 .method public <init>()V
+.limit stack 2
 aload_0
 invokespecial Object/<init>()V
 return

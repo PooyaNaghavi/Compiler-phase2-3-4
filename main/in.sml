@@ -9,6 +9,8 @@ class XXX {
     var b : boolean;
     var c : int;
     var d : string;
+    var d1 : string;
+     var d2 : string;
     var k : int;
 
 	def main() : int {
@@ -18,6 +20,8 @@ class XXX {
 	    hhh = new Helper();
 	    writeln("##########");
         writeln(d);
+        writeln(d1);
+        writeln(d2);
 	    linkedList1 = new LinkedList();
 	    k = linkedList1.constructor();
 

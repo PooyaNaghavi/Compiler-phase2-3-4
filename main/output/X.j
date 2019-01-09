@@ -2,6 +2,7 @@
 .super Y
 .field protected i I = 0
 .method public <init>()V
+.limit stack 2
 aload_0
 invokespecial Y/<init>()V
 return
@@ -9,13 +10,6 @@ return
 .method public setI(I)I
 .limit stack 21
 .limit locals 3
-aload_0
-ldc ""
-aload_0
-ldc ""
-aload_0
-ldc ""
-putfield X/secret Ljava/lang/String;
 iload 1
 istore 1
 iload 1
